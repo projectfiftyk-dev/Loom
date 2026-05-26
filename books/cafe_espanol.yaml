@@ -1,0 +1,315 @@
+# Café Español — Language learning demo book
+# StoryFormat v0.2
+
+metadata:
+  title: "At the Café · En el Café"
+  author: "Loom for Language"
+  version: "0.2"
+  language: "es"
+  cover_image: "cafe_espanol/black.png"
+  description: >
+    Step into a Madrid café and order your first coffee in Spanish.
+    Grammar is introduced before the scene — then the language comes alive.
+  tags:
+    - language-learning
+    - spanish
+    - beginner
+    - A1-A2
+
+settings:
+  ai_model: "gpt-4o-mini"
+  max_free_text_attempts: 3
+
+characters:
+  - id: carlos
+    name: "Carlos"
+    avatar: "cafe_espanol/carlos.svg"
+    voice: "warm_male"
+    personality: >
+      You are Carlos, a friendly and warm waiter at a café in Madrid, Spain.
+      You only speak Spanish — if the player writes in English, respond with
+      gentle confusion ("¿Perdón? No le entiendo...") and encourage them to
+      try in Spanish. You are patient, cheerful, and professional.
+      Keep all responses to one or two sentences maximum.
+
+# ── SCENE 1: Lesson Intro ─────────────────────────────────────────────────
+# Background: slide5 (light — lesson title + scene details panel)
+scenes:
+
+  - id: scene_intro
+    title: "Lesson 1 · At the Café"
+    start: true
+    background: "cafe_espanol/black.png"
+    nodes:
+
+      - id: s1_intro
+        type: dialogue
+        character: narrator
+        text: >
+          You are about to step inside a café in Madrid.
+          The waiter approaches. Everything around you is in Spanish —
+          the menu, the music, the conversation.
+          Your goal: order a coffee, understand the response, and pay the bill.
+        next: scene_grammar
+
+# ── SCENE 2: Grammar Onboarding ──────────────────────────────────────────
+# Background: slide6 (light — "Before you enter the café" grammar cards)
+
+  - id: scene_grammar
+    title: "Grammar Onboarding"
+    background: "cafe_espanol/black.png"
+    nodes:
+
+      - id: g01_intro
+        type: dialogue
+        character: narrator
+        text: >
+          Before you enter the café — two grammar patterns you will need
+          in this scene.
+        next: g02_pattern1
+
+      - id: g02_pattern1
+        type: dialogue
+        character: narrator
+        text: >
+          Making a polite request — structure: [thing you want] + "por favor".
+          Example: "Un café, por favor." (A coffee, please.)
+        next: g03_pattern2
+
+      - id: g03_pattern2
+        type: dialogue
+        character: narrator
+        text: >
+          Asking with ¿Qué? — structure: ¿Qué + [verb] + [subject]?
+          Example: "¿Qué desea tomar?" (What would you like to have?)
+          Carlos will use both. You don't need to memorise them —
+          just recognise them when you hear them.
+        next: scene_cafe
+
+# ── SCENE 3: The Café Morning ────────────────────────────────────────────
+# Background: slide7 (dark navy — AI Narrator bar, Carlos greeting, key phrases sidebar)
+
+  - id: scene_cafe
+    title: "At the Café — Morning"
+    background: "cafe_espanol/black.png"
+    nodes:
+
+      - id: c01_arrive
+        type: dialogue
+        character: narrator
+        text: >
+          The morning sun filters through the café window. A waiter approaches
+          your table — he smiles, pulls out his notepad, and says…
+        next: c02_greeting
+
+      - id: c02_greeting
+        type: dialogue
+        character: carlos
+        text: "¡Buenos días! ¿Qué desea tomar?"
+        next: scene_order
+
+# ── SCENE 4: Ordering ────────────────────────────────────────────────────
+# Background: slide8 (light — [PAUSE] BREAKPOINT, A/B/C/D option cards)
+
+  - id: scene_order
+    title: "Breakpoint — Order Your Coffee"
+    background: "cafe_espanol/black.png"
+    nodes:
+
+      - id: c03_order_choice
+        type: choice
+        prompt: "Carlos is waiting. How do you order a coffee?"
+        options:
+          - label: "Un café, por favor."
+            correct: true
+            next: c04_correct_order
+          - label: "Quiero café."
+            correct: false
+            next: c05_informal_order
+          - label: "Coffee, please."
+            next: c06_english_fail
+          - label: "Una cerveza, por favor."
+            next: c07_beer_funny
+
+      - id: c04_correct_order
+        type: dialogue
+        character: carlos
+        text: "¡Por supuesto! Un momento."
+        next: scene_coffee
+
+      - id: c05_informal_order
+        type: dialogue
+        character: narrator
+        text: >
+          Carlos understands, but "quiero" sounds a little abrupt.
+          "Un café, por favor" is the natural, polite form — try it!
+        next: c03_order_choice
+
+      - id: c06_english_fail
+        type: dialogue
+        character: carlos
+        text: "¿Perdón? No le entiendo… Excuse me? I don't understand you."
+        next: c03_order_choice
+
+      - id: c07_beer_funny
+        type: dialogue
+        character: carlos
+        text: "¿Una cerveza? ¡A las ocho de la mañana! A beer? At eight in the morning!"
+        next: c03_order_choice
+
+# ── SCENE 5: Coffee Arrives ──────────────────────────────────────────────
+# Background: slide9 (dark navy — "Scene continues", coffee arrives, coming up: bill)
+
+  - id: scene_coffee
+    title: "The Coffee Arrives"
+    background: "cafe_espanol/black.png"
+    nodes:
+
+      - id: c08_coffee_arrives_narr
+        type: dialogue
+        character: narrator
+        text: >
+          You ordered correctly. Carlos nods and heads to the counter.
+          A minute later, he returns with a small espresso.
+        next: c09_carlos_returns
+
+      - id: c09_carlos_returns
+        type: dialogue
+        character: carlos
+        text: "¡Aquí tiene su café! Recién hecho. ¿Le puedo traer algo más?"
+        next: c10_respond_choice
+
+      - id: c10_respond_choice
+        type: choice
+        prompt: "Carlos asks if you need anything else. How do you respond?"
+        options:
+          - label: "No, gracias."
+            correct: true
+            next: c11_bill_time
+          - label: "Sí, un croissant, por favor."
+            next: c12_croissant
+          - label: "No, thank you."
+            next: c13_english_again
+
+      - id: c11_bill_time
+        type: dialogue
+        character: carlos
+        text: "¡Perfecto! Cuando usted quiera."
+        next: scene_bill
+
+      - id: c12_croissant
+        type: dialogue
+        character: carlos
+        text: "¡Enseguida! Un croissant recién horneado."
+        next: scene_bill
+
+      - id: c13_english_again
+        type: dialogue
+        character: narrator
+        text: >
+          Almost! Try responding in Spanish next time —
+          "No, gracias" is all you need here.
+        next: scene_bill
+
+# ── SCENE 6: The Bill ────────────────────────────────────────────────────
+# Background: slide10 (dark navy — STORY PAUSE, free response input, "Respond in Spanish")
+
+  - id: scene_bill
+    title: "Story Pause — Ask for the Bill"
+    background: "cafe_espanol/black.png"
+    nodes:
+
+      - id: c14_bill_narr
+        type: dialogue
+        character: narrator
+        text: >
+          The bill arrives. Carlos sets it quietly on the table and steps back,
+          waiting. Can you ask for it in Spanish?
+        next: c15_free_response
+
+      - id: c15_free_response
+        type: free_text
+        prompt: "How do you ask for the bill in Spanish?"
+        hint: >
+          The word for bill is "la cuenta". Try: "La cuenta, por favor."
+        goal: >
+          The player should ask for the bill in Spanish. Any natural
+          Spanish request for the bill is acceptable — "la cuenta",
+          "la cuenta por favor", "me puede traer la cuenta",
+          "quiero pagar", etc.
+        on_success: c16_bill_success
+        on_fail: c17_bill_retry
+        max_attempts: 3
+        on_exhausted: c18_bill_hint
+
+      - id: c16_bill_success
+        type: dialogue
+        character: carlos
+        text: "¡Por supuesto! Son tres euros con cincuenta. Of course! That will be three euros fifty."
+        next: scene_chat
+
+      - id: c17_bill_retry
+        type: dialogue
+        character: carlos
+        text: "¿Perdón? No le entiendo… ¿Puede repetir en español?"
+        next: c15_free_response
+
+      - id: c18_bill_hint
+        type: dialogue
+        character: narrator
+        text: >
+          Tip: "La cuenta, por favor" — 'la cuenta' means the bill.
+          Let's hear it from Carlos.
+        next: c18b_carlos_bill
+
+      - id: c18b_carlos_bill
+        type: dialogue
+        character: carlos
+        text: "¿La cuenta? ¡Sí, claro! Son tres euros con cincuenta."
+        next: scene_chat
+
+# ── SCENE 7: Talk to Carlos ──────────────────────────────────────────────
+# Background: slide12 (light — "Talk to Carlos", voice interaction, Carlos avatar)
+
+  - id: scene_chat
+    title: "Talk to Carlos"
+    background: "cafe_espanol/black.png"
+    nodes:
+
+      - id: c19_chat_intro
+        type: dialogue
+        character: narrator
+        text: >
+          ¡Bien hecho! You paid the bill in Spanish. Carlos has a moment
+          to chat — ask him anything in Spanish.
+        next: c20_chat
+
+      - id: c20_chat
+        type: chat
+        character: carlos
+        context_up_to: c20_chat
+        entry_line: "¡Qué bien! Su español es muy bueno. ¿Tiene alguna pregunta para mí?"
+        standalone: true
+        next: scene_complete
+
+# ── SCENE 8: Lesson Complete ─────────────────────────────────────────────
+# Background: slide13 (light — "Lesson complete", stats cards, "What comes next")
+
+  - id: scene_complete
+    title: "Lesson Complete"
+    end: true
+    background: "cafe_espanol/black.png"
+    nodes:
+
+      - id: end_summary
+        type: dialogue
+        character: narrator
+        text: >
+          ¡Muy bien! You completed Lesson 1 — At the Café.
+          You learned how to greet in Spanish, order politely,
+          respond to questions, and ask for the bill.
+          Next up: Lesson 2 — At the Hotel.
+
+standalone_chats:
+  - character: carlos
+    unlock_after: scene_intro
