@@ -2,7 +2,7 @@ import { useEffect, useId, useState, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Sparkles, Plus, Trash2, Edit3, Check, X,
-  ChevronDown, ChevronRight, Save, AlertCircle,
+  ChevronDown, ChevronRight, Save, AlertCircle, Play,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import clsx from 'clsx';
@@ -683,6 +683,15 @@ export default function ScriptEditorPage() {
                       </span>
                     </div>
                     <span className={clsx('text-xs font-mono shrink-0', isDark ? 'text-[#5A5780]' : 'text-violet-300')}>{scene.id}</span>
+                    <button
+                      onClick={e => { e.stopPropagation(); navigate(`/read/${bookId}?scene=${scene.id}&from=script`); }}
+                      className={clsx('shrink-0 p-1.5 rounded-lg transition-colors',
+                        isDark ? 'text-[#5A5780] hover:text-teal-400 hover:bg-teal-500/10'
+                               : 'text-violet-300 hover:text-teal-600 hover:bg-teal-50')}
+                      title="Preview from this scene"
+                    >
+                      <Play className="w-3.5 h-3.5" />
+                    </button>
                     {confirmDeleteSceneId === scene.id ? (
                       <div className="flex items-center gap-1 shrink-0" onClick={e => e.stopPropagation()}>
                         <button

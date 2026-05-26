@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { X, ChevronRight, ArrowLeft, RotateCcw, CheckCircle } from 'lucide-react';
+import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
+import { X, ChevronRight, ArrowLeft, RotateCcw, CheckCircle, Pause, Play } from 'lucide-react';
 import yaml from 'js-yaml';
 import { useApp } from '../context/AppContext';
 import { fetchBookYaml } from '../api/client';
@@ -30,6 +30,9 @@ function avatarSrc(avatar: string | null | undefined): string | null {
 export default function ReaderPage() {
   const { bookId } = useParams<{ bookId: string }>();
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const startScene = searchParams.get('scene');
+  const fromScript = searchParams.get('from') === 'script';
   const { theme } = useApp();
 
   const [story, setStory] = useState<Story | null>(null);
@@ -38,21 +41,32 @@ export default function ReaderPage() {
   const [currentNodeId, setCurrentNodeId] = useState('');
   const [chatHistories, setChatHistories] = useState<Record<string, ChatMessage[]>>({});
   const [finished, setFinished] = useState(false);
+  const [audioConfig, setAudioConfig] = useState<Record<string, string>>({});
+  const [isPlaying, setIsPlaying] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+  // Stable ref so the onended callback always calls the latest handleAdvance
+  const advanceRef = useRef<() => void>(() => {});
 
   // suppress unused theme warning
   void theme;
 
-  // ── load story ──────────────────────────────────────────────────────────
+  // ── load story + audio config ────────────────────────────────────────────
   useEffect(() => {
     if (!bookId) return;
     setLoading(true);
-    fetchBookYaml(bookId)
-      .then(text => {
+    Promise.all([
+      fetchBookYaml(bookId),
+      fetch(`/api/audio-config/${bookId}`).then(r => r.ok ? r.json() : {}),
+    ])
+      .then(([text, audioCfg]) => {
         const parsed = yaml.load(text) as Story;
         setStory(parsed);
-        const start = parsed.scenes.find(s => s.start);
-        if (start?.nodes?.[0]) setCurrentNodeId(start.nodes[0].id);
+        setAudioConfig(audioCfg || {});
+        const scene = startScene
+          ? (parsed.scenes.find(s => s.id === startScene) ?? parsed.scenes.find(s => s.start))
+          : parsed.scenes.find(s => s.start);
+        if (scene?.nodes?.[0]) setCurrentNodeId(scene.nodes[0].id);
       })
       .catch(e => setError(e.message))
       .finally(() => setLoading(false));
@@ -102,19 +116,41 @@ export default function ReaderPage() {
       navigateTo(node.next);
     }
   };
+  // Keep ref current so the audio onended callback never goes stale
+  advanceRef.current = handleAdvance;
+
+  const handlePause = () => {
+    audioRef.current?.pause();
+    setIsPlaying(false);
+    setIsPaused(true);
+  };
+
+  const handleResume = () => {
+    if (!audioRef.current) return;
+    audioRef.current.play()
+      .then(() => { setIsPlaying(true); setIsPaused(false); })
+      .catch(() => {});
+  };
 
   // ── audio ───────────────────────────────────────────────────────────────
   useEffect(() => {
-    audioRef.current?.pause();
-    audioRef.current = null;
-    if (!currentNodeId) return;
-    const node = nodeMap.get(currentNodeId);
-    if (node?.type === 'dialogue' && node.audio) {
-      const a = new Audio(node.audio);
-      audioRef.current = a;
-      a.play().catch(() => {});
+    if (audioRef.current) {
+      audioRef.current.onended = null;
+      audioRef.current.pause();
+      audioRef.current = null;
     }
-  }, [currentNodeId]);
+    setIsPlaying(false);
+    setIsPaused(false);
+    if (!currentNodeId || !bookId) return;
+    const audioPath = audioConfig[`${bookId}::${currentNodeId}`];
+    if (!audioPath) return;
+    const a = new Audio(audioPath);
+    audioRef.current = a;
+    a.onended = () => { setIsPlaying(false); advanceRef.current(); };
+    a.play()
+      .then(() => setIsPlaying(true))
+      .catch(() => setIsPlaying(false));
+  }, [currentNodeId, audioConfig]);
 
   // ── derived ─────────────────────────────────────────────────────────────
   const currentNode = currentNodeId ? nodeMap.get(currentNodeId) : null;
@@ -186,10 +222,11 @@ export default function ReaderPage() {
             <RotateCcw className="w-4 h-4" /> Read Again
           </button>
           <button
-            onClick={() => navigate('/library')}
+            onClick={() => navigate(fromScript ? `/edit/${bookId}/script` : '/library')}
             className="flex items-center justify-center gap-2 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white"
           >
-            <ArrowLeft className="w-4 h-4" /> Back to Library
+            <ArrowLeft className="w-4 h-4" />
+            {fromScript ? 'Back to Script Editor' : 'Back to Library'}
           </button>
         </div>
       </div>
@@ -263,9 +300,9 @@ export default function ReaderPage() {
             <span className="text-white/30 text-[10px]">{progress}%</span>
           </div>
           <button
-            onClick={() => navigate('/library')}
+            onClick={() => navigate(fromScript ? `/edit/${bookId}/script` : '/library')}
             className="text-white/30 hover:text-white/70 transition-colors"
-            title="Back to Library"
+            title={fromScript ? 'Back to Script Editor' : 'Back to Library'}
           >
             <X className="w-4 h-4" />
           </button>
@@ -287,22 +324,43 @@ export default function ReaderPage() {
                 <span className="text-[10px] tracking-[0.18em] text-white/22 uppercase select-none">
                   {story.metadata.title}
                 </span>
-                {hasNext && !isLastNode && (
-                  <button
-                    onClick={handleAdvance}
-                    className="text-white/45 hover:text-white transition-colors active:scale-95 p-1"
-                  >
-                    <ChevronRight className="w-5 h-5" />
-                  </button>
-                )}
-                {isLastNode && (
-                  <button
-                    onClick={() => setFinished(true)}
-                    className="text-xs text-amber-400/70 hover:text-amber-400 transition-colors"
-                  >
-                    Finish →
-                  </button>
-                )}
+                <div className="flex items-center gap-1">
+                  {isPlaying && (
+                    <button
+                      onClick={handlePause}
+                      className="text-white/45 hover:text-white transition-colors active:scale-95 p-1"
+                      title="Pause"
+                    >
+                      <Pause className="w-4 h-4" />
+                    </button>
+                  )}
+                  {isPaused && (
+                    <button
+                      onClick={handleResume}
+                      className="text-amber-400/70 hover:text-amber-400 transition-colors active:scale-95 p-1"
+                      title="Resume"
+                    >
+                      <Play className="w-4 h-4" />
+                    </button>
+                  )}
+                  {hasNext && !isLastNode && (
+                    <button
+                      onClick={handleAdvance}
+                      className="text-white/45 hover:text-white transition-colors active:scale-95 p-1"
+                      title="Skip to next"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  )}
+                  {isLastNode && (
+                    <button
+                      onClick={() => setFinished(true)}
+                      className="text-xs text-amber-400/70 hover:text-amber-400 transition-colors"
+                    >
+                      Finish →
+                    </button>
+                  )}
+                </div>
               </div>
             </div>
           </div>
