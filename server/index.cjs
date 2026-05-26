@@ -384,6 +384,23 @@ app.post('/api/elevenlabs/generate-audio', async (req, res) => {
   }
 });
 
+// Upload a background image for a book
+app.post('/api/books/:bookId/images', (req, res) => {
+  const { bookId } = req.params;
+  const { filename, data } = req.body;
+  if (!filename || !data) return res.status(400).json({ error: 'Missing filename or data' });
+  const safeName = path.basename(filename).replace(/[^a-zA-Z0-9._-]/g, '_');
+  const bookImgDir = path.join(BOOKS_DIR, bookId);
+  if (!fs.existsSync(bookImgDir)) fs.mkdirSync(bookImgDir, { recursive: true });
+  try {
+    const base64 = data.replace(/^data:[^;]+;base64,/, '');
+    fs.writeFileSync(path.join(bookImgDir, safeName), Buffer.from(base64, 'base64'));
+    res.json({ path: `${bookId}/${safeName}` });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 // Save a book (JSON → YAML written to disk)
 app.put('/api/books/:id', (req, res) => {
   const { id } = req.params;

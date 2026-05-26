@@ -1,8 +1,8 @@
-import { useEffect, useId, useState, type ReactNode } from 'react';
+import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Sparkles, Plus, Trash2, Edit3, Check, X,
-  ChevronDown, ChevronRight, Save, AlertCircle, Play,
+  ChevronDown, ChevronRight, Save, AlertCircle, Play, ImagePlus, ImageOff,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import clsx from 'clsx';
@@ -17,6 +17,7 @@ interface ChoiceOption { label: string; correct?: boolean; next?: string; }
 interface StoryNode {
   id: string;
   type: 'dialogue' | 'choice' | 'free_text' | 'chat';
+  background?: string;
   character?: string;
   text?: string;
   next?: string;
@@ -42,6 +43,15 @@ interface Story {
   characters: StoryCharacter[];
   scenes: StoryScene[];
   standalone_chats?: any[];
+}
+
+function readFileAsBase64(file: File): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(file);
+  });
 }
 
 function resolveCharId(character: any): string | null {
@@ -131,6 +141,86 @@ function CharSelect({ value, onChange, characters, isDark, onCreateChar }: {
         </div>
       )}
     </FieldLabel>
+  );
+}
+
+// ── Background picker ──────────────────────────────────────────────────────────
+
+function BackgroundPicker({ value, onChange, bookId, isDark }: {
+  value: string | undefined; onChange: (path: string | undefined) => void;
+  bookId: string; isDark: boolean;
+}) {
+  const inputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+
+  const handleFile = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const data = await readFileAsBase64(file);
+      const res = await fetch(`/api/books/${bookId}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ filename: file.name, data }),
+      });
+      const json = await res.json();
+      if (!res.ok) throw new Error(json.error);
+      onChange(json.path);
+    } catch (err) {
+      console.error('Image upload failed:', err);
+    } finally {
+      setUploading(false);
+      if (inputRef.current) inputRef.current.value = '';
+    }
+  };
+
+  return (
+    <div className="flex items-center gap-3">
+      {/* Thumbnail */}
+      <div className={clsx(
+        'w-16 h-10 rounded-lg border overflow-hidden shrink-0 flex items-center justify-center',
+        isDark ? 'border-[#2D2B47] bg-[#16152B]' : 'border-[#E2DFFF] bg-violet-50'
+      )}>
+        {value ? (
+          <img src={`/book-assets/${value}`} alt="background"
+            className="w-full h-full object-cover"
+            onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+        ) : (
+          <ImageOff className={clsx('w-4 h-4', isDark ? 'text-[#3D3B57]' : 'text-violet-200')} />
+        )}
+      </div>
+
+      {/* Path label */}
+      <span className={clsx('text-xs truncate flex-1 min-w-0', isDark ? 'text-[#5A5780]' : 'text-violet-300')}>
+        {value ?? 'No background'}
+      </span>
+
+      {/* Actions */}
+      <input ref={inputRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
+      <button
+        onClick={() => inputRef.current?.click()}
+        disabled={uploading}
+        className={clsx(
+          'shrink-0 flex items-center gap-1.5 text-xs font-medium px-2.5 py-1.5 rounded-lg border transition-colors',
+          isDark ? 'border-[#2D2B47] text-[#8B87B8] hover:text-violet-300 hover:border-violet-500/50'
+                 : 'border-[#E2DFFF] text-violet-400 hover:text-violet-600 hover:border-violet-300'
+        )}
+      >
+        <ImagePlus className="w-3.5 h-3.5" />
+        {uploading ? 'Uploading…' : value ? 'Change' : 'Upload'}
+      </button>
+      {value && (
+        <button
+          onClick={() => onChange(undefined)}
+          className={clsx('shrink-0 p-1.5 rounded-lg transition-colors',
+            isDark ? 'text-[#5A5780] hover:text-red-400 hover:bg-red-500/10'
+                   : 'text-violet-300 hover:text-red-500 hover:bg-red-50')}
+        >
+          <X className="w-3.5 h-3.5" />
+        </button>
+      )}
+    </div>
   );
 }
 
@@ -273,8 +363,8 @@ const TYPE_BADGE_CLS: Record<string, [string, string]> = {
   chat:      ['bg-blue-500/10 text-blue-400',       'bg-blue-50 text-blue-600'],
 };
 
-function NodeRow({ node, isDark, allNodeIds, characters, onSave, onDelete, onCreateChar }: {
-  node: StoryNode; isDark: boolean; allNodeIds: string[];
+function NodeRow({ node, isDark, allNodeIds, characters, bookId, onSave, onDelete, onCreateChar }: {
+  node: StoryNode; isDark: boolean; allNodeIds: string[]; bookId: string;
   characters: StoryCharacter[]; onSave: (n: StoryNode) => void;
   onDelete: () => void; onCreateChar: (c: StoryCharacter) => void;
 }) {
@@ -357,6 +447,16 @@ function NodeRow({ node, isDark, allNodeIds, characters, onSave, onDelete, onCre
                 <option value="chat">chat</option>
               </select>
             </FieldLabel>
+          </div>
+
+          <div className={clsx('rounded-lg p-3 mb-4 border', isDark ? 'bg-[#0C0B1A] border-[#2D2B47]' : 'bg-violet-50/40 border-[#E2DFFF]')}>
+            <p className={clsx('text-xs font-medium mb-2', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>Background override</p>
+            <BackgroundPicker
+              value={draft.background}
+              onChange={path => setDraft(d => ({ ...d, background: path }))}
+              bookId={bookId}
+              isDark={isDark}
+            />
           </div>
 
           {draft.type === 'dialogue' && (
@@ -587,6 +687,9 @@ export default function ScriptEditorPage() {
     setConfirmDeleteSceneId(null);
   };
 
+  const handleUpdateScene = (sceneId: string, updated: Partial<StoryScene>) =>
+    update(s => ({ ...s, scenes: s.scenes.map(sc => sc.id === sceneId ? { ...sc, ...updated } : sc) }));
+
   const handleSave = async () => {
     if (!story || !bookId) return;
     setSaving(true); setSaveError(null);
@@ -718,12 +821,22 @@ export default function ScriptEditorPage() {
 
                   {!collapsed && (
                     <>
+                      <div className={clsx('px-5 py-3 border-b', isDark ? 'border-[#2D2B47]' : 'border-[#F0EEFF]')}>
+                        <p className={clsx('text-xs font-medium mb-2', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>Scene background</p>
+                        <BackgroundPicker
+                          value={scene.background}
+                          onChange={path => handleUpdateScene(scene.id, { background: path })}
+                          bookId={bookId!}
+                          isDark={isDark}
+                        />
+                      </div>
                       {scene.nodes.map(node => (
                         <NodeRow
                           key={node.id}
                           node={node}
                           isDark={isDark}
                           allNodeIds={allNodeIds}
+                          bookId={bookId!}
                           characters={story.characters ?? []}
                           onSave={updated => handleSaveNode(scene.id, node.id, updated)}
                           onDelete={() => handleDeleteNode(scene.id, node.id)}

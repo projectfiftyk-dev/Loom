@@ -158,7 +158,9 @@ export default function ReaderPage() {
   // ── derived ─────────────────────────────────────────────────────────────
   const currentNode = currentNodeId ? nodeMap.get(currentNodeId) : null;
   const currentScene = currentNodeId ? sceneByNode.get(currentNodeId) : null;
-  const bgUrl = currentScene?.background ? `/book-assets/${currentScene.background}` : null;
+  const nodeBg = (currentNode as any)?.background as string | undefined;
+  const bg = nodeBg ?? currentScene?.background;
+  const bgUrl = bg ? `/book-assets/${bg}` : null;
 
   const speaker = useMemo(() => {
     if (!story || !currentNode || currentNode.type !== 'dialogue') return null;
