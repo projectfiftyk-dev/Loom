@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, BookOpen, RefreshCw, Sparkles, Globe, Tag } from 'lucide-react';
+import { ArrowLeft, BookOpen, RefreshCw, Sparkles, Globe, Tag, Edit3 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { fetchBooks } from '../api/client';
 import type { BookMeta } from '../types/story';
@@ -13,7 +13,7 @@ const LANG_LABELS: Record<string, string> = {
 
 export default function LibraryPage() {
   const navigate = useNavigate();
-  const { theme } = useApp();
+  const { theme, isEditMode } = useApp();
   const isDark = theme === 'dark';
 
   const [books, setBooks] = useState<BookMeta[]>([]);
@@ -71,6 +71,15 @@ export default function LibraryPage() {
               LOOM
             </span>
             <span className={clsx('text-sm', isDark ? 'text-[#8B87B8]' : 'text-violet-400')}>/ Library</span>
+            {isEditMode && (
+              <span className={clsx(
+                'inline-flex items-center gap-1 text-xs font-semibold px-2 py-0.5 rounded-full ml-1',
+                isDark ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'bg-amber-50 text-amber-600 border border-amber-200'
+              )}>
+                <Edit3 className="w-3 h-3" />
+                Edit Mode
+              </span>
+            )}
           </div>
 
           <button
@@ -141,7 +150,14 @@ export default function LibraryPage() {
         {!loading && !error && books.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {books.map(book => (
-              <BookCard key={book.id} book={book} isDark={isDark} onClick={() => navigate(`/read/${book.id}`)} />
+              <BookCard
+                key={book.id}
+                book={book}
+                isDark={isDark}
+                onClick={() => navigate(`/read/${book.id}`)}
+                isEditMode={isEditMode}
+                onEdit={() => navigate(`/edit/${book.id}`)}
+              />
             ))}
           </div>
         )}
@@ -150,12 +166,21 @@ export default function LibraryPage() {
   );
 }
 
-function BookCard({ book, isDark, onClick }: { book: BookMeta; isDark: boolean; onClick: () => void }) {
+function BookCard({ book, isDark, onClick, isEditMode, onEdit }: {
+  book: BookMeta;
+  isDark: boolean;
+  onClick: () => void;
+  isEditMode: boolean;
+  onEdit: () => void;
+}) {
   return (
-    <button
+    <div
+      role="button"
+      tabIndex={0}
       onClick={onClick}
+      onKeyDown={e => e.key === 'Enter' && onClick()}
       className={clsx(
-        'group text-left rounded-2xl overflow-hidden transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]',
+        'group text-left rounded-2xl overflow-hidden transition-all duration-200 hover:scale-[1.02] active:scale-[0.98] cursor-pointer',
         isDark
           ? 'bg-[#1E1C30] border border-[#2D2B47] hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-900/30'
           : 'bg-white border border-[#E2DFFF] hover:border-violet-400 hover:shadow-lg hover:shadow-violet-200/50'
@@ -226,7 +251,24 @@ function BookCard({ book, isDark, onClick }: { book: BookMeta; isDark: boolean; 
             ))}
           </div>
         )}
+        {isEditMode && (
+          <div className={clsx(
+            'mt-3 pt-3 border-t flex items-center justify-end',
+            isDark ? 'border-[#2D2B47]' : 'border-[#E2DFFF]'
+          )}>
+            <button
+              onClick={e => { e.stopPropagation(); onEdit(); }}
+              className={clsx(
+                'flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-colors',
+                isDark ? 'text-amber-400 hover:bg-amber-500/10' : 'text-amber-600 hover:bg-amber-50'
+              )}
+            >
+              <Edit3 className="w-3 h-3" />
+              Edit
+            </button>
+          </div>
+        )}
       </div>
-    </button>
+    </div>
   );
 }

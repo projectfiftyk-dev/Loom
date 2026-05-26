@@ -13,6 +13,14 @@ export default defineConfig({
         target: 'http://localhost:3001',
         changeOrigin: true,
       },
+      '/voice-tests': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
+      '/audio': {
+        target: 'http://localhost:3001',
+        changeOrigin: true,
+      },
     },
   },
 })

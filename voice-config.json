@@ -1,0 +1,16 @@
+{
+  "voiceAssignments": {
+    "cafe_espanol::narrator": {
+      "voiceId": "nPczCjzI2devNBz1zQrb",
+      "voiceName": "Brian - Deep, Resonant and Comforting"
+    },
+    "cafe_espanol::carlos": {
+      "voiceId": "bIHbv24MWmeRgasZH58o",
+      "voiceName": "Will - Relaxed Optimist"
+    }
+  },
+  "testedCombinations": {
+    "carlos::bIHbv24MWmeRgasZH58o": "voice-tests/carlos_bIHbv24MWmeRgasZH58o.mp3",
+    "narrator::nPczCjzI2devNBz1zQrb": "voice-tests/narrator_nPczCjzI2devNBz1zQrb.mp3"
+  }
+}

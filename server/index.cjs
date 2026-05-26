@@ -9,14 +9,36 @@ app.use(cors());
 app.use(express.json());
 
 const BOOKS_DIR = path.join(__dirname, '..', 'books');
+const VOICE_TESTS_DIR = path.join(__dirname, '..', 'voice-tests');
+const AUDIO_DIR = path.join(__dirname, '..', 'audio');
+const VOICE_CONFIG_FILE = path.join(__dirname, '..', 'voice-config.json');
+const AUDIO_CONFIG_FILE = path.join(__dirname, '..', 'audio-config.json');
 
-// Ensure books directory exists
-if (!fs.existsSync(BOOKS_DIR)) {
-  fs.mkdirSync(BOOKS_DIR, { recursive: true });
-}
+if (!fs.existsSync(BOOKS_DIR)) fs.mkdirSync(BOOKS_DIR, { recursive: true });
+if (!fs.existsSync(VOICE_TESTS_DIR)) fs.mkdirSync(VOICE_TESTS_DIR, { recursive: true });
+if (!fs.existsSync(AUDIO_DIR)) fs.mkdirSync(AUDIO_DIR, { recursive: true });
 
 // Serve book assets (backgrounds, avatars, etc.) from the books folder
 app.use('/book-assets', express.static(BOOKS_DIR));
+
+// Serve generated voice test audio files
+app.use('/voice-tests', express.static(VOICE_TESTS_DIR));
+
+// Serve generated node audio files
+app.use('/audio', express.static(AUDIO_DIR));
+
+function readVoiceConfig() {
+  try {
+    if (fs.existsSync(VOICE_CONFIG_FILE)) {
+      return JSON.parse(fs.readFileSync(VOICE_CONFIG_FILE, 'utf8'));
+    }
+  } catch (e) {}
+  return { voiceAssignments: {}, testedCombinations: {} };
+}
+
+function writeVoiceConfig(config) {
+  fs.writeFileSync(VOICE_CONFIG_FILE, JSON.stringify(config, null, 2), 'utf8');
+}
 
 // List all books
 app.get('/api/books', (req, res) => {
@@ -181,6 +203,182 @@ app.post('/api/llm/chat', async (req, res) => {
     } else {
       res.status(400).json({ error: 'Unknown provider' });
     }
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+function readAudioConfig() {
+  try {
+    if (fs.existsSync(AUDIO_CONFIG_FILE)) {
+      return JSON.parse(fs.readFileSync(AUDIO_CONFIG_FILE, 'utf8'));
+    }
+  } catch (e) {}
+  return {};
+}
+
+function writeAudioConfig(config) {
+  fs.writeFileSync(AUDIO_CONFIG_FILE, JSON.stringify(config, null, 2), 'utf8');
+}
+
+// Voice config: read
+app.get('/api/voice-config', (req, res) => {
+  res.json(readVoiceConfig());
+});
+
+// Voice config: update one character assignment
+app.post('/api/voice-config', (req, res) => {
+  const { bookId, characterId, voiceId, voiceName } = req.body;
+  const config = readVoiceConfig();
+  const key = `${bookId}::${characterId}`;
+  if (voiceId) {
+    config.voiceAssignments[key] = { voiceId, voiceName };
+  } else {
+    delete config.voiceAssignments[key];
+  }
+  writeVoiceConfig(config);
+  res.json({ ok: true });
+});
+
+// ElevenLabs: list available voices for the given API key
+app.get('/api/elevenlabs/voices', async (req, res) => {
+  const apiKey = req.headers['x-elevenlabs-key'];
+  if (!apiKey) {
+    return res.status(400).json({ error: 'Missing ElevenLabs API key header' });
+  }
+  try {
+    const response = await fetch('https://api.elevenlabs.io/v1/voices', {
+      headers: { 'xi-api-key': apiKey },
+    });
+    const data = await response.json();
+    if (!response.ok) throw new Error(data.detail?.message || data.detail || 'ElevenLabs error');
+    res.json(data.voices || []);
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// ElevenLabs: generate or retrieve a test clip for a character+voice combination
+app.post('/api/elevenlabs/test-voice', async (req, res) => {
+  const { apiKey, voiceId, characterId, characterName } = req.body;
+
+  if (!apiKey || !voiceId || !characterId || !characterName) {
+    return res.status(400).json({ error: 'Missing required fields: apiKey, voiceId, characterId, characterName' });
+  }
+
+  const config = readVoiceConfig();
+  const combinationKey = `${characterId}::${voiceId}`;
+  const existingRelPath = config.testedCombinations?.[combinationKey];
+
+  if (existingRelPath) {
+    const absPath = path.join(__dirname, '..', existingRelPath);
+    if (fs.existsSync(absPath)) {
+      return res.json({ audioPath: `/${existingRelPath}` });
+    }
+  }
+
+  try {
+    const text = `Hi I am ${characterName}. Nice to meet you.`;
+    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+      method: 'POST',
+      headers: {
+        'xi-api-key': apiKey,
+        'Content-Type': 'application/json',
+        'Accept': 'audio/mpeg',
+      },
+      body: JSON.stringify({
+        text,
+        model_id: 'eleven_flash_v2_5',
+        voice_settings: { stability: 0.5, similarity_boost: 0.5 },
+      }),
+    });
+
+    if (!response.ok) {
+      const errBody = await response.json().catch(() => ({}));
+      throw new Error(errBody.detail?.message || errBody.detail || `ElevenLabs TTS error ${response.status}`);
+    }
+
+    const filename = `${characterId}_${voiceId}.mp3`;
+    const filePath = path.join(VOICE_TESTS_DIR, filename);
+    const audioBuffer = Buffer.from(await response.arrayBuffer());
+    fs.writeFileSync(filePath, audioBuffer);
+
+    const relativePath = `voice-tests/${filename}`;
+    if (!config.testedCombinations) config.testedCombinations = {};
+    config.testedCombinations[combinationKey] = relativePath;
+    writeVoiceConfig(config);
+
+    res.json({ audioPath: `/${relativePath}` });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Audio config: get all generated nodes for a book
+app.get('/api/audio-config/:bookId', (req, res) => {
+  const { bookId } = req.params;
+  const config = readAudioConfig();
+  const result = {};
+  for (const [key, val] of Object.entries(config)) {
+    if (key.startsWith(`${bookId}::`)) {
+      result[key] = val;
+    }
+  }
+  res.json(result);
+});
+
+// ElevenLabs: generate audio for a single dialogue node
+app.post('/api/elevenlabs/generate-audio', async (req, res) => {
+  const { apiKey, voiceId, bookId, nodeId, text, force } = req.body;
+
+  if (!apiKey || !voiceId || !bookId || !nodeId || !text) {
+    return res.status(400).json({ error: 'Missing required fields: apiKey, voiceId, bookId, nodeId, text' });
+  }
+
+  const configKey = `${bookId}::${nodeId}`;
+  const config = readAudioConfig();
+
+  // Return cached file if it already exists (skip when force re-generation is requested)
+  if (!force && config[configKey]) {
+    const absPath = path.join(__dirname, '..', config[configKey].replace(/^\//, ''));
+    if (fs.existsSync(absPath)) {
+      return res.json({ audioPath: config[configKey] });
+    }
+  }
+
+  try {
+    const response = await fetch(`https://api.elevenlabs.io/v1/text-to-speech/${voiceId}`, {
+      method: 'POST',
+      headers: {
+        'xi-api-key': apiKey,
+        'Content-Type': 'application/json',
+        'Accept': 'audio/mpeg',
+      },
+      body: JSON.stringify({
+        text,
+        model_id: 'eleven_flash_v2_5',
+        voice_settings: { stability: 0.5, similarity_boost: 0.5 },
+      }),
+    });
+
+    if (!response.ok) {
+      const errBody = await response.json().catch(() => ({}));
+      throw new Error(errBody.detail?.message || errBody.detail || `ElevenLabs TTS error ${response.status}`);
+    }
+
+    const bookAudioDir = path.join(AUDIO_DIR, bookId);
+    if (!fs.existsSync(bookAudioDir)) fs.mkdirSync(bookAudioDir, { recursive: true });
+
+    const filename = `${nodeId}.mp3`;
+    const filePath = path.join(bookAudioDir, filename);
+    const audioBuffer = Buffer.from(await response.arrayBuffer());
+    fs.writeFileSync(filePath, audioBuffer);
+
+    const audioPath = `/audio/${bookId}/${filename}`;
+    config[configKey] = audioPath;
+    writeAudioConfig(config);
+
+    res.json({ audioPath });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }

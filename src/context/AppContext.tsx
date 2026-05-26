@@ -10,6 +10,9 @@ interface AppContextValue {
   setLlmProvider: (p: LLMProvider) => void;
   apiKey: string;
   setApiKey: (k: string) => void;
+  elevenLabsApiKey: string;
+  setElevenLabsApiKey: (k: string) => void;
+  isEditMode: boolean;
 }
 
 const AppContext = createContext<AppContextValue | null>(null);
@@ -27,6 +30,10 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     return localStorage.getItem('loom-api-key') || '';
   });
 
+  const [elevenLabsApiKey, setElevenLabsApiKeyState] = useState<string>(() => {
+    return localStorage.getItem('loom-elevenlabs-key') || '';
+  });
+
   const setTheme = (t: Theme) => {
     setThemeState(t);
     localStorage.setItem('loom-theme', t);
@@ -42,6 +49,13 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
     localStorage.setItem('loom-api-key', k);
   };
 
+  const setElevenLabsApiKey = (k: string) => {
+    setElevenLabsApiKeyState(k);
+    localStorage.setItem('loom-elevenlabs-key', k);
+  };
+
+  const isEditMode = !!elevenLabsApiKey;
+
   useEffect(() => {
     const root = document.documentElement;
     if (theme === 'dark') {
@@ -52,7 +66,7 @@ export function AppProvider({ children }: { children: React.ReactNode }) {
   }, [theme]);
 
   return (
-    <AppContext.Provider value={{ theme, setTheme, llmProvider, setLlmProvider, apiKey, setApiKey }}>
+    <AppContext.Provider value={{ theme, setTheme, llmProvider, setLlmProvider, apiKey, setApiKey, elevenLabsApiKey, setElevenLabsApiKey, isEditMode }}>
       {children}
     </AppContext.Provider>
   );
