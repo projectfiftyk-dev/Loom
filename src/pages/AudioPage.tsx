@@ -664,6 +664,15 @@ export default function AudioPage() {
                       {isPreviewing ? <Square className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                       {isPreviewing ? 'Stop' : 'Preview'}
                     </button>
+                    <button
+                      onClick={e => { e.stopPropagation(); navigate(`/read/${bookId}?scene=${scene.id}&from=audio`); }}
+                      className={clsx('shrink-0 p-1.5 rounded-lg transition-colors',
+                        isDark ? 'text-[#5A5780] hover:text-violet-400 hover:bg-violet-600/10'
+                               : 'text-violet-300 hover:text-violet-600 hover:bg-violet-50')}
+                      title="View from here"
+                    >
+                      <Play className="w-3.5 h-3.5" />
+                    </button>
                   </div>
 
                   {/* Node rows */}

@@ -32,7 +32,10 @@ export default function ReaderPage() {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const startScene = searchParams.get('scene');
-  const fromScript = searchParams.get('from') === 'script';
+  const fromParam = searchParams.get('from');
+  const exitPath = fromParam === 'script' ? `/edit/${bookId}/script`
+                 : fromParam === 'audio'  ? `/edit/${bookId}/audio`
+                 : '/library';
   const { theme } = useApp();
 
   const [story, setStory] = useState<Story | null>(null);
@@ -222,11 +225,11 @@ export default function ReaderPage() {
             <RotateCcw className="w-4 h-4" /> Read Again
           </button>
           <button
-            onClick={() => navigate(fromScript ? `/edit/${bookId}/script` : '/library')}
+            onClick={() => navigate(exitPath)}
             className="flex items-center justify-center gap-2 py-3 rounded-xl bg-violet-600 hover:bg-violet-500 text-white"
           >
             <ArrowLeft className="w-4 h-4" />
-            {fromScript ? 'Back to Script Editor' : 'Back to Library'}
+            {fromParam === 'script' ? 'Back to Script Editor' : fromParam === 'audio' ? 'Back to Audio' : 'Back to Library'}
           </button>
         </div>
       </div>
@@ -300,9 +303,9 @@ export default function ReaderPage() {
             <span className="text-white/30 text-[10px]">{progress}%</span>
           </div>
           <button
-            onClick={() => navigate(fromScript ? `/edit/${bookId}/script` : '/library')}
+            onClick={() => navigate(exitPath)}
             className="text-white/30 hover:text-white/70 transition-colors"
-            title={fromScript ? 'Back to Script Editor' : 'Back to Library'}
+            title={fromParam === 'script' ? 'Back to Script Editor' : fromParam === 'audio' ? 'Back to Audio' : 'Back to Library'}
           >
             <X className="w-4 h-4" />
           </button>
