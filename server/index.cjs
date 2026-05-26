@@ -384,6 +384,24 @@ app.post('/api/elevenlabs/generate-audio', async (req, res) => {
   }
 });
 
+// Save a book (JSON → YAML written to disk)
+app.put('/api/books/:id', (req, res) => {
+  const { id } = req.params;
+  const story = req.body;
+  const candidates = [
+    path.join(BOOKS_DIR, `${id}.yaml`),
+    path.join(BOOKS_DIR, `${id}.yml`),
+  ];
+  const filePath = candidates.find(p => fs.existsSync(p)) || candidates[0];
+  try {
+    const yamlStr = yaml.dump(story, { lineWidth: -1, noRefs: true });
+    fs.writeFileSync(filePath, yamlStr, 'utf8');
+    res.json({ ok: true });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
 const PORT = 3001;
 app.listen(PORT, () => {
   console.log(`\x1b[36m[Loom API]\x1b[0m Server running on http://localhost:${PORT}`);

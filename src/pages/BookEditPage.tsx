@@ -11,7 +11,6 @@ export default function BookEditPage() {
   const isDark = theme === 'dark';
 
   const [bookTitle, setBookTitle] = useState<string>(bookId || '');
-  const [scriptSelected, setScriptSelected] = useState(false);
 
   useEffect(() => {
     if (!bookId) return;
@@ -136,47 +135,32 @@ export default function BookEditPage() {
 
           {/* Edit Script */}
           <button
-            onClick={() => setScriptSelected(v => !v)}
+            onClick={() => navigate(`/edit/${bookId}/script`)}
             className={clsx(
-              'group text-left p-6 rounded-2xl border-2 transition-all duration-200',
-              scriptSelected
-                ? isDark
-                  ? 'border-violet-500/50 bg-violet-600/5'
-                  : 'border-violet-300 bg-violet-50'
-                : isDark
-                  ? 'bg-[#1E1C30] border-[#2D2B47] hover:border-violet-500/30'
-                  : 'bg-white border-[#E2DFFF] hover:border-violet-200'
+              'group text-left p-6 rounded-2xl border-2 transition-all duration-200 hover:scale-[1.02] active:scale-[0.98]',
+              isDark
+                ? 'bg-[#1E1C30] border-[#2D2B47] hover:border-violet-500/50 hover:shadow-lg hover:shadow-violet-900/30'
+                : 'bg-white border-[#E2DFFF] hover:border-violet-400 hover:shadow-lg hover:shadow-violet-200/50'
             )}
           >
             <div className={clsx(
               'w-12 h-12 rounded-xl flex items-center justify-center mb-4',
-              isDark ? 'bg-[#16152B]' : 'bg-slate-100'
+              isDark ? 'bg-violet-600/20' : 'bg-violet-100'
             )}>
-              <FileText className={clsx('w-6 h-6', isDark ? 'text-[#5A5780]' : 'text-slate-400')} />
+              <FileText className={clsx('w-6 h-6', isDark ? 'text-violet-400' : 'text-violet-600')} />
             </div>
             <h3 className={clsx(
-              'font-bold text-lg mb-1',
-              isDark ? 'text-[#8B87B8]' : 'text-slate-400'
+              'font-bold text-lg mb-1 group-hover:text-violet-400 transition-colors',
+              isDark ? 'text-white' : 'text-[#1A1839]'
             )}>
               Edit Script
             </h3>
-            <p className={clsx('text-sm', isDark ? 'text-[#5A5780]' : 'text-slate-300')}>
-              Modify the story YAML directly
+            <p className={clsx('text-sm', isDark ? 'text-[#8B87B8]' : 'text-violet-400')}>
+              Edit scenes, nodes and characters
             </p>
           </button>
         </div>
 
-        {scriptSelected && (
-          <div className={clsx(
-            'mt-4 rounded-2xl p-10 text-center border-2 border-dashed',
-            isDark ? 'border-[#2D2B47]' : 'border-[#E2DFFF]'
-          )}>
-            <FileText className={clsx('w-10 h-10 mx-auto mb-3', isDark ? 'text-[#2D2B47]' : 'text-violet-200')} />
-            <p className={clsx('font-medium', isDark ? 'text-[#8B87B8]' : 'text-violet-400')}>
-              Script editor coming soon
-            </p>
-          </div>
-        )}
       </main>
     </div>
   );

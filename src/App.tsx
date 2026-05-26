@@ -6,6 +6,7 @@ import ReaderPage from './pages/ReaderPage';
 import BookEditPage from './pages/BookEditPage';
 import VoicesPage from './pages/VoicesPage';
 import AudioPage from './pages/AudioPage';
+import ScriptEditorPage from './pages/ScriptEditorPage';
 
 export default function App() {
   return (
@@ -18,6 +19,7 @@ export default function App() {
           <Route path="/edit/:bookId" element={<BookEditPage />} />
           <Route path="/edit/:bookId/voices" element={<VoicesPage />} />
           <Route path="/edit/:bookId/audio" element={<AudioPage />} />
+          <Route path="/edit/:bookId/script" element={<ScriptEditorPage />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>
