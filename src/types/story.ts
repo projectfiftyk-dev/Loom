@@ -6,6 +6,7 @@ export interface StoryMetadata {
   cover_image?: string;
   description?: string;
   tags?: string[];
+  style?: string;
 }
 
 export interface StorySettings {
@@ -21,6 +22,7 @@ export interface Character {
   avatar?: string | null;
   voice?: string;
   personality?: string | null;
+  color?: string;
 }
 
 export interface ChoiceOption {
@@ -102,6 +104,7 @@ export interface BookMeta {
   tags: string[];
   language: string;
   version: string;
+  style?: string;
 }
 
 export interface ChatMessage {

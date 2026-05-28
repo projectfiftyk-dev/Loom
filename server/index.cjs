@@ -60,6 +60,7 @@ app.get('/api/books', (req, res) => {
           tags: story.metadata?.tags || [],
           language: story.metadata?.language || 'en',
           version: story.metadata?.version || '0.1',
+          style: story.metadata?.style || 'dark',
         };
       } catch (e) {
         return {
@@ -72,6 +73,7 @@ app.get('/api/books', (req, res) => {
           tags: [],
           language: 'en',
           version: '0.1',
+          style: 'dark',
         };
       }
     });
@@ -396,6 +398,46 @@ app.post('/api/books/:bookId/images', (req, res) => {
     const base64 = data.replace(/^data:[^;]+;base64,/, '');
     fs.writeFileSync(path.join(bookImgDir, safeName), Buffer.from(base64, 'base64'));
     res.json({ path: `${bookId}/${safeName}` });
+  } catch (e) {
+    res.status(500).json({ error: e.message });
+  }
+});
+
+// Create a new book
+app.post('/api/books', (req, res) => {
+  const { title, author, description, language, tags, style } = req.body;
+  if (!title?.trim()) return res.status(400).json({ error: 'title is required' });
+
+  const id = title.trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, '')
+    .replace(/\s+/g, '_')
+    .slice(0, 40) || `book_${Date.now()}`;
+
+  const filePath = path.join(BOOKS_DIR, `${id}.yaml`);
+  if (fs.existsSync(filePath)) {
+    return res.status(409).json({ error: `A book with id "${id}" already exists. Choose a different title.` });
+  }
+
+  const story = {
+    metadata: {
+      title: title.trim(),
+      author: author?.trim() || 'Unknown',
+      description: description?.trim() || '',
+      language: language || 'en',
+      tags: tags || [],
+      version: '0.1',
+      style: style || 'dark',
+    },
+    settings: {},
+    characters: [],
+    scenes: [{ id: 'scene_1', title: 'Scene 1', start: true, nodes: [] }],
+  };
+
+  try {
+    const yamlStr = yaml.dump(story, { lineWidth: -1, noRefs: true });
+    fs.writeFileSync(filePath, yamlStr, 'utf8');
+    res.json({ id, ok: true });
   } catch (e) {
     res.status(500).json({ error: e.message });
   }
