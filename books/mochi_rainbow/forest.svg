@@ -1,0 +1,184 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="forest_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2A5A3A"/>
+      <stop offset="40%" stop-color="#4A8050"/>
+      <stop offset="100%" stop-color="#6A9A60"/>
+    </linearGradient>
+    <linearGradient id="forest_floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#4A3A28"/>
+      <stop offset="100%" stop-color="#2A2018"/>
+    </linearGradient>
+    <radialGradient id="forest_light" cx="50%" cy="0%" r="70%">
+      <stop offset="0%" stop-color="#F5E8A0" stop-opacity="0.18"/>
+      <stop offset="100%" stop-color="#F5E8A0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Forest sky peeking through canopy -->
+  <rect width="1200" height="675" fill="url(#forest_sky)"/>
+  <rect width="1200" height="675" fill="url(#forest_light)"/>
+
+  <!-- Background tall trees -->
+  <rect x="0" y="60" width="90" height="620" fill="#3A2A18"/>
+  <rect x="80" y="80" width="70" height="600" fill="#2A2010"/>
+  <rect x="1110" y="50" width="90" height="625" fill="#3A2A18"/>
+  <rect x="1040" y="70" width="80" height="610" fill="#2A2010"/>
+  <rect x="200" y="100" width="55" height="575" fill="#3A2A18" opacity="0.8"/>
+  <rect x="960" y="90" width="60" height="585" fill="#3A2A18" opacity="0.8"/>
+
+  <!-- Dense foliage canopy top -->
+  <ellipse cx="50" cy="40" rx="120" ry="80" fill="#2A5A20" opacity="0.9"/>
+  <ellipse cx="160" cy="60" rx="100" ry="70" fill="#3A6A28" opacity="0.9"/>
+  <ellipse cx="300" cy="50" rx="130" ry="75" fill="#2A5A20" opacity="0.8"/>
+  <ellipse cx="480" cy="30" rx="140" ry="70" fill="#3A6A28" opacity="0.85"/>
+  <ellipse cx="650" cy="20" rx="160" ry="80" fill="#2A5A20" opacity="0.9"/>
+  <ellipse cx="820" cy="30" rx="150" ry="75" fill="#3A6A28" opacity="0.85"/>
+  <ellipse cx="980" cy="40" rx="130" ry="70" fill="#2A5A20" opacity="0.9"/>
+  <ellipse cx="1120" cy="50" rx="120" ry="75" fill="#3A6A28" opacity="0.9"/>
+
+  <!-- Light rays through canopy -->
+  <polygon points="480,30 510,30 580,480 450,480" fill="#F5E8A0" opacity="0.05"/>
+  <polygon points="650,20 680,20 730,430 620,430" fill="#F5E8A0" opacity="0.06"/>
+  <polygon points="820,30 845,30 900,380 780,380" fill="#F5E8A0" opacity="0.05"/>
+
+  <!-- Forest floor -->
+  <rect x="0" y="480" width="1200" height="195" fill="url(#forest_floor)"/>
+  <rect x="0" y="480" width="1200" height="5" fill="#5A4A30" opacity="0.7"/>
+
+  <!-- Moss and roots on floor -->
+  <ellipse cx="300" cy="488" rx="120" ry="20" fill="#3A6A20" opacity="0.5"/>
+  <ellipse cx="750" cy="490" rx="150" ry="18" fill="#3A6A20" opacity="0.4"/>
+  <ellipse cx="1050" cy="485" rx="100" ry="15" fill="#3A6A20" opacity="0.5"/>
+
+  <!-- Mushrooms -->
+  <rect x="350" y="488" width="8" height="18" fill="#C8A870"/>
+  <ellipse cx="354" cy="486" rx="16" ry="9" fill="#E83020"/>
+  <circle cx="349" cy="483" r="2" fill="white" opacity="0.8"/>
+  <circle cx="357" cy="481" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="362" cy="484" r="2" fill="white" opacity="0.8"/>
+  <rect x="870" y="490" width="7" height="15" fill="#C8A870"/>
+  <ellipse cx="873" cy="488" rx="14" ry="8" fill="#C83020"/>
+  <circle cx="869" cy="485" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="877" cy="483" r="2" fill="white" opacity="0.8"/>
+
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- BIG OAK TREE — center, with roots and yellow gem -->
+  <!-- ════════════════════════════════════════════════ -->
+  <!-- Trunk -->
+  <rect x="555" y="180" width="90" height="310" fill="#5A3A1A" rx="10"/>
+  <rect x="565" y="200" width="70" height="290" fill="#6A4A22" rx="8"/>
+  <!-- Bark lines -->
+  <path d="M 580,220 Q 590,250 583,280 Q 593,310 585,340" fill="none" stroke="#4A3018" stroke-width="3" opacity="0.5"/>
+  <path d="M 610,230 Q 603,265 612,295 Q 605,325 614,355" fill="none" stroke="#4A3018" stroke-width="3" opacity="0.5"/>
+  <!-- Giant canopy -->
+  <ellipse cx="600" cy="160" rx="200" ry="130" fill="#2A6A18" opacity="0.95"/>
+  <ellipse cx="600" cy="140" rx="170" ry="110" fill="#3A7A22"/>
+  <ellipse cx="540" cy="170" rx="120" ry="90" fill="#2A6A18" opacity="0.8"/>
+  <ellipse cx="660" cy="165" rx="130" ry="95" fill="#3A7020" opacity="0.8"/>
+  <ellipse cx="600" cy="120" rx="130" ry="80" fill="#4A8028" opacity="0.7"/>
+
+  <!-- Twisted ROOTS spreading from tree base - the gem was here -->
+  <path d="M 555,488 Q 500,500 440,510 Q 400,515 370,508" fill="none" stroke="#4A3018" stroke-width="22" stroke-linecap="round"/>
+  <path d="M 560,492 Q 510,510 470,530 Q 440,545 410,540" fill="none" stroke="#5A3A20" stroke-width="14" stroke-linecap="round"/>
+  <path d="M 645,488 Q 700,500 760,508 Q 800,512 830,506" fill="none" stroke="#4A3018" stroke-width="22" stroke-linecap="round"/>
+  <path d="M 640,492 Q 688,512 730,528 Q 765,540 790,536" fill="none" stroke="#5A3A20" stroke-width="14" stroke-linecap="round"/>
+  <path d="M 580,490 Q 560,520 545,545 Q 532,565 530,580" fill="none" stroke="#4A3018" stroke-width="18" stroke-linecap="round"/>
+  <path d="M 620,490 Q 640,520 655,545 Q 668,565 670,580" fill="none" stroke="#4A3018" stroke-width="18" stroke-linecap="round"/>
+
+  <!-- Yellow gem in roots (already gotten, shown glowing on ground) -->
+  <polygon points="595,492 610,476 625,492 610,513" fill="#F5C820" opacity="0.9"/>
+  <polygon points="595,492 610,476 625,492 610,513" fill="none" stroke="#FFE870" stroke-width="2"/>
+  <ellipse cx="610" cy="492" rx="8" ry="7" fill="#FFEE80" opacity="0.6"/>
+  <line x1="610" y1="464" x2="610" y2="472" stroke="#FFE060" stroke-width="2"/>
+  <line x1="632" y1="482" x2="640" y2="482" stroke="#FFE060" stroke-width="2"/>
+  <line x1="582" y1="482" x2="590" y2="482" stroke="#FFE060" stroke-width="2"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- PEBBLE the turtle — on mossy rock, left of tree    -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Mossy rock -->
+  <ellipse cx="340" cy="520" rx="80" ry="40" fill="#5A5848"/>
+  <ellipse cx="340" cy="514" rx="75" ry="35" fill="#6A6858"/>
+  <ellipse cx="320" cy="508" rx="40" ry="18" fill="#5A8840" opacity="0.6"/>
+  <ellipse cx="360" cy="510" rx="30" ry="14" fill="#5A8840" opacity="0.5"/>
+  <!-- Pebble shell -->
+  <ellipse cx="340" cy="500" rx="48" ry="35" fill="#3A7A40"/>
+  <ellipse cx="340" cy="496" rx="40" ry="28" fill="#4A9A50"/>
+  <!-- Shell pattern -->
+  <ellipse cx="340" cy="492" rx="18" ry="14" fill="#5AAA60"/>
+  <ellipse cx="318" cy="490" rx="11" ry="9" fill="#5AAA60" opacity="0.7"/>
+  <ellipse cx="362" cy="490" rx="11" ry="9" fill="#5AAA60" opacity="0.7"/>
+  <ellipse cx="340" cy="506" rx="11" ry="9" fill="#5AAA60" opacity="0.7"/>
+  <!-- Pebble head -->
+  <ellipse cx="340" cy="472" rx="26" ry="20" fill="#6AAA58"/>
+  <!-- Eyes — half-closed wise look -->
+  <circle cx="330" cy="468" r="8" fill="white"/>
+  <circle cx="350" cy="468" r="8" fill="white"/>
+  <path d="M 323,465 Q 330,461 337,465" fill="#6AAA58"/>
+  <path d="M 343,465 Q 350,461 357,465" fill="#6AAA58"/>
+  <circle cx="331" cy="469" r="5" fill="#2A3A18"/>
+  <circle cx="351" cy="469" r="5" fill="#2A3A18"/>
+  <circle cx="332" cy="468" r="1.5" fill="white"/>
+  <circle cx="352" cy="468" r="1.5" fill="white"/>
+  <!-- Small smile -->
+  <path d="M 333,479 Q 340,484 347,479" fill="none" stroke="#4A7A38" stroke-width="2" stroke-linecap="round"/>
+  <!-- Legs -->
+  <ellipse cx="300" cy="520" rx="18" ry="10" fill="#6AAA58"/>
+  <ellipse cx="378" cy="520" rx="18" ry="10" fill="#6AAA58"/>
+  <ellipse cx="310" cy="530" rx="15" ry="8" fill="#6AAA58"/>
+  <ellipse cx="370" cy="530" rx="15" ry="8" fill="#6AAA58"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- MOCHI — right side of scene, looking at tree          -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- Mochi shadow -->
+  <ellipse cx="880" cy="598" rx="42" ry="9" fill="#2A2018" opacity="0.35"/>
+  <!-- Mochi body -->
+  <ellipse cx="880" cy="556" rx="44" ry="38" fill="#F0A040"/>
+  <!-- Ears -->
+  <circle cx="850" cy="517" r="17" fill="#E8882A"/>
+  <circle cx="910" cy="517" r="17" fill="#E8882A"/>
+  <circle cx="850" cy="517" r="9" fill="#F5B870"/>
+  <circle cx="910" cy="517" r="9" fill="#F5B870"/>
+  <!-- Head -->
+  <circle cx="880" cy="530" r="36" fill="#F5A050"/>
+  <!-- Snout -->
+  <ellipse cx="880" cy="542" rx="17" ry="11" fill="#F0C080"/>
+  <!-- Eyes looking up at tree with wonder -->
+  <circle cx="869" cy="523" r="10" fill="white"/>
+  <circle cx="891" cy="523" r="10" fill="white"/>
+  <circle cx="871" cy="521" r="6.5" fill="#2A1A0A"/>
+  <circle cx="893" cy="521" r="6.5" fill="#2A1A0A"/>
+  <circle cx="873" cy="519" r="2" fill="white"/>
+  <circle cx="895" cy="519" r="2" fill="white"/>
+  <!-- Raised eyebrows (excited) -->
+  <path d="M 862,514 Q 869,510 876,513" fill="none" stroke="#C05820" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 884,513 Q 891,510 898,514" fill="none" stroke="#C05820" stroke-width="2" stroke-linecap="round"/>
+  <!-- Nose -->
+  <ellipse cx="880" cy="537" rx="4" ry="3" fill="#C05820"/>
+  <!-- Open mouth of wonder -->
+  <path d="M 873,545 Q 880,551 887,545" fill="none" stroke="#C05820" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Rosy cheeks -->
+  <circle cx="861" cy="534" r="7" fill="#F08040" opacity="0.35"/>
+  <circle cx="899" cy="534" r="7" fill="#F08040" opacity="0.35"/>
+  <!-- Arms pointing at tree -->
+  <path d="M 843,552 Q 820,540 750,510" fill="none" stroke="#F0A040" stroke-width="12" stroke-linecap="round"/>
+  <ellipse cx="744" cy="507" rx="13" ry="10" fill="#F0A040"/>
+  <!-- Other arm -->
+  <path d="M 917,552 Q 930,558 938,570" fill="none" stroke="#F0A040" stroke-width="12" stroke-linecap="round"/>
+  <ellipse cx="942" cy="574" rx="12" ry="9" fill="#F0A040"/>
+  <!-- Legs -->
+  <path d="M 863,592 Q 855,612 845,620" fill="none" stroke="#F0A040" stroke-width="11" stroke-linecap="round"/>
+  <ellipse cx="841" cy="622" rx="11" ry="8" fill="#F0A040"/>
+  <path d="M 897,590 Q 904,609 910,618" fill="none" stroke="#F0A040" stroke-width="11" stroke-linecap="round"/>
+  <ellipse cx="913" cy="620" rx="11" ry="8" fill="#F0A040"/>
+
+  <!-- Speech bubble from tree (small) -->
+  <ellipse cx="600" cy="225" rx="80" ry="30" fill="#4A8028" opacity="0.8"/>
+  <text x="600" y="220" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="12" fill="#D0F0A0" text-anchor="middle">...creeeak...</text>
+  <text x="600" y="234" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="12" fill="#D0F0A0" text-anchor="middle">wiggle wiggle...</text>
+
+  <!-- Label -->
+  <text x="60" y="655" font-family="Georgia,'Times New Roman',serif" font-size="22" fill="#D0E8C0" opacity="0.65" font-style="italic">Pebble's Forest · The Yellow Gem</text>
+</svg>

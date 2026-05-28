@@ -137,19 +137,29 @@ app.post('/api/llm/evaluate', async (req, res) => {
       res.json(JSON.parse(text.replace(/```json\n?|\n?```/g, '').trim()));
 
     } else if (provider === 'gemini') {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           system_instruction: { parts: [{ text: systemMsg }] },
           contents: [{ role: 'user', parts: [{ text: userMsg }] }],
+          generationConfig: { responseMimeType: 'application/json', temperature: 0.1 },
         }),
       });
       const data = await response.json();
       if (!response.ok) throw new Error(data.error?.message || 'Gemini error');
-      const text = data.candidates?.[0]?.content?.parts?.[0]?.text || '{"success":false,"reason":"No response"}';
-      res.json(JSON.parse(text.replace(/```json\n?|\n?```/g, '').trim()));
+      const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      // Strip markdown fences if present, then try to extract a JSON object
+      const stripped = raw.replace(/```json\n?|\n?```/g, '').trim();
+      let parsed;
+      try {
+        parsed = JSON.parse(stripped);
+      } catch {
+        const match = stripped.match(/\{[\s\S]*\}/);
+        parsed = match ? JSON.parse(match[0]) : { success: false, reason: 'Could not evaluate — continuing anyway.' };
+      }
+      res.json(parsed);
 
     } else {
       res.status(400).json({ error: 'Unknown provider' });
@@ -185,16 +195,35 @@ app.post('/api/llm/chat', async (req, res) => {
       res.json({ reply: data.choices?.[0]?.message?.content || 'No response.' });
 
     } else if (provider === 'gemini') {
-      const geminiMessages = messages.map(m => ({
+      // Map roles and strip leading model messages (Gemini requires conversations to start with 'user').
+      // Entry lines from chat nodes arrive as role:'assistant' — fold them into the system prompt.
+      const mapped = messages.map(m => ({
         role: m.role === 'assistant' ? 'model' : 'user',
         parts: [{ text: m.content }],
       }));
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
+      const leadingModel = [];
+      while (mapped.length > 0 && mapped[0].role === 'model') {
+        leadingModel.push(mapped.shift().parts[0].text);
+      }
+      // Merge consecutive same-role messages (Gemini requires strict alternation).
+      const geminiMessages = [];
+      for (const msg of mapped) {
+        const prev = geminiMessages[geminiMessages.length - 1];
+        if (prev && prev.role === msg.role) {
+          prev.parts[0].text += '\n' + msg.parts[0].text;
+        } else {
+          geminiMessages.push({ role: msg.role, parts: [{ text: msg.parts[0].text }] });
+        }
+      }
+      const fullSystem = leadingModel.length > 0
+        ? `${systemPrompt}\n\nYour opening message to the player was:\n${leadingModel.join('\n')}`
+        : systemPrompt;
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
       const response = await fetch(url, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          system_instruction: { parts: [{ text: systemPrompt }] },
+          system_instruction: { parts: [{ text: fullSystem }] },
           contents: geminiMessages,
         }),
       });

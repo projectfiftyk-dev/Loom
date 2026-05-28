@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Background — forest green / monk's cell -->
+  <circle cx="60" cy="60" r="58" fill="#2A4A28"/>
+  <circle cx="60" cy="60" r="55" fill="#3A5A38"/>
+
+  <!-- Monk's tonsure — shaved crown, grey hair ring -->
+  <circle cx="60" cy="38" r="28" fill="#C8A870"/>
+  <ellipse cx="60" cy="28" rx="18" ry="10" fill="#D0B880"/>
+  <!-- Grey hair ring around tonsure -->
+  <path d="M 34,42 Q 28,55 30,70" fill="none" stroke="#8A7860" stroke-width="9" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 86,42 Q 92,55 90,70" fill="none" stroke="#8A7860" stroke-width="9" stroke-linecap="round" opacity="0.7"/>
+  <path d="M 34,42 Q 45,33 60,30 Q 75,33 86,42" fill="none" stroke="#8A7860" stroke-width="8" stroke-linecap="round" opacity="0.6"/>
+
+  <!-- Face — weathered, kind, 50s -->
+  <ellipse cx="60" cy="70" rx="24" ry="26" fill="#C8A060"/>
+  <ellipse cx="60" cy="52" rx="22" ry="16" fill="#D0A868"/>
+
+  <!-- Eyes — gentle, wise, a little tired -->
+  <ellipse cx="50" cy="65" rx="8" ry="5.5" fill="white"/>
+  <ellipse cx="70" cy="65" rx="8" ry="5.5" fill="white"/>
+  <circle cx="51" cy="65" r="4.5" fill="#4A3A28"/>
+  <circle cx="71" cy="65" r="4.5" fill="#4A3A28"/>
+  <circle cx="51" cy="65" r="2" fill="#1A1008"/>
+  <circle cx="71" cy="65" r="2" fill="#1A1008"/>
+  <circle cx="52" cy="63" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="72" cy="63" r="1.5" fill="white" opacity="0.8"/>
+  <!-- Crow's feet — lines of a thoughtful man -->
+  <path d="M 58,64 Q 61,61 64,63" fill="none" stroke="none"/>
+  <path d="M 40,63 Q 43,60 47,62" fill="none" stroke="#A07840" stroke-width="1" opacity="0.4"/>
+  <path d="M 73,62 Q 77,60 80,63" fill="none" stroke="#A07840" stroke-width="1" opacity="0.4"/>
+
+  <!-- Brows — bushy, grey, slightly furrowed with concern -->
+  <path d="M 43,59 Q 51,56 57,59" fill="#7A6848" stroke="#7A6848" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 63,59 Q 69,56 77,59" fill="#7A6848" stroke="#7A6848" stroke-width="3" stroke-linecap="round"/>
+
+  <!-- Nose — broad, kind -->
+  <path d="M 58,68 Q 57,75 60,77 Q 63,75 62,68" fill="#B88848" opacity="0.7"/>
+  <circle cx="57" cy="75" r="3" fill="#A87840" opacity="0.5"/>
+  <circle cx="63" cy="75" r="3" fill="#A87840" opacity="0.5"/>
+
+  <!-- Lips — gentle, thoughtful expression -->
+  <path d="M 50,84 Q 60,81 70,84" fill="#B07850" stroke="#9A6040" stroke-width="1"/>
+  <path d="M 50,84 Q 60,88 70,84" fill="#A06840" stroke="#8A5030" stroke-width="1"/>
+
+  <!-- Worry lines on forehead — a man who has made mistakes and knows it -->
+  <path d="M 46,52 Q 60,49 74,52" fill="none" stroke="#A07840" stroke-width="1.5" opacity="0.3"/>
+  <path d="M 48,56 Q 60,53 72,56" fill="none" stroke="#A07840" stroke-width="1" opacity="0.25"/>
+
+  <!-- Rosy cheeks - weathered -->
+  <circle cx="40" cy="74" r="7" fill="#C08050" opacity="0.2"/>
+  <circle cx="80" cy="74" r="7" fill="#C08050" opacity="0.2"/>
+
+  <!-- Franciscan robe — brown/grey with rope belt, cowl visible -->
+  <rect x="24" y="98" width="72" height="22" fill="#7A6848" rx="2"/>
+  <path d="M 24,98 Q 60,92 96,98" fill="#8A7858" opacity="0.7"/>
+  <!-- Rope belt -->
+  <path d="M 32,106 Q 60,100 88,106" fill="none" stroke="#A08A60" stroke-width="3"/>
+  <!-- Cowl/hood falling behind shoulders -->
+  <ellipse cx="60" cy="97" rx="30" ry="8" fill="#6A5838" opacity="0.6"/>
+
+  <!-- Small cross on chest -->
+  <rect x="57" y="100" width="3" height="10" fill="#C8A870" opacity="0.7"/>
+  <rect x="54" y="104" width="9" height="3" fill="#C8A870" opacity="0.7"/>
+
+  <!-- Herb sprig in hand (barely visible at bottom) -->
+  <path d="M 85,112 Q 88,106 90,100" fill="none" stroke="#5A7A38" stroke-width="2.5"/>
+  <ellipse cx="91" cy="98" rx="5" ry="3" fill="#6A8A48" opacity="0.8" transform="rotate(-20 91 98)"/>
+</svg>

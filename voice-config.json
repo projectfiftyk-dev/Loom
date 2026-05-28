@@ -19,6 +19,22 @@
     "ein_tag_in_berlin::narrator": {
       "voiceId": "JBFqnCBsd6RMkjVDRZzb",
       "voiceName": "George - Warm, Captivating Storyteller"
+    },
+    "mochi_rainbow::mochi": {
+      "voiceId": "CwhRBWXzGAHq8TQ4Fs17",
+      "voiceName": "Roger - Laid-Back, Casual, Resonant"
+    },
+    "mochi_rainbow::sunny": {
+      "voiceId": "EXAVITQu4vr4xnSDxMaL",
+      "voiceName": "Sarah - Mature, Reassuring, Confident"
+    },
+    "mochi_rainbow::pebble": {
+      "voiceId": "FGY2WhTYpPnrIDTdsKH5",
+      "voiceName": "Laura - Enthusiast, Quirky Attitude"
+    },
+    "mochi_rainbow::narrator": {
+      "voiceId": "N2lVS1w4EtoT3dr4eOWO",
+      "voiceName": "Callum - Husky Trickster"
     }
   },
   "testedCombinations": {
@@ -30,6 +46,11 @@
     "felix::CwhRBWXzGAHq8TQ4Fs17": "voice-tests/felix_CwhRBWXzGAHq8TQ4Fs17.mp3",
     "narrator::JBFqnCBsd6RMkjVDRZzb": "voice-tests/narrator_JBFqnCBsd6RMkjVDRZzb.mp3",
     "narrator::N2lVS1w4EtoT3dr4eOWO": "voice-tests/narrator_N2lVS1w4EtoT3dr4eOWO.mp3",
-    "narrator::SOYHLrjzK2X1ezoPC6cr": "voice-tests/narrator_SOYHLrjzK2X1ezoPC6cr.mp3"
+    "narrator::SOYHLrjzK2X1ezoPC6cr": "voice-tests/narrator_SOYHLrjzK2X1ezoPC6cr.mp3",
+    "mochi::CwhRBWXzGAHq8TQ4Fs17": "voice-tests/mochi_CwhRBWXzGAHq8TQ4Fs17.mp3",
+    "mochi::FGY2WhTYpPnrIDTdsKH5": "voice-tests/mochi_FGY2WhTYpPnrIDTdsKH5.mp3",
+    "mochi::EXAVITQu4vr4xnSDxMaL": "voice-tests/mochi_EXAVITQu4vr4xnSDxMaL.mp3",
+    "sunny::EXAVITQu4vr4xnSDxMaL": "voice-tests/sunny_EXAVITQu4vr4xnSDxMaL.mp3",
+    "pebble::FGY2WhTYpPnrIDTdsKH5": "voice-tests/pebble_FGY2WhTYpPnrIDTdsKH5.mp3"
   }
 }

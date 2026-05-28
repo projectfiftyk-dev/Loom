@@ -1,0 +1,163 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="sparta_dawn" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A1A3A"/>
+      <stop offset="35%" stop-color="#6A2A40"/>
+      <stop offset="65%" stop-color="#C86030"/>
+      <stop offset="100%" stop-color="#E8A040"/>
+    </linearGradient>
+    <linearGradient id="mountain_grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2A2A38"/>
+      <stop offset="100%" stop-color="#3A3040"/>
+    </linearGradient>
+    <linearGradient id="ground_grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#7A6848"/>
+      <stop offset="100%" stop-color="#5A4A30"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Dawn sky — deep purple to burning orange -->
+  <rect width="1200" height="675" fill="url(#sparta_dawn)"/>
+
+  <!-- Stars fading in upper sky -->
+  <circle cx="120" cy="50" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="220" cy="30" r="1" fill="white" opacity="0.6"/>
+  <circle cx="380" cy="65" r="1.5" fill="white" opacity="0.5"/>
+  <circle cx="900" cy="40" r="1" fill="white" opacity="0.6"/>
+  <circle cx="1050" cy="55" r="1.5" fill="white" opacity="0.7"/>
+  <circle cx="1150" cy="25" r="1" fill="white" opacity="0.5"/>
+
+  <!-- Mount Taygetos — massive jagged ridge on left -->
+  <polygon points="0,280 80,160 140,200 180,140 240,180 300,120 370,165 420,200 480,260 520,310 0,310" fill="url(#mountain_grad)"/>
+  <polygon points="0,280 80,165 140,205 180,145 240,182 300,125 370,168 420,205 480,265" fill="none" stroke="#4A4060" stroke-width="1" opacity="0.3"/>
+  <!-- Snow caps on highest peaks -->
+  <polygon points="290,125 300,120 310,125 302,138 298,138" fill="white" opacity="0.4"/>
+  <polygon points="170,140 180,140 190,147 183,158 177,158" fill="white" opacity="0.3"/>
+
+  <!-- Ground — dry Laconian earth -->
+  <rect x="0" y="500" width="1200" height="175" fill="url(#ground_grad)"/>
+  <rect x="0" y="500" width="1200" height="4" fill="#9A8858" opacity="0.6"/>
+
+  <!-- Dust and stone on ground -->
+  <ellipse cx="300" cy="506" rx="80" ry="12" fill="#8A7848" opacity="0.4"/>
+  <ellipse cx="800" cy="504" rx="100" ry="10" fill="#8A7848" opacity="0.4"/>
+
+  <!-- Spartan architecture — stone columns and buildings -->
+  <!-- Main stoa / building center-right -->
+  <rect x="680" y="310" width="360" height="200" fill="#D8C8A0" opacity="0.85"/>
+  <rect x="680" y="305" width="360" height="18" fill="#C8B890" opacity="0.9"/>
+  <!-- Column row -->
+  <rect x="700" y="310" width="22" height="190" fill="#E8D8B0" opacity="0.9" rx="2"/>
+  <rect x="750" y="310" width="22" height="190" fill="#E8D8B0" opacity="0.9" rx="2"/>
+  <rect x="800" y="310" width="22" height="190" fill="#E8D8B0" opacity="0.9" rx="2"/>
+  <rect x="850" y="310" width="22" height="190" fill="#E8D8B0" opacity="0.9" rx="2"/>
+  <rect x="900" y="310" width="22" height="190" fill="#E8D8B0" opacity="0.9" rx="2"/>
+  <rect x="950" y="310" width="22" height="190" fill="#E8D8B0" opacity="0.9" rx="2"/>
+  <rect x="1000" y="310" width="22" height="190" fill="#E8D8B0" opacity="0.9" rx="2"/>
+  <!-- Pediment -->
+  <polygon points="680,305 860,260 1040,305" fill="#D0C098" opacity="0.9"/>
+  <!-- Altar / smaller building left -->
+  <rect x="150" y="380" width="200" height="130" fill="#C8B888" opacity="0.8"/>
+  <rect x="150" y="374" width="200" height="14" fill="#B8A878" opacity="0.9"/>
+  <rect x="168" y="374" width="18" height="120" fill="#D8C898" opacity="0.9" rx="1"/>
+  <rect x="218" y="374" width="18" height="120" fill="#D8C898" opacity="0.9" rx="1"/>
+  <rect x="268" y="374" width="18" height="120" fill="#D8C898" opacity="0.9" rx="1"/>
+  <rect x="318" y="374" width="14" height="120" fill="#D8C898" opacity="0.9" rx="1"/>
+  <polygon points="150,374 250,340 350,374" fill="#C8B880" opacity="0.9"/>
+
+  <!-- TRAINING GROUND — flat stone area, center-left -->
+  <rect x="100" y="440" width="500" height="65" fill="#9A8860" opacity="0.7"/>
+  <rect x="100" y="440" width="500" height="3" fill="#AEA070" opacity="0.6"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- SPARTAN WARRIORS — training at dawn                    -->
+  <!-- ═══════════════════════════════════════════════════════ -->
+
+  <!-- LEONIDAS — prominent center, crimson cloak -->
+  <!-- Shadow -->
+  <ellipse cx="420" cy="510" rx="35" ry="8" fill="#4A3820" opacity="0.4"/>
+  <!-- Body — muscular, armor -->
+  <rect x="402" y="442" width="36" height="62" fill="#8B6914" rx="3"/>
+  <rect x="404" y="444" width="32" height="58" fill="#C89820" rx="2"/>
+  <!-- Crimson cloak billowing behind -->
+  <path d="M 420,442 Q 370,450 355,510" fill="#8B1A1A" opacity="0.9"/>
+  <path d="M 420,442 Q 365,448 350,508" fill="none" stroke="#6A1010" stroke-width="2"/>
+  <!-- Legs with greaves (bronze) -->
+  <rect x="406" y="500" width="12" height="55" fill="#C89820" rx="2"/>
+  <rect x="420" y="500" width="12" height="55" fill="#C89820" rx="2"/>
+  <!-- Shield — round, Spartan lambda Λ -->
+  <circle cx="380" cy="480" r="32" fill="#8B6914"/>
+  <circle cx="380" cy="480" r="28" fill="#C89820"/>
+  <circle cx="380" cy="480" r="24" fill="#A07810"/>
+  <text x="380" y="487" font-family="Georgia,serif" font-size="24" fill="#E8D060" text-anchor="middle" font-weight="bold">Λ</text>
+  <!-- Spear -->
+  <line x1="450" y1="390" x2="450" y2="560" stroke="#8B6020" stroke-width="5" stroke-linecap="round"/>
+  <polygon points="447,390 453,390 450,370" fill="#C0C0A0"/>
+  <!-- Head / helmet -->
+  <rect x="408" y="415" width="24" height="28" fill="#8B6914" rx="3"/>
+  <rect x="411" y="417" width="18" height="24" fill="#C89820" rx="2"/>
+  <!-- Helmet crest — crimson -->
+  <rect x="416" y="405" width="8" height="14" fill="#8B1A1A" rx="2"/>
+  <ellipse cx="420" cy="405" rx="10" ry="4" fill="#C02020"/>
+  <!-- Face showing -->
+  <ellipse cx="420" cy="431" rx="7" ry="6" fill="#C8855A"/>
+
+  <!-- SPARTAN WARRIOR 2 — right of Leonidas -->
+  <ellipse cx="520" cy="510" rx="28" ry="7" fill="#4A3820" opacity="0.35"/>
+  <rect x="504" y="448" width="30" height="56" fill="#A07818" rx="2"/>
+  <rect x="506" y="450" width="26" height="52" fill="#C89820" rx="1"/>
+  <path d="M 518,448 Q 480,456 468,508" fill="#8B1A1A" opacity="0.85"/>
+  <rect x="507" y="500" width="10" height="52" fill="#B08820" rx="1"/>
+  <rect x="520" y="500" width="10" height="52" fill="#B08820" rx="1"/>
+  <!-- Helmet -->
+  <rect x="506" y="420" width="22" height="28" fill="#8B6914" rx="2"/>
+  <rect x="509" y="422" width="16" height="24" fill="#C89820" rx="1"/>
+  <rect x="513" y="410" width="7" height="12" fill="#8B1A1A" rx="1"/>
+  <ellipse cx="517" cy="410" rx="9" ry="3.5" fill="#C02020"/>
+  <!-- Shield -->
+  <circle cx="490" cy="478" r="27" fill="#A07810"/>
+  <circle cx="490" cy="478" r="23" fill="#C89820"/>
+  <text x="490" y="484" font-family="Georgia,serif" font-size="20" fill="#8B4A10" text-anchor="middle" font-weight="bold">Λ</text>
+  <!-- Spear -->
+  <line x1="548" y1="400" x2="548" y2="555" stroke="#8B6020" stroke-width="4" stroke-linecap="round"/>
+  <polygon points="545,400 551,400 548,382" fill="#B0B098"/>
+
+  <!-- WARRIOR 3 — exercising left background -->
+  <ellipse cx="220" cy="512" rx="22" ry="6" fill="#4A3820" opacity="0.3"/>
+  <rect x="206" y="455" width="26" height="52" fill="#A07818" rx="2" opacity="0.9"/>
+  <path d="M 218,455 Q 192,460 184,510" fill="#8B1A1A" opacity="0.8"/>
+  <rect x="207" y="505" width="10" height="50" fill="#B08820" rx="1" opacity="0.9"/>
+  <rect x="219" y="503" width="10" height="52" fill="#B08820" rx="1" opacity="0.9"/>
+  <rect x="208" y="428" width="20" height="26" fill="#8B6914" rx="2" opacity="0.9"/>
+  <rect x="212" y="416" width="6" height="13" fill="#8B1A1A" rx="1"/>
+  <ellipse cx="215" cy="416" rx="8" ry="3" fill="#C02020"/>
+  <!-- This warrior is combing his hair (the famous act before battle) -->
+  <ellipse cx="198" cy="448" rx="18" ry="10" fill="#8B6914" opacity="0.7"/>
+  <path d="M 192,442 Q 200,438 210,442" fill="none" stroke="#C89820" stroke-width="2"/>
+
+  <!-- WARRIOR 4 — far right, small/background -->
+  <ellipse cx="650" cy="510" rx="20" ry="5" fill="#4A3820" opacity="0.25"/>
+  <rect x="638" y="462" width="22" height="44" fill="#A07818" rx="2" opacity="0.8"/>
+  <path d="M 648,462 Q 628,468 620,508" fill="#8B1A1A" opacity="0.75"/>
+  <rect x="639" y="504" width="9" height="42" fill="#B08820" rx="1" opacity="0.8"/>
+  <rect x="649" y="504" width="9" height="42" fill="#B08820" rx="1" opacity="0.8"/>
+  <rect x="640" y="440" width="18" height="22" fill="#8B6914" rx="2" opacity="0.8"/>
+  <!-- Line of shields against wall -->
+  <circle cx="580" cy="490" r="22" fill="#A07810" opacity="0.7"/>
+  <circle cx="580" cy="490" r="18" fill="#C89820" opacity="0.6"/>
+  <circle cx="615" cy="488" r="20" fill="#8B6814" opacity="0.65"/>
+
+  <!-- Fire brazier — center, just lit at dawn -->
+  <rect x="295" y="455" width="20" height="30" fill="#6A5030" rx="2"/>
+  <ellipse cx="305" cy="452" rx="16" ry="8" fill="#8B6030"/>
+  <ellipse cx="305" cy="450" rx="12" ry="6" fill="#C85820" opacity="0.8"/>
+  <ellipse cx="305" cy="448" rx="8" ry="5" fill="#F08020" opacity="0.7"/>
+  <path d="M 300,438 Q 305,428 310,438 Q 307,432 305,440 Q 303,432 300,438" fill="#F5C030" opacity="0.7"/>
+
+  <!-- Smoke wisps -->
+  <path d="M 303,428 Q 298,420 302,412" fill="none" stroke="#8A8070" stroke-width="2" opacity="0.4"/>
+  <path d="M 308,425 Q 313,415 309,407" fill="none" stroke="#8A8070" stroke-width="2" opacity="0.3"/>
+
+  <!-- Label -->
+  <text x="60" y="648" font-family="Georgia,'Times New Roman',serif" font-size="24" fill="#F0D8A0" opacity="0.7" font-style="italic">Sparta · Dawn of Departure · 480 BC</text>
+</svg>

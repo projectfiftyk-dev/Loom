@@ -1,0 +1,251 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="battle_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A1820"/>
+      <stop offset="40%" stop-color="#3A3038"/>
+      <stop offset="100%" stop-color="#5A4840"/>
+    </linearGradient>
+    <linearGradient id="battle_floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6A5840"/>
+      <stop offset="100%" stop-color="#4A3A28"/>
+    </linearGradient>
+    <radialGradient id="battle_glow" cx="50%" cy="60%" r="50%">
+      <stop offset="0%" stop-color="#C87820" stop-opacity="0.15"/>
+      <stop offset="100%" stop-color="#C87820" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Dark, smoky battle sky -->
+  <rect width="1200" height="675" fill="url(#battle_sky)"/>
+  <rect width="1200" height="675" fill="url(#battle_glow)"/>
+
+  <!-- Smoke and dust of battle -->
+  <ellipse cx="400" cy="200" rx="300" ry="100" fill="#8A7860" opacity="0.2"/>
+  <ellipse cx="800" cy="180" rx="280" ry="90" fill="#8A7860" opacity="0.15"/>
+  <ellipse cx="600" cy="280" rx="400" ry="80" fill="#C88040" opacity="0.08"/>
+
+  <!-- CLIFF WALLS narrowing in from both sides — tight space -->
+  <!-- Left cliff face -->
+  <rect x="0" y="0" width="180" height="675" fill="#2A2620"/>
+  <path d="M 180,0 Q 160,100 170,200 Q 165,350 175,500 Q 170,600 180,675" fill="#1A1810" opacity="0.5"/>
+  <!-- Rock striations left -->
+  <path d="M 0,120 Q 80,108 180,122" fill="none" stroke="#3A3028" stroke-width="2" opacity="0.5"/>
+  <path d="M 0,250 Q 80,238 180,252" fill="none" stroke="#3A3028" stroke-width="2" opacity="0.4"/>
+  <path d="M 0,400 Q 80,388 180,402" fill="none" stroke="#3A3028" stroke-width="2" opacity="0.4"/>
+
+  <!-- Right cliff face -->
+  <rect x="1020" y="0" width="180" height="675" fill="#2A2620"/>
+  <path d="M 1020,0 Q 1040,100 1030,200 Q 1035,350 1025,500 Q 1030,600 1020,675" fill="#1A1810" opacity="0.5"/>
+  <!-- Rock striations right -->
+  <path d="M 1200,120 Q 1120,108 1020,122" fill="none" stroke="#3A3028" stroke-width="2" opacity="0.5"/>
+  <path d="M 1200,250 Q 1120,238 1020,252" fill="none" stroke="#3A3028" stroke-width="2" opacity="0.4"/>
+
+  <!-- Battle ground floor — bloody churned earth -->
+  <rect x="0" y="490" width="1200" height="185" fill="url(#battle_floor)"/>
+  <rect x="0" y="490" width="1200" height="4" fill="#5A4830" opacity="0.7"/>
+  <!-- Dark stains on ground -->
+  <ellipse cx="900" cy="498" rx="60" ry="12" fill="#3A1A10" opacity="0.4"/>
+  <ellipse cx="1050" cy="502" rx="45" ry="10" fill="#3A1A10" opacity="0.3"/>
+  <ellipse cx="970" cy="515" rx="30" ry="8" fill="#3A1A10" opacity="0.4"/>
+
+  <!-- FALLEN PERSIAN WEAPONS on ground (their dead) -->
+  <line x1="880" y1="510" x2="950" y2="495" stroke="#C0A050" stroke-width="3" opacity="0.5"/>
+  <line x1="1000" y1="505" x2="1080" y2="518" stroke="#C0A050" stroke-width="3" opacity="0.45"/>
+  <ellipse cx="920" cy="512" rx="22" ry="14" fill="#7A5A28" opacity="0.5"/>
+  <ellipse cx="1060" cy="508" rx="20" ry="13" fill="#7A5A28" opacity="0.45"/>
+
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- SPARTAN PHALANX — left half, tight wall of shields/spears  -->
+  <!-- ═══════════════════════════════════════════════════════════ -->
+  <!-- Bodies behind shields — armored legs visible below -->
+  <!-- Greave row (bronze leg armor) -->
+  <rect x="195" y="470" width="16" height="85" fill="#C89820" rx="2"/>
+  <rect x="213" y="470" width="16" height="85" fill="#B08820" rx="2"/>
+  <rect x="253" y="470" width="16" height="85" fill="#C89820" rx="2"/>
+  <rect x="271" y="470" width="16" height="85" fill="#B08820" rx="2"/>
+  <rect x="311" y="470" width="16" height="85" fill="#C89820" rx="2"/>
+  <rect x="329" y="470" width="16" height="85" fill="#B08820" rx="2"/>
+  <rect x="369" y="470" width="16" height="85" fill="#C89820" rx="2"/>
+  <rect x="387" y="470" width="16" height="85" fill="#B08820" rx="2"/>
+  <rect x="427" y="470" width="16" height="85" fill="#C89820" rx="2"/>
+  <rect x="445" y="470" width="16" height="85" fill="#B08820" rx="2"/>
+  <rect x="485" y="470" width="16" height="85" fill="#C89820" rx="2"/>
+  <rect x="503" y="470" width="16" height="85" fill="#B08820" rx="2"/>
+  <rect x="543" y="470" width="16" height="85" fill="#C89820" rx="2"/>
+  <rect x="561" y="470" width="16" height="85" fill="#B08820" rx="2"/>
+
+  <!-- THE SHIELDS — locked together, wall of bronze -->
+  <!-- Front shield row — overlapping circles -->
+  <circle cx="204" cy="440" r="42" fill="#7A5810"/>
+  <circle cx="204" cy="440" r="38" fill="#C89820"/>
+  <circle cx="204" cy="440" r="30" fill="#A07010"/>
+  <text x="204" y="447" font-family="Georgia,serif" font-size="26" fill="#E8D050" text-anchor="middle" font-weight="bold">Λ</text>
+
+  <circle cx="262" cy="438" r="42" fill="#7A5810"/>
+  <circle cx="262" cy="438" r="38" fill="#C89820"/>
+  <circle cx="262" cy="438" r="30" fill="#A07010"/>
+  <text x="262" y="445" font-family="Georgia,serif" font-size="26" fill="#E8D050" text-anchor="middle" font-weight="bold">Λ</text>
+
+  <circle cx="320" cy="438" r="42" fill="#7A5810"/>
+  <circle cx="320" cy="438" r="38" fill="#C89820"/>
+  <circle cx="320" cy="438" r="30" fill="#A07010"/>
+  <text x="320" y="445" font-family="Georgia,serif" font-size="26" fill="#E8D050" text-anchor="middle" font-weight="bold">Λ</text>
+
+  <circle cx="378" cy="437" r="42" fill="#7A5810"/>
+  <circle cx="378" cy="437" r="38" fill="#C89820"/>
+  <circle cx="378" cy="437" r="30" fill="#A07010"/>
+  <text x="378" y="444" font-family="Georgia,serif" font-size="26" fill="#E8D050" text-anchor="middle" font-weight="bold">Λ</text>
+
+  <circle cx="436" cy="437" r="42" fill="#7A5810"/>
+  <circle cx="436" cy="437" r="38" fill="#C89820"/>
+  <circle cx="436" cy="437" r="30" fill="#A07010"/>
+  <text x="436" y="444" font-family="Georgia,serif" font-size="26" fill="#E8D050" text-anchor="middle" font-weight="bold">Λ</text>
+
+  <circle cx="494" cy="438" r="42" fill="#7A5810"/>
+  <circle cx="494" cy="438" r="38" fill="#C89820"/>
+  <circle cx="494" cy="438" r="30" fill="#A07010"/>
+  <text x="494" y="445" font-family="Georgia,serif" font-size="26" fill="#E8D050" text-anchor="middle" font-weight="bold">Λ</text>
+
+  <circle cx="552" cy="437" r="42" fill="#7A5810"/>
+  <circle cx="552" cy="437" r="38" fill="#C89820"/>
+  <circle cx="552" cy="437" r="30" fill="#A07010"/>
+  <text x="552" y="444" font-family="Georgia,serif" font-size="26" fill="#E8D050" text-anchor="middle" font-weight="bold">Λ</text>
+
+  <!-- Helmeted heads above shields — red crests -->
+  <!-- Row of helmets visible above shield rim -->
+  <ellipse cx="204" cy="378" rx="22" ry="18" fill="#8B6914"/>
+  <ellipse cx="204" cy="376" rx="19" ry="16" fill="#C89820"/>
+  <rect x="198" y="354" width="12" height="26" fill="#8B1A1A" rx="2"/>
+  <ellipse cx="204" cy="354" rx="14" ry="5" fill="#C82020"/>
+  <ellipse cx="196" cy="393" rx="6" ry="4" fill="#C8855A"/>
+
+  <ellipse cx="262" cy="376" rx="22" ry="18" fill="#8B6914"/>
+  <ellipse cx="262" cy="374" rx="19" ry="16" fill="#C89820"/>
+  <rect x="256" y="352" width="12" height="26" fill="#8B1A1A" rx="2"/>
+  <ellipse cx="262" cy="352" rx="14" ry="5" fill="#C82020"/>
+
+  <ellipse cx="320" cy="376" rx="22" ry="18" fill="#8B6914"/>
+  <ellipse cx="320" cy="374" rx="19" ry="16" fill="#C89820"/>
+  <rect x="314" y="352" width="12" height="26" fill="#8B1A1A" rx="2"/>
+  <ellipse cx="320" cy="352" rx="14" ry="5" fill="#C82020"/>
+
+  <ellipse cx="378" cy="375" rx="22" ry="18" fill="#8B6914"/>
+  <ellipse cx="378" cy="373" rx="19" ry="16" fill="#C89820"/>
+  <rect x="372" y="351" width="12" height="26" fill="#8B1A1A" rx="2"/>
+  <ellipse cx="378" cy="351" rx="14" ry="5" fill="#C82020"/>
+
+  <ellipse cx="436" cy="375" rx="22" ry="18" fill="#8B6914"/>
+  <ellipse cx="436" cy="373" rx="19" ry="16" fill="#C89820"/>
+  <rect x="430" y="351" width="12" height="26" fill="#8B1A1A" rx="2"/>
+  <ellipse cx="436" cy="351" rx="14" ry="5" fill="#C82020"/>
+
+  <ellipse cx="494" cy="375" rx="22" ry="18" fill="#8B6914"/>
+  <ellipse cx="494" cy="373" rx="19" ry="16" fill="#C89820"/>
+  <rect x="488" y="351" width="12" height="26" fill="#8B1A1A" rx="2"/>
+  <ellipse cx="494" cy="351" rx="14" ry="5" fill="#C82020"/>
+
+  <ellipse cx="552" cy="374" rx="22" ry="18" fill="#8B6914"/>
+  <ellipse cx="552" cy="372" rx="19" ry="16" fill="#C89820"/>
+  <rect x="546" y="350" width="12" height="26" fill="#8B1A1A" rx="2"/>
+  <ellipse cx="552" cy="350" rx="14" ry="5" fill="#C82020"/>
+
+  <!-- SPEARS THRUSTING FORWARD — the killing edge -->
+  <line x1="204" y1="310" x2="204" y2="440" stroke="#8B6020" stroke-width="5"/>
+  <polygon points="200,310 208,310 204,290" fill="#C8C890"/>
+  <line x1="262" y1="308" x2="262" y2="438" stroke="#8B6020" stroke-width="5"/>
+  <polygon points="258,308 266,308 262,288" fill="#C8C890"/>
+  <line x1="320" y1="307" x2="320" y2="437" stroke="#8B6020" stroke-width="5"/>
+  <polygon points="316,307 324,307 320,287" fill="#C8C890"/>
+  <line x1="378" y1="307" x2="378" y2="437" stroke="#8B6020" stroke-width="5"/>
+  <polygon points="374,307 382,307 378,287" fill="#C8C890"/>
+  <line x1="436" y1="307" x2="436" y2="437" stroke="#8B6020" stroke-width="5"/>
+  <polygon points="432,307 440,307 436,287" fill="#C8C890"/>
+  <line x1="494" y1="308" x2="494" y2="438" stroke="#8B6020" stroke-width="5"/>
+  <polygon points="490,308 498,308 494,288" fill="#C8C890"/>
+  <line x1="552" y1="307" x2="552" y2="437" stroke="#8B6020" stroke-width="5"/>
+  <polygon points="548,307 556,307 552,287" fill="#C8C890"/>
+
+  <!-- Second rank spears (over the top) -->
+  <line x1="225" y1="320" x2="580" y2="320" stroke="#9A7030" stroke-width="3.5" opacity="0.7"/>
+  <line x1="225" y1="335" x2="580" y2="335" stroke="#9A7030" stroke-width="3" opacity="0.6"/>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- PERSIAN FRONT RANK — right half, pressing the shield  -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- Persian bodies pressing against the shields -->
+  <ellipse cx="680" cy="410" rx="30" ry="25" fill="#B07030"/>
+  <ellipse cx="680" cy="388" rx="18" ry="15" fill="#C88040"/>
+  <!-- Face — mouth open, pressing -->
+  <circle cx="676" cy="385" r="4" fill="#2A1A08"/>
+  <circle cx="685" cy="385" r="4" fill="#2A1A08"/>
+  <path d="M 672,393 Q 680,398 688,393" fill="none" stroke="#9A5828" stroke-width="2"/>
+
+  <ellipse cx="750" cy="415" rx="28" ry="23" fill="#A86828"/>
+  <ellipse cx="750" cy="394" rx="17" ry="14" fill="#C08038"/>
+  <circle cx="746" cy="390" r="3.5" fill="#2A1A08"/>
+  <circle cx="755" cy="390" r="3.5" fill="#2A1A08"/>
+
+  <ellipse cx="820" cy="412" rx="30" ry="24" fill="#B07030"/>
+  <ellipse cx="820" cy="391" rx="18" ry="15" fill="#C88040"/>
+  <circle cx="815" cy="387" r="4" fill="#2A1A08"/>
+  <circle cx="825" cy="387" r="4" fill="#2A1A08"/>
+
+  <ellipse cx="890" cy="410" rx="28" ry="23" fill="#A86828"/>
+  <ellipse cx="890" cy="389" rx="17" ry="14" fill="#C08038"/>
+
+  <ellipse cx="960" cy="415" rx="30" ry="25" fill="#B07030"/>
+  <ellipse cx="960" cy="393" rx="18" ry="15" fill="#C88040"/>
+
+  <!-- Persian wicker shields — rectangular, woven pattern -->
+  <rect x="650" y="430" width="38" height="50" fill="#8B6030" rx="3"/>
+  <rect x="652" y="432" width="34" height="46" fill="#A07838" rx="2"/>
+  <!-- Wicker pattern lines -->
+  <line x1="652" y1="440" x2="686" y2="440" stroke="#7A5828" stroke-width="1.5"/>
+  <line x1="652" y1="450" x2="686" y2="450" stroke="#7A5828" stroke-width="1.5"/>
+  <line x1="652" y1="460" x2="686" y2="460" stroke="#7A5828" stroke-width="1.5"/>
+  <line x1="662" y1="432" x2="662" y2="478" stroke="#7A5828" stroke-width="1.5"/>
+  <line x1="674" y1="432" x2="674" y2="478" stroke="#7A5828" stroke-width="1.5"/>
+
+  <rect x="718" y="432" width="38" height="50" fill="#7A5020" rx="3"/>
+  <rect x="720" y="434" width="34" height="46" fill="#9A6830" rx="2"/>
+  <line x1="720" y1="442" x2="754" y2="442" stroke="#6A4818" stroke-width="1.5"/>
+  <line x1="720" y1="452" x2="754" y2="452" stroke="#6A4818" stroke-width="1.5"/>
+  <line x1="720" y1="462" x2="754" y2="462" stroke="#6A4818" stroke-width="1.5"/>
+
+  <rect x="788" y="430" width="38" height="50" fill="#8B6030" rx="3"/>
+  <rect x="790" y="432" width="34" height="46" fill="#A07838" rx="2"/>
+  <line x1="790" y1="440" x2="824" y2="440" stroke="#7A5828" stroke-width="1.5"/>
+  <line x1="790" y1="450" x2="824" y2="450" stroke="#7A5828" stroke-width="1.5"/>
+
+  <!-- Persian spears — shorter than Greek doru, pressing in -->
+  <line x1="670" y1="340" x2="650" y2="430" stroke="#A08040" stroke-width="4"/>
+  <polygon points="666,340 674,337 671,323" fill="#D0B840"/>
+  <line x1="740" y1="338" x2="720" y2="430" stroke="#A08040" stroke-width="4"/>
+  <polygon points="736,338 744,335 741,321" fill="#D0B840"/>
+  <line x1="810" y1="340" x2="790" y2="430" stroke="#A08040" stroke-width="4"/>
+  <polygon points="806,340 814,337 811,323" fill="#D0B840"/>
+  <line x1="880" y1="338" x2="860" y2="430" stroke="#A08040" stroke-width="4"/>
+  <polygon points="876,338 884,335 881,321" fill="#D0B840"/>
+
+  <!-- The clash point — center, where shields meet spears -->
+  <!-- Impact flash/dust -->
+  <ellipse cx="615" cy="440" rx="30" ry="20" fill="#E8D070" opacity="0.2"/>
+  <ellipse cx="620" cy="435" rx="20" ry="15" fill="#F0E080" opacity="0.15"/>
+
+  <!-- Arrows in the air from Persian archers behind -->
+  <line x1="780" y1="200" x2="430" y2="350" stroke="#8B6020" stroke-width="2" opacity="0.6"/>
+  <polygon points="428,350 436,345 430,360" fill="#C0A050" opacity="0.6"/>
+  <line x1="820" y1="180" x2="490" y2="340" stroke="#8B6020" stroke-width="2" opacity="0.5"/>
+  <polygon points="488,340 496,335 490,350" fill="#C0A050" opacity="0.5"/>
+  <line x1="860" y1="190" x2="550" y2="345" stroke="#8B6020" stroke-width="2" opacity="0.55"/>
+  <polygon points="548,345 556,340 550,355" fill="#C0A050" opacity="0.55"/>
+  <line x1="740" y1="195" x2="380" y2="360" stroke="#8B6020" stroke-width="2" opacity="0.5"/>
+  <polygon points="378,360 386,355 380,370" fill="#C0A050" opacity="0.5"/>
+  <!-- Arrows stuck in shields -->
+  <line x1="222" y1="440" x2="210" y2="415" stroke="#8B6020" stroke-width="2.5"/>
+  <line x1="370" y1="437" x2="358" y2="412" stroke="#8B6020" stroke-width="2.5"/>
+  <line x1="450" y1="440" x2="465" y2="415" stroke="#8B6020" stroke-width="2.5"/>
+
+  <!-- Label -->
+  <text x="60" y="655" font-family="Georgia,'Times New Roman',serif" font-size="24" fill="#F0E0C0" opacity="0.7" font-style="italic">The Phalanx · Day Two at the Hot Gates</text>
+</svg>

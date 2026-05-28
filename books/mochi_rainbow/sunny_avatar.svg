@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Petals -->
+  <ellipse cx="60" cy="10" rx="11" ry="18" fill="#F5C820"/>
+  <ellipse cx="60" cy="110" rx="11" ry="18" fill="#F5C820"/>
+  <ellipse cx="10" cy="60" rx="18" ry="11" fill="#F5C820"/>
+  <ellipse cx="110" cy="60" rx="18" ry="11" fill="#F5C820"/>
+  <!-- Diagonal petals -->
+  <ellipse cx="23" cy="23" rx="11" ry="18" fill="#F5C820" transform="rotate(-45 23 23)"/>
+  <ellipse cx="97" cy="23" rx="11" ry="18" fill="#F5C820" transform="rotate(45 97 23)"/>
+  <ellipse cx="23" cy="97" rx="11" ry="18" fill="#F5C820" transform="rotate(45 23 97)"/>
+  <ellipse cx="97" cy="97" rx="11" ry="18" fill="#F5C820" transform="rotate(-45 97 97)"/>
+  <!-- Center face circle -->
+  <circle cx="60" cy="60" r="34" fill="#F5A820"/>
+  <circle cx="60" cy="60" r="30" fill="#FFC030"/>
+  <!-- Eyes - big sparkly -->
+  <circle cx="49" cy="56" r="8" fill="white"/>
+  <circle cx="71" cy="56" r="8" fill="white"/>
+  <circle cx="51" cy="56" r="5" fill="#4A2A0A"/>
+  <circle cx="73" cy="56" r="5" fill="#4A2A0A"/>
+  <circle cx="53" cy="54" r="2" fill="white"/>
+  <circle cx="75" cy="54" r="2" fill="white"/>
+  <!-- Sparkle stars in eyes -->
+  <circle cx="47" cy="52" r="1" fill="white" opacity="0.8"/>
+  <circle cx="69" cy="52" r="1" fill="white" opacity="0.8"/>
+  <!-- Nose -->
+  <circle cx="60" cy="65" r="3" fill="#D08010"/>
+  <!-- Big smile -->
+  <path d="M 48,70 Q 60,80 72,70" fill="none" stroke="#C07010" stroke-width="3" stroke-linecap="round"/>
+  <!-- Rosy cheeks -->
+  <circle cx="40" cy="67" r="6" fill="#F08050" opacity="0.35"/>
+  <circle cx="80" cy="67" r="6" fill="#F08050" opacity="0.35"/>
+</svg>

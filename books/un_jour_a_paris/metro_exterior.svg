@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="metro_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#A0BCDC"/>
+      <stop offset="100%" stop-color="#D8C8A0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#metro_sky)"/>
+  <!-- Pavement -->
+  <rect x="0" y="500" width="1200" height="175" fill="#4A4840"/>
+  <rect x="0" y="500" width="1200" height="3" fill="#6A6858" opacity="0.6"/>
+  <!-- Buildings background -->
+  <rect x="0"    y="250" width="160" height="260" fill="#C8B898" opacity="0.8"/>
+  <rect x="155"  y="200" width="130" height="310" fill="#D8C8A8" opacity="0.8"/>
+  <rect x="900"  y="220" width="140" height="290" fill="#C8B898" opacity="0.8"/>
+  <rect x="1035" y="180" width="165" height="330" fill="#D8C8A8" opacity="0.8"/>
+  <!-- Art nouveau metro entrance arch -->
+  <!-- Base posts -->
+  <rect x="380" y="330" width="28" height="180" fill="#1A7A18" rx="4"/>
+  <rect x="792" y="330" width="28" height="180" fill="#1A7A18" rx="4"/>
+  <!-- Arch - classic Paris metro green ironwork -->
+  <path d="M 380,330 Q 600,80 820,330" fill="none" stroke="#1A7A18" stroke-width="18"/>
+  <path d="M 380,330 Q 600,80 820,330" fill="none" stroke="#2A9A20" stroke-width="10"/>
+  <!-- Decorative ironwork details on arch -->
+  <path d="M 450,280 Q 600,150 750,280" fill="none" stroke="#2A9A20" stroke-width="5" opacity="0.6"/>
+  <circle cx="380" cy="325" r="12" fill="#2A9A20"/>
+  <circle cx="820" cy="325" r="12" fill="#2A9A20"/>
+  <circle cx="600" cy="108" r="14" fill="#2A9A20"/>
+  <!-- Floral ornaments at top -->
+  <circle cx="600" cy="108" r="8" fill="#1A7A18"/>
+  <ellipse cx="580" cy="115" rx="10" ry="6" fill="#2A9A20" transform="rotate(-30 580 115)"/>
+  <ellipse cx="620" cy="115" rx="10" ry="6" fill="#2A9A20" transform="rotate(30 620 115)"/>
+  <!-- METROPOLITAIN sign on arch -->
+  <rect x="470" y="140" width="260" height="42" fill="#1A6A18" rx="4"/>
+  <text x="600" y="168" font-family="Georgia,'Times New Roman',serif" font-size="22" fill="#F5E870"
+        text-anchor="middle" letter-spacing="3" font-weight="bold">METROPOLITAIN</text>
+  <!-- Entrance opening -->
+  <rect x="455" y="350" width="290" height="160" fill="#0A1808" opacity="0.85" rx="4"/>
+  <!-- Stairs hint in entrance -->
+  <line x1="455" y1="380" x2="745" y2="380" stroke="#2A3820" stroke-width="2"/>
+  <line x1="455" y1="400" x2="745" y2="400" stroke="#2A3820" stroke-width="2"/>
+  <line x1="455" y1="420" x2="745" y2="420" stroke="#2A3820" stroke-width="2"/>
+  <!-- M sign circle -->
+  <circle cx="600" cy="230" r="40" fill="#1A6AB8"/>
+  <circle cx="600" cy="230" r="33" fill="#1A7AD0"/>
+  <text x="600" y="244" font-family="Arial,sans-serif" font-size="40" font-weight="bold"
+        fill="white" text-anchor="middle">M</text>
+  <!-- Line number -->
+  <circle cx="652" cy="205" r="16" fill="#F5A020"/>
+  <text x="652" y="211" font-family="Arial,sans-serif" font-size="16" font-weight="bold"
+        fill="white" text-anchor="middle">4</text>
+  <!-- Street lamp -->
+  <line x1="200" y1="500" x2="200" y2="390" stroke="#3A3828" stroke-width="5"/>
+  <line x1="200" y1="390" x2="240" y2="375" stroke="#3A3828" stroke-width="4"/>
+  <circle cx="248" cy="372" r="10" fill="#F5E870" opacity="0.85"/>
+  <!-- Label -->
+  <text x="80" y="638" font-family="Georgia,'Times New Roman',serif" font-size="26" fill="#F0E6CC" opacity="0.7" font-style="italic">Paris · Métro · Entrée</text>
+</svg>

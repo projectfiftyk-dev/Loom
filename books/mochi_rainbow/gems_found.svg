@@ -1,0 +1,236 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="finale_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2060C0"/>
+      <stop offset="30%" stop-color="#60A8E0"/>
+      <stop offset="65%" stop-color="#A0D8F8"/>
+      <stop offset="100%" stop-color="#D0EEF8"/>
+    </linearGradient>
+    <linearGradient id="finale_grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#70BB48"/>
+      <stop offset="100%" stop-color="#50922A"/>
+    </linearGradient>
+    <radialGradient id="gem_glow_r" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FF8090" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FF8090" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gem_glow_y" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFE880" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FFE880" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="gem_glow_b" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#80D0FF" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#80D0FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Beautiful sky -->
+  <rect width="1200" height="675" fill="url(#finale_sky)"/>
+
+  <!-- THE RAINBOW! Big beautiful arching rainbow -->
+  <!-- Red band -->
+  <path d="M -50,600 Q 600,-100 1250,600" fill="none" stroke="#E82030" stroke-width="28" opacity="0.9"/>
+  <!-- Orange band -->
+  <path d="M -50,600 Q 600,-60 1250,600" fill="none" stroke="#F87020" stroke-width="22" opacity="0.9"/>
+  <!-- Yellow band -->
+  <path d="M -50,600 Q 600,-25 1250,600" fill="none" stroke="#F8D020" stroke-width="22" opacity="0.9"/>
+  <!-- Green band -->
+  <path d="M -50,600 Q 600,10 1250,600" fill="none" stroke="#40C030" stroke-width="22" opacity="0.9"/>
+  <!-- Blue band -->
+  <path d="M -50,600 Q 600,45 1250,600" fill="none" stroke="#3080E8" stroke-width="22" opacity="0.9"/>
+  <!-- Indigo band -->
+  <path d="M -50,600 Q 600,78 1250,600" fill="none" stroke="#6040C8" stroke-width="18" opacity="0.85"/>
+  <!-- Violet band -->
+  <path d="M -50,600 Q 600,108 1250,600" fill="none" stroke="#9040C0" stroke-width="18" opacity="0.85"/>
+
+  <!-- Sparkles and stars all over sky -->
+  <circle cx="200" cy="120" r="4" fill="white" opacity="0.9"/>
+  <circle cx="180" cy="90" r="2.5" fill="white" opacity="0.8"/>
+  <circle cx="225" cy="100" r="3" fill="white" opacity="0.85"/>
+  <circle cx="950" cy="100" r="4" fill="white" opacity="0.9"/>
+  <circle cx="970" cy="75" r="2.5" fill="white" opacity="0.8"/>
+  <circle cx="930" cy="115" r="3.5" fill="white" opacity="0.85"/>
+  <circle cx="500" cy="150" r="3" fill="white" opacity="0.8"/>
+  <circle cx="700" cy="130" r="4" fill="white" opacity="0.85"/>
+  <circle cx="400" cy="200" r="2" fill="#FFE060" opacity="0.9"/>
+  <circle cx="800" cy="180" r="2" fill="#FFE060" opacity="0.9"/>
+  <!-- Star shapes -->
+  <text x="155" y="175" font-family="Arial" font-size="20" fill="#FFE060" opacity="0.8" text-anchor="middle">✦</text>
+  <text x="1020" y="165" font-family="Arial" font-size="18" fill="#FFE060" opacity="0.8" text-anchor="middle">✦</text>
+  <text x="350" y="240" font-family="Arial" font-size="14" fill="white" opacity="0.7" text-anchor="middle">✦</text>
+  <text x="870" y="220" font-family="Arial" font-size="14" fill="white" opacity="0.7" text-anchor="middle">✦</text>
+
+  <!-- Ground -->
+  <rect x="0" y="500" width="1200" height="175" fill="url(#finale_grass)"/>
+  <rect x="0" y="500" width="1200" height="6" fill="#8ACC58" opacity="0.6"/>
+
+  <!-- Colorful flowers everywhere (rainbow brought colors back!) -->
+  <!-- Row of flowers -->
+  <line x1="80" y1="510" x2="80" y2="488" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="80" cy="484" r="8" fill="#E82020"/>
+  <line x1="110" y1="514" x2="110" y2="492" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="110" cy="488" r="7" fill="#F5C820"/>
+  <line x1="140" y1="510" x2="140" y2="490" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="140" cy="486" r="7" fill="#A040C8"/>
+  <line x1="170" y1="513" x2="170" y2="493" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="170" cy="489" r="6" fill="#40A0E0"/>
+  <line x1="1020" y1="510" x2="1020" y2="488" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="1020" cy="484" r="8" fill="#E82020"/>
+  <line x1="1050" y1="513" x2="1050" y2="491" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="1050" cy="487" r="7" fill="#F07820"/>
+  <line x1="1080" y1="510" x2="1080" y2="490" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="1080" cy="486" r="7" fill="#F5C820"/>
+  <line x1="1110" y1="513" x2="1110" y2="493" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="1110" cy="489" r="6" fill="#40C840"/>
+
+  <!-- THREE GEMS in triangle on ground — glowing and combined -->
+  <!-- Glow halos -->
+  <ellipse cx="580" cy="508" rx="50" ry="30" fill="url(#gem_glow_r)"/>
+  <ellipse cx="640" cy="508" rx="50" ry="30" fill="url(#gem_glow_y)"/>
+  <ellipse cx="610" cy="485" rx="50" ry="30" fill="url(#gem_glow_b)"/>
+  <!-- Central combined glow -->
+  <ellipse cx="610" cy="500" rx="90" ry="45" fill="white" opacity="0.15"/>
+  <!-- Red gem -->
+  <polygon points="568,520 582,502 596,520 582,538" fill="#E83040" opacity="0.95"/>
+  <polygon points="568,520 582,502 596,520 582,538" fill="none" stroke="#FF8098" stroke-width="2"/>
+  <ellipse cx="582" cy="518" rx="9" ry="8" fill="#FF90A8" opacity="0.6"/>
+  <!-- Yellow gem -->
+  <polygon points="628,520 642,502 656,520 642,538" fill="#F5D020" opacity="0.95"/>
+  <polygon points="628,520 642,502 656,520 642,538" fill="none" stroke="#FFE860" stroke-width="2"/>
+  <ellipse cx="642" cy="518" rx="9" ry="8" fill="#FFEE80" opacity="0.6"/>
+  <!-- Blue gem -->
+  <polygon points="598,495 612,477 626,495 612,515" fill="#3090E8" opacity="0.95"/>
+  <polygon points="598,495 612,477 626,495 612,515" fill="none" stroke="#80D0FF" stroke-width="2"/>
+  <ellipse cx="612" cy="493" rx="9" ry="8" fill="#A0E0FF" opacity="0.6"/>
+  <!-- Combined sparkle rays -->
+  <line x1="612" y1="455" x2="612" y2="465" stroke="white" stroke-width="3" opacity="0.8"/>
+  <line x1="560" y1="475" x2="568" y2="483" stroke="white" stroke-width="2.5" opacity="0.7"/>
+  <line x1="662" y1="475" x2="654" y2="483" stroke="white" stroke-width="2.5" opacity="0.7"/>
+  <line x1="545" y1="510" x2="558" y2="510" stroke="white" stroke-width="2" opacity="0.7"/>
+  <line x1="672" y1="510" x2="659" y2="510" stroke="white" stroke-width="2" opacity="0.7"/>
+
+  <!-- ═══════════════════════════════════════════════ -->
+  <!-- All characters celebrating!                    -->
+  <!-- ═══════════════════════════════════════════════ -->
+
+  <!-- SUNNY the sunflower — far left, arms up -->
+  <!-- Stem -->
+  <rect x="170" y="470" width="14" height="55" fill="#5A9A28" rx="3"/>
+  <!-- Petals -->
+  <ellipse cx="177" cy="435" rx="10" ry="18" fill="#FFD020"/>
+  <ellipse cx="177" cy="473" rx="10" ry="18" fill="#FFD020"/>
+  <ellipse cx="158" cy="454" rx="18" ry="10" fill="#FFD020"/>
+  <ellipse cx="196" cy="454" rx="18" ry="10" fill="#FFD020"/>
+  <ellipse cx="164" cy="439" rx="10" ry="18" fill="#FFD020" transform="rotate(-45 164 439)"/>
+  <ellipse cx="190" cy="439" rx="10" ry="18" fill="#FFD020" transform="rotate(45 190 439)"/>
+  <ellipse cx="164" cy="469" rx="10" ry="18" fill="#FFD020" transform="rotate(45 164 469)"/>
+  <ellipse cx="190" cy="469" rx="10" ry="18" fill="#FFD020" transform="rotate(-45 190 469)"/>
+  <!-- Face -->
+  <circle cx="177" cy="454" r="28" fill="#F5A820"/>
+  <circle cx="177" cy="454" r="24" fill="#FFC030"/>
+  <!-- Eyes squinted with joy -->
+  <path d="M 167,450 Q 170,445 174,450" fill="none" stroke="#8A5010" stroke-width="3" stroke-linecap="round"/>
+  <path d="M 180,450 Q 183,445 187,450" fill="none" stroke="#8A5010" stroke-width="3" stroke-linecap="round"/>
+  <!-- Big smile -->
+  <path d="M 166,460 Q 177,471 188,460" fill="#E8A020" stroke="#C07010" stroke-width="2"/>
+  <!-- Cheeks -->
+  <circle cx="160" cy="460" r="6" fill="#F09050" opacity="0.4"/>
+  <circle cx="194" cy="460" r="6" fill="#F09050" opacity="0.4"/>
+
+  <!-- PEBBLE — left of center -->
+  <!-- Rock he's sitting on -->
+  <ellipse cx="390" cy="562" rx="65" ry="28" fill="#6A6858"/>
+  <ellipse cx="390" cy="556" rx="60" ry="24" fill="#7A7868"/>
+  <!-- Shell -->
+  <ellipse cx="390" cy="532" rx="46" ry="33" fill="#3A7A40"/>
+  <ellipse cx="390" cy="528" rx="38" ry="26" fill="#4A9A50"/>
+  <ellipse cx="390" cy="524" rx="17" ry="13" fill="#5AAA60"/>
+  <!-- Shell detail -->
+  <ellipse cx="370" cy="523" rx="10" ry="8" fill="#5AAA60" opacity="0.6"/>
+  <ellipse cx="410" cy="523" rx="10" ry="8" fill="#5AAA60" opacity="0.6"/>
+  <!-- Head -->
+  <ellipse cx="390" cy="504" rx="24" ry="19" fill="#6AAA58"/>
+  <!-- Eyes WIDE OPEN (surprised and happy!) -->
+  <circle cx="381" cy="499" r="8" fill="white"/>
+  <circle cx="399" cy="499" r="8" fill="white"/>
+  <circle cx="382" cy="500" r="5" fill="#2A3A18"/>
+  <circle cx="400" cy="500" r="5" fill="#2A3A18"/>
+  <circle cx="383" cy="499" r="1.5" fill="white"/>
+  <circle cx="401" cy="499" r="1.5" fill="white"/>
+  <!-- Open mouth smile (unusual for pebble!) -->
+  <path d="M 383,511 Q 390,517 397,511" fill="#4A7A38" stroke="#3A6A28" stroke-width="1.5"/>
+  <!-- Tiny arms raised! -->
+  <ellipse cx="352" cy="535" rx="14" ry="9" fill="#6AAA58"/>
+  <path d="M 357,528 Q 345,520 342,510" fill="none" stroke="#6AAA58" stroke-width="9" stroke-linecap="round"/>
+  <ellipse cx="339" cy="506" rx="11" ry="8" fill="#6AAA58"/>
+  <ellipse cx="428" cy="535" rx="14" ry="9" fill="#6AAA58"/>
+  <path d="M 423,528 Q 435,520 438,510" fill="none" stroke="#6AAA58" stroke-width="9" stroke-linecap="round"/>
+  <ellipse cx="441" cy="506" rx="11" ry="8" fill="#6AAA58"/>
+
+  <!-- ═════════════════════════════════════════════════ -->
+  <!-- MOCHI — center, jumping for joy!               -->
+  <!-- ═════════════════════════════════════════════════ -->
+  <!-- Mochi in air -->
+  <ellipse cx="760" cy="520" rx="50" ry="43" fill="#F0A040"/>
+  <!-- Ears -->
+  <circle cx="726" cy="474" r="20" fill="#E8882A"/>
+  <circle cx="794" cy="474" r="20" fill="#E8882A"/>
+  <circle cx="726" cy="474" r="11" fill="#F5B870"/>
+  <circle cx="794" cy="474" r="11" fill="#F5B870"/>
+  <!-- Head -->
+  <circle cx="760" cy="490" r="43" fill="#F5A050"/>
+  <!-- Snout -->
+  <ellipse cx="760" cy="503" rx="21" ry="15" fill="#F0C080"/>
+  <!-- VERY happy eyes - squished with joy -->
+  <path d="M 742,483 Q 751,476 760,483" fill="none" stroke="#2A1A0A" stroke-width="4" stroke-linecap="round"/>
+  <path d="M 760,483 Q 769,476 778,483" fill="none" stroke="#2A1A0A" stroke-width="4" stroke-linecap="round"/>
+  <!-- Nose -->
+  <ellipse cx="760" cy="498" rx="5" ry="4" fill="#C05820"/>
+  <!-- Huge smile / laugh -->
+  <path d="M 746,510 Q 760,522 774,510" fill="#E87828" stroke="#C05820" stroke-width="2"/>
+  <!-- Rosy cheeks big -->
+  <circle cx="736" cy="500" r="10" fill="#F08040" opacity="0.4"/>
+  <circle cx="784" cy="500" r="10" fill="#F08040" opacity="0.4"/>
+  <!-- Arms straight up jubilant -->
+  <path d="M 720,510 Q 698,490 685,466" fill="none" stroke="#F0A040" stroke-width="14" stroke-linecap="round"/>
+  <ellipse cx="680" cy="460" rx="15" ry="12" fill="#F0A040"/>
+  <path d="M 800,510 Q 822,490 835,466" fill="none" stroke="#F0A040" stroke-width="14" stroke-linecap="round"/>
+  <ellipse cx="840" cy="460" rx="15" ry="12" fill="#F0A040"/>
+  <!-- Legs kicking in joy -->
+  <path d="M 740,560 Q 720,580 710,600" fill="none" stroke="#F0A040" stroke-width="13" stroke-linecap="round"/>
+  <ellipse cx="706" cy="604" rx="12" ry="10" fill="#F0A040"/>
+  <path d="M 780,558 Q 802,576 810,596" fill="none" stroke="#F0A040" stroke-width="13" stroke-linecap="round"/>
+  <ellipse cx="814" cy="600" rx="12" ry="10" fill="#F0A040"/>
+  <!-- Shadow below jumping Mochi -->
+  <ellipse cx="760" cy="640" rx="50" ry="8" fill="#3A8020" opacity="0.25"/>
+
+  <!-- ═══════════════════════════════════ -->
+  <!-- HAPPY FISH — jumping out of water  -->
+  <!-- (brought bucket of river water)   -->
+  <!-- ═══════════════════════════════════ -->
+  <!-- Fish body -->
+  <ellipse cx="1000" cy="530" rx="35" ry="24" fill="#4080C8" transform="rotate(-30 1000 530)"/>
+  <ellipse cx="998" cy="528" rx="30" ry="20" fill="#5090D8" transform="rotate(-30 998 528)"/>
+  <!-- Fish tail -->
+  <polygon points="1018,510 1040,495 1042,525 1018,520" fill="#3878C0"/>
+  <!-- Happy eyes! -->
+  <circle cx="982" cy="520" r="11" fill="white"/>
+  <circle cx="984" cy="522" r="8" fill="#1A3A7A"/>
+  <circle cx="986" cy="520" r="2.5" fill="white"/>
+  <!-- Happy mouth -->
+  <path d="M 976,535 Q 980,540 986,538" fill="none" stroke="#2858A0" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Fins -->
+  <ellipse cx="994" cy="548" rx="14" ry="7" fill="#3878C0" opacity="0.8" transform="rotate(-20 994 548)"/>
+  <!-- Water droplets from jumping -->
+  <circle cx="950" cy="510" r="5" fill="#80C0E8" opacity="0.8"/>
+  <circle cx="960" cy="495" r="4" fill="#80C0E8" opacity="0.7"/>
+  <circle cx="1032" cy="508" r="4" fill="#80C0E8" opacity="0.8"/>
+  <circle cx="1025" cy="495" r="3" fill="#80C0E8" opacity="0.7"/>
+
+  <!-- Celebration text floating -->
+  <text x="600" y="340" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="44" fill="white" text-anchor="middle" opacity="0.95" filter="url(#shadow)">🌈 WE DID IT! 🌈</text>
+  <text x="600" y="340" font-family="Arial Rounded MT Bold,Arial,sans-serif" font-size="44" fill="#F5D020" text-anchor="middle" opacity="0.9">🌈 WE DID IT! 🌈</text>
+
+  <!-- Label -->
+  <text x="60" y="655" font-family="Georgia,'Times New Roman',serif" font-size="22" fill="#E0F0FF" opacity="0.7" font-style="italic">Rainbow Valley · The Rainbow Returns!</text>
+</svg>

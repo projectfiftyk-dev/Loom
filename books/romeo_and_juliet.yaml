@@ -1,0 +1,446 @@
+metadata:
+  title: "O, What Light: The Story of Romeo and Juliet"
+  author: "Loom for Literature"
+  version: "1.0"
+  language: en
+  cover_image: romeo_and_juliet/balcony.svg
+  description: |
+    Verona, 1590s. You are Romeo Montague — young, reckless, and about to ruin your life in the most beautiful way imaginable. Play through the greatest love story ever written: take Juliet's hand at the feast, speak under the balcony, face the consequences of a sword drawn in anger, and find your way to the vault where it all ends. Shakespeare's words live in the cracks of every scene. So does the tragedy.
+  tags:
+    - literature
+    - shakespeare
+    - romeo and juliet
+    - romance
+    - tragedy
+    - ages 14+
+    - reader plays romeo
+  style: forest
+
+settings:
+  max_free_text_attempts: 3
+  allow_chat_rewind: true
+
+characters:
+  - id: juliet
+    name: Juliet
+    avatar: romeo_and_juliet/juliet_avatar.svg
+    color: "#C85870"
+    is_chat_character: true
+    recall_history: true
+    personality: |
+      You are Juliet Capulet of Verona — quick-witted, deeply loving, entirely unafraid of what she feels.
+      You are speaking to Romeo (the player). You met at your father's feast. You spoke under the balcony.
+      You love him with full sincerity, and you are frightened of nothing except losing him.
+      You speak in language that evokes Shakespeare without being impenetrable — heightened English,
+      genuine emotion, and occasional period vocabulary (thee, thy, wherefore, hath, dost) used naturally.
+      You are not passive or naive. You are his equal in wit and exceed him in practical wisdom.
+      You may quote or lightly echo lines from the original play when they fit naturally.
+      Keep responses to 3-4 sentences. Stay fully in character — passionate, clear-eyed, brave.
+      If Romeo/the player is uncertain or troubled, give him warmth and honesty in equal measure.
+      Never break the period setting. Never speak of the modern world.
+
+  - id: friar_lawrence
+    name: Friar Lawrence
+    avatar: romeo_and_juliet/friar_avatar.svg
+    color: "#5A7A4A"
+    is_chat_character: true
+    recall_history: false
+    personality: |
+      You are Friar Lawrence, a Franciscan friar who has known Romeo since he was a boy.
+      You agreed to marry Romeo and Juliet in secret, hoping the union might end the feud between their families.
+      You are wise, warm, and deeply conflicted — you acted with good intentions and the outcome broke your heart.
+      You warned Romeo about passion moving too fast. He did not listen. Neither did you, in the end.
+      You speak with quiet authority, theological patience, and genuine love for Romeo.
+      Occasional Shakespearean phrasing is welcome ("these violent delights," "wisely and slow") but stay clear.
+      Keep responses to 3-4 sentences. You carry guilt. You do not hide it.
+      Address Romeo/the player with the affection of a confessor who also made a terrible mistake.
+
+  - id: nurse
+    name: The Nurse
+    avatar: romeo_and_juliet/nurse_avatar.svg
+    color: "#8A6848"
+
+  - id: narrator
+    name: Narrator
+    color: "#4A3A2A"
+
+scenes:
+  # ─── SCENE 1: Capulet's Feast ─────────────────────────────────────────────────
+  - id: scene_feast
+    title: "A Feast at Capulet's"
+    start: true
+    background: romeo_and_juliet/feast_hall.svg
+    nodes:
+      - id: f01_verona
+        type: dialogue
+        character: narrator
+        text: "Verona, Italy. Some time in the 1590s. Two families — the Montagues and the Capulets — have been at war for so long that no one alive remembers how it started. You are Romeo Montague. You are young, you are in love with someone who doesn't love you back, and your friends have just talked you into crashing the Capulets' feast wearing a mask."
+        next: f02_rosaline
+
+      - id: f02_rosaline
+        type: dialogue
+        character: narrator
+        text: "You came hoping to see Rosaline, the woman who has occupied your thoughts for months. You arrived at the feast and looked for her. And then someone else crossed your field of vision."
+        next: f03_first_sight
+
+      - id: f03_first_sight
+        type: dialogue
+        character: narrator
+        text: "She stands near the far wall. The torchlight catches her face. Every person in the room — including Rosaline — simply disappears."
+        next: f04_romeo_reacts
+
+      - id: f04_romeo_reacts
+        type: dialogue
+        character: narrator
+        text: "You ask a passing servant who she is. He doesn't know. You watch her for a long moment — and then your feet start moving before you've made any decision."
+        hint: "Romeo's actual words on first seeing Juliet: 'Did my heart love till now? Forswear it, sight! / For I ne'er saw true beauty till this night.' He literally forgets Rosaline in an instant. Critics debate whether this makes him shallow or whether it means Rosaline was never the real thing."
+        next: f05_take_hand
+
+      - id: f05_take_hand
+        type: dialogue
+        character: narrator
+        text: "You cross the hall. She sees you coming and doesn't look away. You reach out and take her hand — a bold thing to do with a stranger, in this house, at this hour. She doesn't pull back."
+        next: f06_free_text
+
+      - id: f06_free_text
+        type: free_text
+        prompt: "Romeo, speak. You're holding Juliet's hand and she's looking at you. What are the first words you say?"
+        goal: "Accept any sincere romantic opening — a compliment on her beauty, a nervous greeting, a poetic declaration, a question, an expression of wonder. The player IS Romeo speaking to Juliet for the first time. Accept anything genuine, tender, or even awkward-but-sincere. Reject only rude, aggressive, inappropriate, or completely nonsensical responses."
+        hint: "In the play, Romeo calls her a 'holy shrine' and himself a pilgrim unworthy to touch it — his lips 'two blushing pilgrims' ready to smooth the rough touch with a kiss. Reverence, wonder, a little audacity. Anything that comes from the heart will do."
+        on_success: f07_juliet_replies
+        on_fail: f06b_fail_hint
+        on_exhausted: f07_juliet_replies
+        max_attempts: 2
+
+      - id: f06b_fail_hint
+        type: dialogue
+        character: narrator
+        text: "She is still looking at you. The music plays on. Whatever is in your heart — put it into words. Even something simple. She deserves the honest thought, not the rehearsed one."
+        next: f05_take_hand
+
+      - id: f07_juliet_replies
+        type: dialogue
+        character: juliet
+        text: "'Good pilgrim, you do wrong your hand too much, which mannerly devotion shows in this; for saints have hands that pilgrims' hands do touch, and palm to palm is holy palmers' kiss.'"
+        hint: "Together, Juliet and Romeo's first fourteen lines of dialogue form a perfect Shakespearean sonnet — they complete it together without either knowing the other is doing it. Shakespeare's way of showing: these two were made for the same language."
+        next: f08_nurse_calls
+
+      - id: f08_nurse_calls
+        type: dialogue
+        character: narrator
+        text: "You talk. You lose track of time. And then the Nurse appears at Juliet's shoulder, insistent, and draws her away. You catch her eye once more before she's gone."
+        next: f09_who_is_she
+
+      - id: f09_who_is_she
+        type: dialogue
+        character: nurse
+        text: "'Her mother is the lady of the house,' the Nurse says, with the particular satisfaction of someone delivering bad news. 'She is a Capulet.'"
+        next: f10_capulet
+
+      - id: f10_capulet
+        type: dialogue
+        character: narrator
+        text: "A Capulet. Your family's enemy. The one person in Verona you were born to hate. You have just given your heart to her."
+        hint: "Romeo's exact words on learning her identity: 'Is she a Capulet? O dear account! My life is my foe's debt.' His life is now owed to his enemy. He owes his very being to a Capulet — because without Juliet, he doesn't want a life."
+        next: f11_choice
+
+      - id: f11_choice
+        type: choice
+        text: "What do you do?"
+        options:
+          - label: "Leave the feast before this gets worse."
+            next: f12_redirect
+          - label: "Find her again tonight. You have to."
+            next: scene_balcony
+
+      - id: f12_redirect
+        type: dialogue
+        character: narrator
+        text: "You walk toward the door. You stop. You look back once. That is the last time leaving felt like an option."
+        next: scene_balcony
+
+  # ─── SCENE 2: The Balcony ─────────────────────────────────────────────────────
+  - id: scene_balcony
+    title: "What Light Through Yonder Window"
+    background: romeo_and_juliet/balcony.svg
+    nodes:
+      - id: b01_garden
+        type: dialogue
+        character: narrator
+        text: "You should have gone home with your friends. Instead you climbed the orchard wall and now stand in the Capulet garden in the dark. The house looms above you. Most of the windows are black."
+        next: b02_window_lights
+
+      - id: b02_window_lights
+        type: dialogue
+        character: narrator
+        text: "Then one window blazes with light. It opens. She steps out onto the balcony. She is speaking to the night air — talking to herself, believing she is alone."
+        next: b03_juliet_speaks
+
+      - id: b03_juliet_speaks
+        type: dialogue
+        character: juliet
+        text: "'O Romeo, Romeo — wherefore art thou Romeo? Deny thy father and refuse thy name; or, if thou wilt not, be but sworn my love, and I'll no longer be a Capulet.'"
+        hint: "'Wherefore' means 'why,' not 'where.' Juliet is not looking for Romeo — she is asking why he must be Romeo Montague, why the man she loves has to be the son of her family's enemy. She already loves him. She is asking the universe why it arranged things so badly."
+        next: b04_can_stay_silent
+
+      - id: b04_can_stay_silent
+        type: dialogue
+        character: narrator
+        text: "She doesn't know you're here. She is speaking her heart to the night and getting no answer. You could stay in the shadows. You could climb back over the wall and let this be a beautiful, impossible thing you heard once through a garden."
+        next: b05_free_text
+
+      - id: b05_free_text
+        type: free_text
+        prompt: "Juliet is speaking to the dark. You are standing in it. What do you call out to her?"
+        goal: "Accept any response where Romeo speaks up, reveals himself, calls her name, declares himself, expresses his love or presence, or answers her question about his name. Even 'I am here' or 'Juliet, it is Romeo' is sufficient. Accept anything that is a step toward her. Reject only responses where Romeo explicitly stays silent, hides, or does nothing — because he cannot stay silent in this moment."
+        hint: "Romeo answers: 'I take thee at thy word: call me but love, and I'll be new baptised; henceforth I never will be Romeo.' He offers to give up his name entirely — his family, his identity — if she will only call him hers."
+        on_success: b06_startled
+        on_fail: b05b_fail_hint
+        on_exhausted: b06_startled
+        max_attempts: 2
+
+      - id: b05b_fail_hint
+        type: dialogue
+        character: narrator
+        text: "She is right above you. She said his name — your name — to the empty air and got no answer. She deserves one. Say anything. She will understand it."
+        next: b04_can_stay_silent
+
+      - id: b06_startled
+        type: dialogue
+        character: juliet
+        text: "'What man art thou, that, thus bescreen'd in night, so stumblest on my counsel?' Her voice has gone sharp with alarm — but she has not called for help. She has not called for anyone."
+        hint: "Notice she doesn't scream. Doesn't call the guards. Even startled, she is drawn to him. Shakespeare shows us: she already knows, on some level, who is standing in her garden."
+        next: b07_steps_forward
+
+      - id: b07_steps_forward
+        type: dialogue
+        character: narrator
+        text: "You step out of the shadow. You let her see your face. The alarm in her eyes does not disappear — it becomes something else entirely."
+        next: b08_danger
+
+      - id: b08_danger
+        type: dialogue
+        character: juliet
+        text: "'How cam'st thou hither — and wherefore? The orchard walls are high and hard to climb, and the place is death, considering who thou art, if any of my kinsmen find thee here.'"
+        next: b09_chat_juliet
+
+      - id: b09_chat_juliet
+        type: chat
+        character: juliet
+        entry_line: "I am not sorry you came. I am frightened for you — my kinsmen's swords are real, and they know your face. But I am not sorry. Tell me truly: did you mean what you said tonight? All of it? Because I cannot play at this. If you mean it — then so do I. Completely."
+        next: scene_duel
+
+  # ─── SCENE 3: The Duel ────────────────────────────────────────────────────────
+  - id: scene_duel
+    title: "A Plague on Both Your Houses"
+    background: romeo_and_juliet/verona_street.svg
+    nodes:
+      - id: d01_married
+        type: dialogue
+        character: narrator
+        text: "The next morning, Friar Lawrence married you. The ceremony was brief and secret. Juliet is your wife. You are her husband. You walk through Verona in the afternoon sun feeling entirely transformed — like someone the old grudges cannot reach."
+        next: d02_friar_warning
+
+      - id: d02_friar_warning
+        type: dialogue
+        character: friar_lawrence
+        text: "'These violent delights have violent ends, Romeo — and in their triumph, die, like fire and powder. I am glad you are happy. I am asking you to be patient. Let the families learn of it gradually. Do not light any fires today.'"
+        hint: "Friar Lawrence's warning is one of the most prophetic lines in Shakespeare. 'Violent delights have violent ends' — the very intensity of Romeo and Juliet's love is what makes the tragedy inevitable. Their passion is genuine; it is also consuming."
+        next: d03_street
+
+      - id: d03_street
+        type: dialogue
+        character: narrator
+        text: "That afternoon you turn a corner in the Via della Pietra and find Tybalt waiting — Juliet's cousin, the finest swordsman in Verona, and a man who has been looking for you since he saw you at the feast."
+        next: d04_tybalt_challenge
+
+      - id: d04_tybalt_challenge
+        type: dialogue
+        character: narrator
+        text: "'Romeo, the love I bear thee can afford no better term than this: thou art a villain.' He wants blood. He knows nothing of the marriage. To him you are simply a Montague who came uninvited to his uncle's house."
+        next: d05_you_refuse
+
+      - id: d05_you_refuse
+        type: dialogue
+        character: narrator
+        text: "You try to refuse. You call him your kinsman now — you cannot tell him why — and he hears only cowardice. Your friend Mercutio can bear it no longer. He draws his sword."
+        next: d06_choice
+
+      - id: d06_choice
+        type: choice
+        text: "Mercutio and Tybalt are fighting. Your best friend, your wife's cousin. What do you do?"
+        options:
+          - label: "Step between them — break it up before someone dies."
+            next: d07_intervene
+          - label: "Stay back — call to Tybalt, reason with him."
+            next: d08_call_off
+
+      - id: d07_intervene
+        type: dialogue
+        character: narrator
+        text: "You step between them and grab Mercutio's arm. For a terrible moment the blades lower. Then Tybalt's sword finds the gap under your outstretched arm."
+        next: d09_mercutio_falls
+
+      - id: d08_call_off
+        type: dialogue
+        character: narrator
+        text: "You call to Tybalt — you try to use words. But Mercutio is already fighting, and words mean nothing in a swordfight. When Tybalt finally gets past his guard, it happens so fast you barely see it."
+        next: d09_mercutio_falls
+
+      - id: d09_mercutio_falls
+        type: dialogue
+        character: narrator
+        text: "Mercutio falls. He looks at you with something between disbelief and betrayal. 'Why the devil came you between us?' he says. 'I was hurt under your arm.' And then — 'A plague on both your houses.'"
+        hint: "'A plague on both your houses' — Mercutio's dying curse. He is not just dying; he is damning both families for the feud that killed him. This is the play's exact pivot point: from love story to tragedy. Shakespeare places it dead in the middle of the third act."
+        next: d10_tybalt_returns
+
+      - id: d10_tybalt_returns
+        type: dialogue
+        character: narrator
+        text: "Mercutio is dead. Tybalt, who has returned to look at what he has done, is standing twenty feet from you. He looks at Mercutio. He looks at you."
+        next: d11_choice
+
+      - id: d11_choice
+        type: choice
+        text: "What do you do?"
+        options:
+          - label: "Draw. This day's black fate has decided itself."
+            next: d12_fight
+          - label: "Run. Leave Verona. Reach Juliet before it's too late."
+            next: d13_run_redirect
+
+      - id: d13_run_redirect
+        type: dialogue
+        character: narrator
+        text: "For a moment you think it. Then Mercutio's voice is still in the air — 'a plague on both your houses' — and your hand has already moved to your sword before your mind agreed to it."
+        next: d12_fight
+
+      - id: d12_fight
+        type: dialogue
+        character: narrator
+        text: "The fight is short. Tybalt falls. Within minutes, the Prince's guard fills the street. The Prince hears everything. He does not order your execution — two men are dead and the blame is shared. Instead: banishment. Leave Verona, or die."
+        next: d14_banishment
+
+      - id: d14_banishment
+        type: dialogue
+        character: narrator
+        text: "Banishment. It sounds like mercy. To you, it is not. 'There is no world without Verona walls,' you tell Friar Lawrence, 'but purgatory, torture, hell itself. Hence banished is banished from the world.'"
+        hint: "Exile from Verona meant exile from Juliet. To Romeo, they were the same thing. Critics who find Romeo melodramatic here are missing the point: his world really had shrunk to her. This is not adolescent dramatics — it is the logical conclusion of a love that has consumed everything else."
+        next: d15_chat_friar
+
+      - id: d15_chat_friar
+        type: chat
+        character: friar_lawrence
+        entry_line: "Romeo. Hear me. Juliet is alive. She is in Verona. I have a plan — go to Mantua, wait, and I will send word when you can return. The Prince may yet be persuaded. The marriage, when it is known, may move him. Ask me what you need to know. And then — for the love of God — do exactly as I tell you."
+        next: scene_tomb
+
+  # ─── SCENE 4: The Tomb ────────────────────────────────────────────────────────
+  - id: scene_tomb
+    title: "Thus with a Kiss"
+    background: romeo_and_juliet/tomb.svg
+    nodes:
+      - id: t01_false_news
+        type: dialogue
+        character: narrator
+        text: "In Mantua, a letter arrives. Your servant Balthasar has ridden from Verona with news: Juliet is dead. She was found cold in her bed that morning. She has been laid in the Capulet vault."
+        hint: "The tragedy turns on a letter that never arrived. Friar Lawrence had sent word to Romeo explaining everything — the sleeping potion, the plan, the forty-two hours. Balthasar didn't know. He arrived first. Romeo didn't wait."
+        next: t02_no_wait
+
+      - id: t02_no_wait
+        type: dialogue
+        character: narrator
+        text: "You don't ask questions. You don't wait for any second letter. You buy poison from a desperate apothecary in Mantua — 'let me have a dram of poison, such soon-speeding gear as will disperse itself through all the veins' — and you ride for Verona."
+        next: t03_the_vault
+
+      - id: t03_the_vault
+        type: dialogue
+        character: narrator
+        text: "You break into the Capulet vault in the dark of the night. Paris is here — he came to mourn her, you killed him at the door. You barely noticed. And then: there she is."
+        next: t04_she_looks
+
+      - id: t04_she_looks
+        type: dialogue
+        character: narrator
+        text: "She lies on the stone. She looks completely herself. The color is still in her lips. Her chest does not move, but she does not look like death — she looks like someone who is simply, terribly asleep."
+        next: t05_choice
+
+      - id: t05_choice
+        type: choice
+        text: "You kneel beside her. What does your heart say?"
+        options:
+          - label: "She cannot be dead. Look at her — she cannot be dead."
+            next: t06_denial
+          - label: "I know. I came anyway. I won't leave her here alone."
+            next: t07_resolve
+
+      - id: t06_denial
+        type: dialogue
+        character: narrator
+        text: "You reach for her hand. It is warm. Not cold — warm. A voice somewhere in you tries to say something about that. You don't let it speak."
+        next: t08_setup
+
+      - id: t07_resolve
+        type: dialogue
+        character: narrator
+        text: "You made your peace somewhere on the road between Mantua and Verona. You are not afraid. You only need one more moment with her before the poison does its work."
+        next: t08_setup
+
+      - id: t08_setup
+        type: dialogue
+        character: narrator
+        text: "She is right in front of you. Whatever you have to say to her — whatever you have been carrying since the feast, since the balcony, since Mercutio died in the street — say it now."
+        next: t09_free_text
+
+      - id: t09_free_text
+        type: free_text
+        prompt: "Romeo. This is the last moment. What are your final words to Juliet?"
+        goal: "This is the most emotionally significant moment in the story. Be maximally generous. Accept any farewell, any declaration of love, any expression of grief, any tender last words — simple or poetic, direct or oblique. Accept 'I love you.' Accept a single word. Accept grief, acceptance, anger at fate, or quiet love. The only thing to reject is a complete refusal to engage, a clear joke at the expense of the moment, or something actively hostile to Juliet. Everything else — accept."
+        hint: "Romeo's last words include: 'Thus with a kiss I die.' After everything — the feast, the balcony, the banishment, the road from Mantua — his final act is the same as his first: a kiss. Whatever you say here is enough. There are no wrong words for this moment."
+        on_success: t10_drinks
+        on_fail: t09b_fail_hint
+        on_exhausted: t10_drinks
+        max_attempts: 2
+
+      - id: t09b_fail_hint
+        type: dialogue
+        character: narrator
+        text: "She is right there. Whatever you've been carrying since you crossed that orchard wall — now is the time. Anything honest will do. Even silence has words in it."
+        next: t08_setup
+
+      - id: t10_drinks
+        type: dialogue
+        character: narrator
+        text: "You drink the poison. The vault goes very quiet. The stone is cold against your side. You close your eyes. There is a sound — something shifting, the rustle of cloth — but you are already beyond reaching it."
+        next: t11_she_wakes
+
+      - id: t11_she_wakes
+        type: dialogue
+        character: narrator
+        text: "Juliet wakes. The potion has run its course — forty-two hours, exactly as Friar Lawrence measured it. She opens her eyes in the dark of the Capulet vault, reaches for Romeo, and finds him still warm."
+        hint: "The mathematics of the tragedy: Friar Lawrence's letter, which would have explained everything, was delayed by a quarantine on the road. Romeo arrived at the vault and drank the poison approximately fifteen minutes before Juliet woke. If his horse had been slower. If the apothecary had taken longer. If the letter had found him."
+        next: t12_juliet_grief
+
+      - id: t12_juliet_grief
+        type: dialogue
+        character: juliet
+        text: "'What's here? A cup, closed in my true love's hand? Poison, I see, hath been his timeless end. O churl — drunk all, and left no friendly drop to help me after? I will kiss thy lips; haply some poison yet doth hang on them, to make me die with a restorative.'"
+        next: t13_the_end
+
+      - id: t13_the_end
+        type: dialogue
+        character: narrator
+        text: "The Prince came. The families came. In the vault, faced with their children's bodies, the Montagues and the Capulets finally, at last, put their swords down. The feud ended. It is the worst kind of victory."
+        hint: "Prince Escalus's closing words: 'A glooming peace this morning with it brings; the sun, for sorrow, will not show his head. For never was a story of more woe than this of Juliet and her Romeo.' Shakespeare gives the last word not to love, not to grief — but to consequence."
+        next: t14_chat_friar
+
+      - id: t14_chat_friar
+        type: chat
+        character: friar_lawrence
+        entry_line: "God forgive me. I sent the letter. It did not arrive. I thought — I truly believed — that love between a Montague and a Capulet was the one thing that could end this. I was not wrong about the love. I was wrong about the time it would be given. Ask me what you need to ask. I owe you that much, and more."
+        next: t15_final
+
+      - id: t15_final
+        type: dialogue
+        character: narrator
+        text: "THE END · Romeo and Juliet · Written by William Shakespeare · First performed approximately 1594–1596 · Based on an Italian tale by Matteo Bandello (1554), itself adapted from Luigi da Porto (1530) · Shakespeare made it poetry, made it immortal, and made the tragedy inevitable from the first line."
+        hint: "Suggested reading: The original text is shorter than you think — about 3,000 lines, two hours on stage. Franco Zeffirelli's 1968 film is the most faithful. Baz Luhrmann's 1996 film (modern setting, original text) is the most electric. For the play as literature: Harold Bloom's 'Shakespeare: The Invention of the Human.' The play invented the idea that love could be worth dying for — and then spent five acts showing you the cost."

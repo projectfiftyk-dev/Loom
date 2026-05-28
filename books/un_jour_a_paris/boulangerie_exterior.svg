@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="boul_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#B8D0E8"/>
+      <stop offset="100%" stop-color="#E8D8B0"/>
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="675" fill="url(#boul_sky)"/>
+  <!-- Street -->
+  <rect x="0" y="525" width="1200" height="150" fill="#5A5048"/>
+  <rect x="0" y="525" width="1200" height="3" fill="#7A6A58" opacity="0.6"/>
+  <!-- Building facade - classic Haussmann cream -->
+  <rect x="150" y="60" width="900" height="485" fill="#E8D8B8"/>
+  <!-- Window mouldings row 1 -->
+  <rect x="210" y="110" width="120" height="160" fill="#5A7A90" opacity="0.55" rx="3"/>
+  <rect x="212" y="112" width="116" height="156" fill="none" stroke="#C8B890" stroke-width="4" rx="2"/>
+  <line x1="270" y1="112" x2="270" y2="268" stroke="#C8B890" stroke-width="3"/>
+  <rect x="560" y="110" width="80"  height="160" fill="#5A7A90" opacity="0.55" rx="3"/>
+  <rect x="562" y="112" width="76"  height="156" fill="none" stroke="#C8B890" stroke-width="4" rx="2"/>
+  <rect x="870" y="110" width="120" height="160" fill="#5A7A90" opacity="0.55" rx="3"/>
+  <rect x="872" y="112" width="116" height="156" fill="none" stroke="#C8B890" stroke-width="4" rx="2"/>
+  <line x1="930" y1="112" x2="930" y2="268" stroke="#C8B890" stroke-width="3"/>
+  <!-- Awning - deep navy blue with gold trim -->
+  <path d="M 130,260 L 1070,260 L 1040,320 L 160,320 Z" fill="#1A2A4A"/>
+  <path d="M 130,260 L 1070,260 L 1040,320 L 160,320 Z" fill="none" stroke="#C8A840" stroke-width="3"/>
+  <!-- Awning scalloped edge -->
+  <path d="M 160,320 Q175,338 190,320 Q205,338 220,320 Q235,338 250,320 Q265,338 280,320 Q295,338 310,320 Q325,338 340,320 Q355,338 370,320 Q385,338 400,320 Q415,338 430,320 Q445,338 460,320 Q475,338 490,320 Q505,338 520,320 Q535,338 550,320 Q565,338 580,320 Q595,338 610,320 Q625,338 640,320 Q655,338 670,320 Q685,338 700,320 Q715,338 730,320 Q745,338 760,320 Q775,338 790,320 Q805,338 820,320 Q835,338 850,320 Q865,338 880,320 Q895,338 910,320 Q925,338 940,320 Q955,338 970,320 Q985,338 1000,320 Q1015,338 1030,320 Q1040,320 1040,320" fill="#1A2A4A" stroke="#C8A840" stroke-width="2"/>
+  <!-- Shop name on awning -->
+  <text x="600" y="297" font-family="Georgia,'Times New Roman',serif" font-size="32" fill="#F0D880"
+        text-anchor="middle" font-style="italic" letter-spacing="2">Boulangerie · Pâtisserie</text>
+  <!-- Display window -->
+  <rect x="330" y="335" width="540" height="210" fill="#4A6880" opacity="0.5" rx="3"/>
+  <line x1="600" y1="335" x2="600" y2="545" stroke="#C8B890" stroke-width="4"/>
+  <rect x="330" y="335" width="540" height="210" fill="none" stroke="#C8B890" stroke-width="4" rx="3"/>
+  <!-- Pastries/bread in window -->
+  <ellipse cx="420" cy="490" rx="55" ry="20" fill="#8B5A18" opacity="0.8"/>
+  <ellipse cx="420" cy="475" rx="45" ry="22" fill="#C88A30"/>
+  <text x="420" y="480" font-family="serif" font-size="11" fill="#6A3808" text-anchor="middle" opacity="0.7">baguette</text>
+  <ellipse cx="540" cy="480" rx="32" ry="28" fill="#C8A050" opacity="0.9"/>
+  <ellipse cx="540" cy="466" rx="25" ry="20" fill="#E8C060"/>
+  <ellipse cx="660" cy="485" rx="38" ry="25" fill="#B87828" opacity="0.9"/>
+  <ellipse cx="660" cy="470" rx="30" ry="22" fill="#D8983A"/>
+  <ellipse cx="770" cy="480" rx="28" ry="28" fill="#C89040" opacity="0.9"/>
+  <ellipse cx="770" cy="466" rx="22" ry="22" fill="#E8B858"/>
+  <!-- Door -->
+  <rect x="510" y="390" width="180" height="155" fill="#1A2A4A" rx="5"/>
+  <rect x="518" y="398" width="70"  height="80" fill="#3A5A7A" opacity="0.5" rx="2"/>
+  <rect x="602" y="398" width="70"  height="80" fill="#3A5A7A" opacity="0.5" rx="2"/>
+  <text x="600" y="488" font-family="serif" font-size="13" fill="#C8A840" text-anchor="middle">ENTREZ</text>
+  <!-- Sign above window -->
+  <rect x="380" y="155" width="440" height="58" fill="#1A2A4A" rx="5"/>
+  <text x="600" y="193" font-family="Georgia,'Times New Roman',serif" font-size="26" fill="#F0D880"
+        text-anchor="middle" font-style="italic">Sophie · depuis 2010</text>
+  <!-- Label -->
+  <text x="80" y="635" font-family="Georgia,'Times New Roman',serif" font-size="26" fill="#F0E6CC" opacity="0.7" font-style="italic">Paris · Boulangerie · Le matin</text>
+</svg>

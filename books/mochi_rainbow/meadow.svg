@@ -1,0 +1,177 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="meadow_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#5AB0F0"/>
+      <stop offset="60%" stop-color="#90D0F8"/>
+      <stop offset="100%" stop-color="#C8E8F8"/>
+    </linearGradient>
+    <linearGradient id="meadow_grass" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#6AAA40"/>
+      <stop offset="100%" stop-color="#4A8828"/>
+    </linearGradient>
+    <radialGradient id="sun_glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#FFF0A0" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#FFF0A0" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Sky -->
+  <rect width="1200" height="675" fill="url(#meadow_sky)"/>
+
+  <!-- Sun -->
+  <circle cx="950" cy="110" r="60" fill="#FFF0A0" opacity="0.3"/>
+  <circle cx="950" cy="110" r="40" fill="#FFE050" opacity="0.7"/>
+  <circle cx="950" cy="110" r="28" fill="#FFD020"/>
+
+  <!-- Fluffy white clouds -->
+  <ellipse cx="200" cy="90" rx="95" ry="42" fill="white" opacity="0.9"/>
+  <ellipse cx="270" cy="78" rx="72" ry="36" fill="white" opacity="0.9"/>
+  <ellipse cx="140" cy="95" rx="60" ry="30" fill="white" opacity="0.85"/>
+  <ellipse cx="650" cy="70" rx="85" ry="38" fill="white" opacity="0.85"/>
+  <ellipse cx="715" cy="60" rx="65" ry="32" fill="white" opacity="0.85"/>
+  <ellipse cx="595" cy="74" rx="55" ry="28" fill="white" opacity="0.85"/>
+
+  <!-- Ground -->
+  <rect x="0" y="480" width="1200" height="195" fill="url(#meadow_grass)"/>
+  <rect x="0" y="480" width="1200" height="8" fill="#82C450" opacity="0.7"/>
+
+  <!-- Rolling hills in background -->
+  <ellipse cx="150" cy="490" rx="280" ry="100" fill="#78B840" opacity="0.5"/>
+  <ellipse cx="1050" cy="485" rx="300" ry="110" fill="#6AAA38" opacity="0.5"/>
+  <ellipse cx="600" cy="498" rx="350" ry="80" fill="#72B240" opacity="0.4"/>
+
+  <!-- Grass texture -->
+  <ellipse cx="80" cy="482" rx="25" ry="7" fill="#8ACC58" opacity="0.6"/>
+  <ellipse cx="200" cy="481" rx="20" ry="6" fill="#8ACC58" opacity="0.5"/>
+  <ellipse cx="380" cy="482" rx="28" ry="7" fill="#8ACC58" opacity="0.6"/>
+  <ellipse cx="820" cy="481" rx="22" ry="6" fill="#8ACC58" opacity="0.5"/>
+  <ellipse cx="1100" cy="482" rx="26" ry="7" fill="#8ACC58" opacity="0.6"/>
+
+  <!-- Small flowers scattered -->
+  <!-- Red tulips left -->
+  <line x1="120" y1="498" x2="120" y2="468" stroke="#4A8228" stroke-width="3"/>
+  <ellipse cx="120" cy="462" rx="9" ry="12" fill="#E83838"/>
+  <line x1="145" y1="502" x2="145" y2="475" stroke="#4A8228" stroke-width="3"/>
+  <ellipse cx="145" cy="469" rx="8" ry="11" fill="#F07820"/>
+  <line x1="98" y1="502" x2="96" y2="476" stroke="#4A8228" stroke-width="3"/>
+  <ellipse cx="96" cy="470" rx="8" ry="10" fill="#E05050"/>
+
+  <!-- Purple flowers right -->
+  <line x1="1050" y1="499" x2="1050" y2="470" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="1050" cy="462" r="9" fill="#A060C8"/>
+  <circle cx="1055" cy="456" r="5" fill="#C080E8"/>
+  <line x1="1075" y1="501" x2="1074" y2="474" stroke="#4A8228" stroke-width="3"/>
+  <circle cx="1074" cy="466" r="8" fill="#9050B8"/>
+
+  <!-- Butterflies -->
+  <ellipse cx="400" cy="300" rx="14" ry="8" fill="#F0C050" opacity="0.8" transform="rotate(-20 400 300)"/>
+  <ellipse cx="415" cy="300" rx="14" ry="8" fill="#F0C050" opacity="0.8" transform="rotate(20 415 300)"/>
+  <circle cx="407" cy="300" r="3" fill="#8A5020"/>
+  <ellipse cx="800" cy="260" rx="12" ry="7" fill="#60C8F0" opacity="0.7" transform="rotate(-25 800 260)"/>
+  <ellipse cx="813" cy="260" rx="12" ry="7" fill="#60C8F0" opacity="0.7" transform="rotate(25 813 260)"/>
+  <circle cx="806" cy="260" r="2.5" fill="#2A5A7A"/>
+
+  <!-- Ladybug on a leaf near center -->
+  <ellipse cx="680" cy="490" rx="22" ry="10" fill="#5AAA38"/>
+  <circle cx="680" cy="485" r="10" fill="#E82020"/>
+  <circle cx="680" cy="485" r="4" fill="#1A1A1A"/>
+  <circle cx="675" cy="481" r="2.5" fill="#1A1A1A"/>
+  <circle cx="685" cy="481" r="2.5" fill="#1A1A1A"/>
+  <line x1="680" y1="481" x2="680" y2="476" stroke="#1A1A1A" stroke-width="1.5"/>
+  <!-- 6 legs! -->
+  <line x1="672" y1="484" x2="664" y2="481" stroke="#1A1A1A" stroke-width="1.5"/>
+  <line x1="672" y1="487" x2="663" y2="487" stroke="#1A1A1A" stroke-width="1.5"/>
+  <line x1="672" y1="490" x2="664" y2="493" stroke="#1A1A1A" stroke-width="1.5"/>
+  <line x1="688" y1="484" x2="696" y2="481" stroke="#1A1A1A" stroke-width="1.5"/>
+  <line x1="688" y1="487" x2="697" y2="487" stroke="#1A1A1A" stroke-width="1.5"/>
+  <line x1="688" y1="490" x2="696" y2="493" stroke="#1A1A1A" stroke-width="1.5"/>
+
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- SUNNY the sunflower — big, center-left of scene    -->
+  <!-- ═══════════════════════════════════════════════════ -->
+  <!-- Stem -->
+  <rect x="412" y="390" width="18" height="110" fill="#5A9A28" rx="4"/>
+  <!-- Leaves on stem -->
+  <ellipse cx="404" cy="450" rx="28" ry="12" fill="#5AAA30" transform="rotate(-30 404 450)"/>
+  <ellipse cx="440" cy="470" rx="26" ry="11" fill="#5AAA30" transform="rotate(25 440 470)"/>
+  <!-- Petals - big sunflower -->
+  <ellipse cx="421" cy="330" rx="14" ry="24" fill="#FFD020"/>
+  <ellipse cx="421" cy="394" rx="14" ry="24" fill="#FFD020"/>
+  <ellipse cx="388" cy="362" rx="24" ry="14" fill="#FFD020"/>
+  <ellipse cx="454" cy="362" rx="24" ry="14" fill="#FFD020"/>
+  <ellipse cx="398" cy="337" rx="14" ry="24" fill="#FFD020" transform="rotate(-45 398 337)"/>
+  <ellipse cx="444" cy="337" rx="14" ry="24" fill="#FFD020" transform="rotate(45 444 337)"/>
+  <ellipse cx="398" cy="387" rx="14" ry="24" fill="#FFD020" transform="rotate(45 398 387)"/>
+  <ellipse cx="444" cy="387" rx="14" ry="24" fill="#FFD020" transform="rotate(-45 444 387)"/>
+  <!-- Sunny face center -->
+  <circle cx="421" cy="362" r="38" fill="#F5A820"/>
+  <circle cx="421" cy="362" r="33" fill="#FFC030"/>
+  <!-- Sunny eyes - happy! -->
+  <circle cx="409" cy="356" r="9" fill="white"/>
+  <circle cx="433" cy="356" r="9" fill="white"/>
+  <circle cx="411" cy="357" r="6" fill="#4A2A0A"/>
+  <circle cx="435" cy="357" r="6" fill="#4A2A0A"/>
+  <circle cx="413" cy="355" r="2" fill="white"/>
+  <circle cx="437" cy="355" r="2" fill="white"/>
+  <!-- Nose -->
+  <circle cx="421" cy="366" r="3.5" fill="#C07010"/>
+  <!-- Big happy smile -->
+  <path d="M 408,372 Q 421,383 434,372" fill="none" stroke="#C07010" stroke-width="3" stroke-linecap="round"/>
+  <!-- Rosy cheeks -->
+  <circle cx="398" cy="368" r="7" fill="#F09050" opacity="0.4"/>
+  <circle cx="444" cy="368" r="7" fill="#F09050" opacity="0.4"/>
+
+  <!-- ═════════════════════════════════════════════ -->
+  <!-- MOCHI — right side of scene, happy running   -->
+  <!-- ═════════════════════════════════════════════ -->
+  <!-- Mochi shadow -->
+  <ellipse cx="820" cy="598" rx="45" ry="10" fill="#3A7820" opacity="0.3"/>
+  <!-- Mochi body -->
+  <ellipse cx="820" cy="555" rx="46" ry="40" fill="#F0A040"/>
+  <!-- Ears -->
+  <circle cx="788" cy="512" r="18" fill="#E8882A"/>
+  <circle cx="852" cy="512" r="18" fill="#E8882A"/>
+  <circle cx="788" cy="512" r="10" fill="#F5B870"/>
+  <circle cx="852" cy="512" r="10" fill="#F5B870"/>
+  <!-- Head -->
+  <circle cx="820" cy="528" r="38" fill="#F5A050"/>
+  <!-- Snout -->
+  <ellipse cx="820" cy="540" rx="18" ry="12" fill="#F0C080"/>
+  <!-- Happy eyes -->
+  <circle cx="808" cy="522" r="10" fill="white"/>
+  <circle cx="832" cy="522" r="10" fill="white"/>
+  <circle cx="810" cy="523" r="6.5" fill="#2A1A0A"/>
+  <circle cx="834" cy="523" r="6.5" fill="#2A1A0A"/>
+  <circle cx="812" cy="521" r="2" fill="white"/>
+  <circle cx="836" cy="521" r="2" fill="white"/>
+  <!-- Nose -->
+  <ellipse cx="820" cy="535" rx="4.5" ry="3.5" fill="#C05820"/>
+  <!-- Big smile -->
+  <path d="M 812,543 Q 820,550 828,543" fill="none" stroke="#C05820" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Rosy cheeks -->
+  <circle cx="800" cy="533" r="7" fill="#F08040" opacity="0.35"/>
+  <circle cx="840" cy="533" r="7" fill="#F08040" opacity="0.35"/>
+  <!-- Waving arms -->
+  <path d="M 782,548 Q 762,535 758,518" fill="none" stroke="#F0A040" stroke-width="13" stroke-linecap="round"/>
+  <ellipse cx="756" cy="514" rx="14" ry="11" fill="#F0A040"/>
+  <path d="M 858,548 Q 878,535 882,522" fill="none" stroke="#F0A040" stroke-width="13" stroke-linecap="round"/>
+  <ellipse cx="884" cy="518" rx="14" ry="11" fill="#F0A040"/>
+  <!-- Legs running -->
+  <path d="M 800,592 Q 790,610 778,618" fill="none" stroke="#F0A040" stroke-width="12" stroke-linecap="round"/>
+  <ellipse cx="774" cy="620" rx="12" ry="9" fill="#F0A040"/>
+  <path d="M 840,590 Q 855,607 862,618" fill="none" stroke="#F0A040" stroke-width="12" stroke-linecap="round"/>
+  <ellipse cx="866" cy="620" rx="12" ry="9" fill="#F0A040"/>
+
+  <!-- Red gem floating above ground near Sunny -->
+  <polygon points="510,435 525,420 540,435 525,455" fill="#E83040" opacity="0.9"/>
+  <polygon points="510,435 525,420 540,435 525,455" fill="none" stroke="#FF6080" stroke-width="2"/>
+  <ellipse cx="525" cy="435" rx="8" ry="6" fill="#FF8090" opacity="0.5"/>
+
+  <!-- Sparkle around gem -->
+  <line x1="525" y1="408" x2="525" y2="416" stroke="#FFB0B8" stroke-width="2"/>
+  <line x1="545" y1="425" x2="553" y2="425" stroke="#FFB0B8" stroke-width="2"/>
+  <line x1="497" y1="425" x2="505" y2="425" stroke="#FFB0B8" stroke-width="2"/>
+
+  <!-- Label -->
+  <text x="60" y="655" font-family="Georgia,'Times New Roman',serif" font-size="22" fill="#1A3A08" opacity="0.65" font-style="italic">Sunny's Meadow · The Red Gem</text>
+</svg>

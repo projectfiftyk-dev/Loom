@@ -1,0 +1,486 @@
+metadata:
+  title: "The Hot Gates: Stand with the 300"
+  author: "Loom for Learning"
+  version: "1.0"
+  language: en
+  cover_image: thermopylae/sparta.svg
+  description: |
+    The year is 480 BC. Xerxes I, King of Kings, commands the largest army the ancient world has ever seen — marching to devour Greece. At a narrow coastal pass called Thermopylae, King Leonidas of Sparta takes 300 warriors to hold the line. Stand with them. Learn why three days changed the course of history.
+  tags:
+    - history
+    - ancient greece
+    - battle of thermopylae
+    - 480 BC
+    - sparta
+    - educational
+    - ages 14+
+  style: forest
+
+settings:
+  max_free_text_attempts: 3
+  allow_chat_rewind: false
+
+characters:
+  - id: leonidas
+    name: Leonidas I
+    avatar: thermopylae/leonidas_avatar.svg
+    color: "#C8502A"
+    is_chat_character: true
+    recall_history: true
+    personality: |
+      You are Leonidas I, King of Sparta, speaking in 480 BC at the pass of Thermopylae.
+      You are approximately 60 years old. You have trained as a warrior since age seven.
+      You speak in short, powerful sentences — Spartan brevity is a point of pride.
+      Never waste words. Say in five words what others would say in fifty.
+      You are calm, even in the face of death. You chose this battle knowingly.
+      You are aware of the Oracle's prophecy: either Sparta falls, or one of her kings must.
+      You address the player as a fellow soldier, with direct respect.
+      You may reference historical facts about Sparta, the agoge, the battle, Greek politics.
+      Famous phrases available to you: "Molon labe" (come and take them),
+      "With your shield or on it," references to Spartan law and honor.
+      Keep responses to 2-3 short, weighted sentences. No modern language. Stay in 480 BC.
+      If the player asks about your family, your wife Gorgo, or your choice to die here,
+      answer honestly and without self-pity — a Spartan does not perform grief.
+
+  - id: dilios
+    name: Dilios
+    avatar: thermopylae/dilios_avatar.svg
+    color: "#4A7A9A"
+    is_chat_character: true
+    recall_history: false
+    personality: |
+      You are Dilios, a Spartan soldier and the man Leonidas chose to carry the story south.
+      You are a gifted storyteller — vivid, precise, proud.
+      Leonidas sent you away before the final battle so that someone would survive to tell it.
+      You speak with historical detail and controlled emotion. You were there. You saw it.
+      You can explain: the agoge, the phalanx formation, the geography of Thermopylae,
+      the Persian Empire under Xerxes, the role of the Battle of Salamis, Greek city-state politics,
+      the role of the Thespians and other allies, the Ephialtes betrayal, the epitaph of Simonides.
+      Keep responses to 3-4 sentences. Stay in character as a Greek soldier of 480 BC
+      who has had decades to reflect on what he witnessed.
+      Speak with the pride of a man who carries the dead in his memory.
+
+  - id: narrator
+    name: Narrator
+    color: "#6A5A48"
+
+scenes:
+  # ─── SCENE 1: Sparta — The Departure ─────────────────────────────────────────
+  - id: scene_sparta
+    title: "Sparta, 480 BC"
+    start: true
+    background: thermopylae/sparta.svg
+    nodes:
+      - id: s01_context
+        type: dialogue
+        character: narrator
+        text: "The year is 480 BC. Xerxes I — King of Kings, ruler of the Persian Empire from Egypt to India — has assembled the largest army the ancient world has ever seen. He is marching west. His target: Greece."
+        next: s02_demand
+
+      - id: s02_demand
+        type: dialogue
+        character: narrator
+        text: "His heralds have already visited every Greek city-state with the same demand: offer earth and water, the symbols of submission to Persia. Many cities are considering it. A few have already agreed."
+        next: s03_leonidas_well
+
+      - id: s03_leonidas_well
+        type: dialogue
+        character: leonidas
+        text: "The herald asked Sparta for earth and water. I showed him our well. He is welcome to dig them out himself."
+        hint: "Sparta threw two Persian heralds into a well — a deliberate violation of the ancient Greek custom of herald immunity. This was not impulsive violence; it was a calculated statement. Sparta would not negotiate, would not submit, and had contempt for the very concept of the demand."
+        next: s04_narrator_300
+
+      - id: s04_narrator_300
+        type: dialogue
+        character: narrator
+        text: "A religious festival — the Carneia — prevented Sparta's full army from marching. So Leonidas selected 300 men to go ahead. Every man chosen was a father with a living son. If they fell, their bloodlines would continue. Sparta would survive them."
+        hint: "The Carneia was a Spartan religious festival sacred to Apollo, during which military campaigning was forbidden. Leonidas used the festival as partial justification — and perhaps as cover for the fact that he was deliberately choosing a force he could afford to sacrifice for maximum strategic effect."
+        next: s05_dilios_allies
+
+      - id: s05_dilios_allies
+        type: dialogue
+        character: dilios
+        text: "We were not alone. Seven thousand Greeks marched north with us — Arcadians, Corinthians, Thespians, Thebans, Phocians, men from a dozen city-states. But in the stories that have survived, it is always the 300 who are remembered. Make of that what you will."
+        next: s06_choice
+
+      - id: s06_choice
+        type: choice
+        text: "Before the march north, you have a moment with Leonidas and Dilios. What do you want to understand?"
+        options:
+          - label: "What is the agoge — Sparta's warrior training?"
+            next: s07_agoge
+          - label: "What did the Oracle of Delphi prophesy?"
+            next: s09_oracle
+          - label: "I am ready. Tell me of Thermopylae."
+            next: s11_march
+
+      - id: s07_agoge
+        type: dialogue
+        character: dilios
+        text: "Every Spartan boy is taken from his mother at age seven and placed in the agoge — the training program. Twenty years of discipline: sleeping on reed mats in winter, fighting for food, learning to endure pain without complaint. By the time a Spartan calls himself a warrior, he has survived twenty years of hardship that would break most soldiers before breakfast."
+        hint: "The agoge (ἀγωγή, ah-go-GAY) was Sparta's state education program. Boys trained from age 7 to 18 in peer 'herds' (agelai), then served as soldiers until 30. Key elements: deliberate hunger, harsh weather exposure, forced theft (to develop resourcefulness — you were punished only for being caught), and relentless physical conditioning. The goal was not just strong bodies — it was the complete elimination of fear."
+        next: s08_agoge2
+
+      - id: s08_agoge2
+        type: dialogue
+        character: leonidas
+        text: "You cannot make a man brave the night before battle. You make him brave over twenty years. The agoge does not teach courage. It removes everything that gets in courage's way."
+        next: s06_choice
+
+      - id: s09_oracle
+        type: dialogue
+        character: dilios
+        text: "The Oracle at Delphi spoke plainly to Leonidas: either Sparta falls, or one of her kings must fall. He heard both fates clearly. He chose the second — to die at Thermopylae so that his city would live. He has known this day was coming since he heard those words."
+        hint: "Herodotus records the Oracle's prophecy: 'Either your great and glorious city must be sacked by the children of Perseus, or if that be not, the whole land of Lacedaemon shall mourn the death of a king of the house of Heracles.' Leonidas was of the Agiad dynasty, descended — according to Spartan tradition — from Heracles. The prophecy was personal."
+        next: s10_oracle2
+
+      - id: s10_oracle2
+        type: dialogue
+        character: leonidas
+        text: "I chose these 300 men carefully. Every one is a father. If I fall here, they fall as men who have already done their duty to Sparta's future. I chose this death. There is a difference between dying and being killed."
+        next: s06_choice
+
+      - id: s11_march
+        type: dialogue
+        character: leonidas
+        text: "Thermopylae. 'The Hot Gates.' A pass between mountain and sea — fifteen meters wide at its narrowest. That is where we stop them. Or at least slow them long enough for Greece to prepare what comes next."
+        next: s12_march2
+
+      - id: s12_march2
+        type: dialogue
+        character: narrator
+        text: "The army begins its march north. Somewhere ahead, Xerxes' force — 200,000 soldiers by conservative count — is already moving. The two armies will meet at a narrow crack in the landscape of Greece, where a king has decided to spend his life buying time."
+        next: scene_arrival
+
+  # ─── SCENE 2: The Hot Gates — Arrival ────────────────────────────────────────
+  - id: scene_arrival
+    title: "The Hot Gates"
+    background: thermopylae/thermopylae_pass.svg
+    nodes:
+      - id: a01_arrive
+        type: dialogue
+        character: narrator
+        text: "You reach Thermopylae — 'the Hot Gates,' named for the sulfur springs that bubble here. To your left: the sheer cliffs of Mount Kallidromos, hundreds of meters of impassable rock. To your right: the Malian Gulf, cold grey water. Between them: a dirt track barely wide enough for a cart."
+        next: a02_width
+
+      - id: a02_width
+        type: dialogue
+        character: dilios
+        text: "At the Middle Gate — the narrowest point — the pass is approximately fifteen meters wide. You could lay seven men end to end and fill it entirely. Against this width, Xerxes' 200,000 soldiers become, at most, forty soldiers at a time. Numbers mean nothing here. Only discipline means anything here."
+        next: a03_wall
+
+      - id: a03_wall
+        type: dialogue
+        character: narrator
+        text: "The Greeks reinforce an ancient Phocian wall across the Middle Gate. One thousand Phocian soldiers are dispatched into the mountains to guard the Anopaea — the goat path that winds around the cliffs. It is the one route that could allow the Persians to encircle the entire position."
+        hint: "The Anopaea (Ἀνόπαια) path was approximately 10 miles long through difficult mountain terrain. Leonidas knew it existed and knew it was the critical vulnerability. The 1,000 Phocians posted there were meant to hold it — or at least provide warning. They would fail at both."
+        next: a04_choice
+
+      - id: a04_choice
+        type: choice
+        text: "Dilios turns to you: 'Tell me, soldier — why does this narrow pass change everything about this battle?'"
+        options:
+          - label: "It collapses Persia's numerical advantage to a fighting front of forty at a time"
+            next: a05_correct
+          - label: "The mountain cliffs give us high ground for archers"
+            next: a06_wrong1
+          - label: "It forces the Persians to abandon their cavalry on open ground"
+            next: a07_wrong2
+
+      - id: a05_correct
+        type: dialogue
+        character: dilios
+        text: "Exactly. In open ground, 7,000 against 200,000 is arithmetic — we lose. In a pass fifteen meters wide, their millions collapse to the same narrow front our 300 can hold. Xerxes' greatest weapon is his vastness. We have taken it from him."
+        hint: "The strategic principle Leonidas exploited is still studied in military academies: force multiplication through terrain. A superior force's numbers become irrelevant when the engagement front is so narrow that only a fraction can fight at once. Thermopylae is the textbook example of this principle being applied with perfect precision."
+        next: a08_leonidas_time
+
+      - id: a06_wrong1
+        type: dialogue
+        character: dilios
+        text: "The mountains are cliffs, not battlements — they are walls, not platforms. Our archers are few. The key insight is simpler: the width of the front. The cliffs don't help us fight; they help us by preventing the Persians from going around us."
+        next: a04_choice
+
+      - id: a07_wrong2
+        type: dialogue
+        character: dilios
+        text: "The cavalry argument has merit — horses are useless in this space — but the Persians relied primarily on infantry at Thermopylae. The core insight is the fighting front: forty Persians at a time, facing Spartan warriors who have trained thirty years for exactly this kind of brutal close-quarters fighting."
+        next: a04_choice
+
+      - id: a08_leonidas_time
+        type: dialogue
+        character: leonidas
+        text: "We do not need to win. We need three days. Three days for Themistocles to position the fleet. Three days for Athens to prepare what comes after us. Three days is a price I am willing to pay."
+        hint: "Themistocles of Athens designed the dual-chokepoint strategy: Leonidas holds the land passage at Thermopylae while the Athenian navy under Themistocles blocks the sea passage at nearby Artemisium. If both held, Xerxes' advance would stall completely. If both fell — Greece would need a third plan."
+        next: scene_herald
+
+  # ─── SCENE 3: Molon Labe — The Herald ────────────────────────────────────────
+  - id: scene_herald
+    title: "Molon Labe"
+    background: thermopylae/persian_host.svg
+    nodes:
+      - id: h01_calm
+        type: dialogue
+        character: narrator
+        text: "For four days, Xerxes waits at the edge of the pass, certain the Greeks will lose their nerve and flee. His cavalry scouts return with an unexpected report: the Spartans are exercising in the open. Some are sitting in the sun, combing their long hair."
+        next: h02_demaratus
+
+      - id: h02_demaratus
+        type: dialogue
+        character: dilios
+        text: "A former Spartan king named Demaratus — exiled, now advisor to Xerxes — warned him: 'When Spartans adorn their heads before battle, it means they intend to kill or be killed.' Xerxes laughed. He stopped laughing later."
+        hint: "Demaratus (Δημάρατος) was deposed as Spartan king around 491 BC after a political dispute and fled to Persia. Herodotus portrays him as a man of integrity who repeatedly warned Xerxes about Spartan resolve. Xerxes valued his advice but rarely followed it. Demaratus also secretly warned Sparta of the coming invasion by writing a message on a wax tablet — one of history's earliest recorded intelligence operations."
+        next: h03_waiting
+
+      - id: h03_waiting
+        type: dialogue
+        character: narrator
+        text: "Xerxes waits two more days. The Greeks do not move. On the fifth day, he sends his herald forward with a final formal demand."
+        next: h04_offer
+
+      - id: h04_offer
+        type: dialogue
+        character: narrator
+        text: "The herald's voice carries across the wall: 'The Great King Xerxes, master of all nations, commands you to lay down your spears and shields. Surrender your arms. Yield, and he will give you better land than you now possess, and keep you in honor. Resist, and you will be destroyed utterly.'"
+        next: h05_choice
+
+      - id: h05_choice
+        type: choice
+        text: "Leonidas turns to you. Sparta answers with two words. Do you know them?"
+        options:
+          - label: "Μολὼν λαβέ — Come and take them."
+            next: h06_correct
+          - label: "Sparta does not surrender to anyone."
+            next: h07_redirect
+          - label: "Tell Xerxes his army is not as large as his pride."
+            next: h08_redirect2
+
+      - id: h06_correct
+        type: dialogue
+        character: leonidas
+        text: "Molon labe. Come and take them. Two words. Send them back to their king."
+        hint: "Μολὼν λαβέ (Molon labe) — literally 'having come, take' — is attributed to Leonidas by Plutarch, writing ~400 years after the battle. Whether these exact words were spoken is debated by historians; the defiance they express is not. The phrase is used today by the US Special Operations Command, the Greek First Army Corps, and military units across the world."
+        next: h09_immortals
+
+      - id: h07_redirect
+        type: dialogue
+        character: leonidas
+        text: "You say it well enough. But a Spartan uses fewer words and strikes harder with them. Molon labe — 'Come and take them.' Two words. Everything else is wasted breath."
+        next: h09_immortals
+
+      - id: h08_redirect2
+        type: dialogue
+        character: leonidas
+        text: "A Spartan insult should be short and final. Molon labe. Come and take them. When they carry those two words back to Xerxes, he will understand exactly what kind of men are waiting for him."
+        next: h09_immortals
+
+      - id: h09_immortals
+        type: dialogue
+        character: narrator
+        text: "The herald returns to Xerxes. The King of Kings tears his robes in rage. He sends his finest warriors first — the Immortals, ten thousand elite Persian infantry who have never lost a battle, whose ranks are instantly replaced when any man falls."
+        next: h10_immortals_broken
+
+      - id: h10_immortals_broken
+        type: dialogue
+        character: dilios
+        text: "The Immortals attacked in waves all morning. By midday they had lost more men than in any previous engagement. Herodotus records that Xerxes, watching from his golden throne on the hillside, stood up three times in alarm as he watched his finest soldiers die against a wall of Spartan shields."
+        hint: "The Persian Immortals (Athanatoi — 'the Undying') were the elite infantry of the Achaemenid Empire. Their name came from the practice of immediately replacing any casualty, keeping their number always at exactly 10,000. Against the Spartan phalanx in the narrow pass, their advantages — numbers, archery range, open-ground mobility — were all negated simultaneously."
+        next: scene_battle
+
+  # ─── SCENE 4: The Phalanx — Days of Blood ────────────────────────────────────
+  - id: scene_battle
+    title: "The Phalanx"
+    background: thermopylae/battle.svg
+    nodes:
+      - id: b01_day2
+        type: dialogue
+        character: narrator
+        text: "Day two. The Greeks rotate fresh warriors into the line before any unit exhausts itself. Persians press from behind, crushing their own men forward. The pass fills with dead. Xerxes sends wave after wave. Each wave breaks on the same wall."
+        next: b02_choice
+
+      - id: b02_choice
+        type: choice
+        text: "Dilios drills you between engagements: 'What is the foundation of the phalanx — the principle that makes it work?'"
+        options:
+          - label: "Every shield protects the man to your left — the unit is one organism"
+            next: b03_correct
+          - label: "The bravest warriors fight in front, pulling the formation forward"
+            next: b04_wrong1
+          - label: "Speed and aggression — hit first, hit hard, break their will"
+            next: b05_wrong2
+
+      - id: b03_correct
+        type: dialogue
+        character: leonidas
+        text: "Your shield is not for you. It is for the man beside you. My shield is for the man beside me. Together we are a wall without cracks. One man who breaks formation to show his individual courage does not just die — he opens the gap that kills his brothers."
+        hint: "The Greek hoplite phalanx (φάλαγξ): soldiers stood in tight formation 8 ranks deep, shields (aspis, ~90cm diameter) overlapping with the neighbor's, thrusting spears (doru, 2-3 meters) projecting forward in multiple rows. The formation was nearly unbreakable from the front. Its weaknesses were the flanks and the rear — which is exactly what Ephialtes' betrayal would expose."
+        next: b06_xerxes_stands
+
+      - id: b04_wrong1
+        type: dialogue
+        character: dilios
+        text: "Individual glory is what gets men killed in formation. The man who steps forward to show his bravery creates the gap that kills ten men behind him. The phalanx is a machine — every man is a cog. The machine does not care about heroism. It cares about alignment."
+        next: b02_choice
+
+      - id: b05_wrong2
+        type: dialogue
+        character: dilios
+        text: "Speed matters — the Spartans did use controlled advances. But the foundation is the shield overlap. Without shields aligned, you have brave individuals dying alone. With shields aligned and locked, you have an impenetrable moving wall. The geometry of the thing is what kills."
+        next: b02_choice
+
+      - id: b06_xerxes_stands
+        type: dialogue
+        character: narrator
+        text: "Herodotus records it with quiet precision: during the battle, Xerxes stood up three times from his golden throne. A king who expected to watch his army flow through the pass like water through a crack in a dam — stood up three times in alarm."
+        next: b07_body_counts
+
+      - id: b07_body_counts
+        type: dialogue
+        character: dilios
+        text: "Persian dead numbered in the thousands by the end of day two. Our losses were counted in dozens at most. In the narrow pass, this was not a battle between armies. It was a mill. And we were the millstone."
+        next: b08_betrayal
+
+      - id: b08_betrayal
+        type: dialogue
+        character: narrator
+        text: "Then, on the second night, a local man climbed the mountain to Xerxes' camp. His name was Ephialtes of Trachis. He knew the Anopaea path — the goat trail through the mountains that bypassed the pass entirely. He offered to lead the Persians around us. For a reward."
+        hint: "Ephialtes (Ἐφιάλτης) — his name in Greek literally means 'nightmare.' He led a force of Persian Immortals along the Anopaea path through the night. The 1,000 Phocian soldiers guarding the path heard the Persians approaching through fallen leaves in the predawn darkness — and fled rather than fight. The pass was outflanked by dawn."
+        next: b09_choice
+
+      - id: b09_choice
+        type: choice
+        text: "When Leonidas receives word that the Anopaea path has been taken, what does he do?"
+        options:
+          - label: "He dismisses the allied Greeks and prepares for a deliberate last stand"
+            next: b10_correct
+          - label: "He orders an immediate full retreat to save as many men as possible"
+            next: b11_wrong1
+          - label: "He leads a desperate night assault to retake the mountain path"
+            next: b12_wrong2
+
+      - id: b10_correct
+        type: dialogue
+        character: leonidas
+        text: "I sent the allies away. Sending men to die for a position already lost is waste — not courage. The Thespians refused to leave. Seven hundred of them. They chose to die beside us. I will tell you plainly: I respect them as I respect my own."
+        next: b13_thespians
+
+      - id: b11_wrong1
+        type: dialogue
+        character: dilios
+        text: "A full retreat would have saved some lives — but Persia would have marched south immediately, with zero delay. Leonidas chose a deliberate last stand: to sell every hour at the highest possible price. He was not holding the pass for Sparta. He was holding it for Greece."
+        next: b13_thespians
+
+      - id: b12_wrong2
+        type: dialogue
+        character: dilios
+        text: "The Anopaea path was ten miles of difficult mountain terrain, already held by thousands of Persians. A night assault through unfamiliar ground against an overwhelming force was not possible. Leonidas had one remaining choice: where to die, and how long to take doing it."
+        next: b13_thespians
+
+      - id: b13_thespians
+        type: dialogue
+        character: narrator
+        text: "The 700 Thespians who stayed were volunteers — not ordered to remain. Their city, Thespiae, had already refused to submit to Persia. They knew Persia would burn their homes regardless of what happened here. They chose to die with warriors rather than survive to watch their families enslaved."
+        hint: "The Thespians at Thermopylae are among history's most overlooked heroes. Their general, Demophilus, led them in staying. Thespiae was indeed burned to the ground by the Persians shortly after Thermopylae. The Thespians' sacrifice was, in numbers and proportion, equal to Sparta's — but Sparta had better storytellers."
+        next: b14_decision
+
+      - id: b14_decision
+        type: dialogue
+        character: leonidas
+        text: "Go south, soldier. I am sending you with a message. You will carry what happened here. You will tell it until every Greek knows the name of this place, and every Persian remembers what it cost them."
+        next: b15_chat
+
+      - id: b15_chat
+        type: chat
+        character: leonidas
+        entry_line: "Ask what you will. A soldier who carries a story deserves honest answers before he carries it south. Our time here is short — speak."
+        next: scene_legacy
+
+  # ─── SCENE 5: The Legacy — Go Tell the Spartans ──────────────────────────────
+  - id: scene_legacy
+    title: "Go Tell the Spartans"
+    background: thermopylae/final_stand.svg
+    nodes:
+      - id: l01_last_battle
+        type: dialogue
+        character: narrator
+        text: "The last battle was fought on Kolonos Hill, a small rise behind the wall. The surviving Greeks — the 300, the Thespians, the few Thebans who had not surrendered — fought back to back as the Persians closed in from every direction. The end was not long coming."
+        next: l02_dilios_witness
+
+      - id: l02_dilios_witness
+        type: dialogue
+        character: dilios
+        text: "I was not there for the end. Leonidas sent me away the night before — to witness, to survive, to tell it. I watched from the mountain as the arrows fell like rain over Kolonos Hill. The histories say Leonidas fell early. The Spartans recovered his body four times from beneath the Persian dead."
+        hint: "Herodotus writes that the fighting over Leonidas' body was among the fiercest of the entire battle. Persian accounts (filtered through Greek sources) suggest Xerxes ordered Leonidas' body beheaded and impaled after the battle — a violation of Persian military custom so extreme that it suggests Xerxes both feared and respected the man he had just killed."
+        next: l03_fall
+
+      - id: l03_fall
+        type: dialogue
+        character: narrator
+        text: "All 300 Spartans died. All 700 Thespians died. A portion of the Thebans surrendered and were branded with the King's mark. Persia marched on. Within weeks, Athens was evacuated and burned."
+        next: l04_strategic
+
+      - id: l04_strategic
+        type: dialogue
+        character: narrator
+        text: "But Thermopylae had bought three days. And three days — in the mathematics of 480 BC — was exactly enough."
+        next: l05_choice
+
+      - id: l05_choice
+        type: choice
+        text: "Dilios asks the question that every historian since has asked: what did those three days at Thermopylae actually achieve?"
+        options:
+          - label: "Time for Athens to evacuate and for the fleet to win the decisive Battle of Salamis"
+            next: l06_correct
+          - label: "It broke Persia's will to conquer — Xerxes retreated after Thermopylae"
+            next: l07_wrong1
+          - label: "It proved Spartan arms were superior to any force on earth"
+            next: l08_wrong2
+
+      - id: l06_correct
+        type: dialogue
+        character: dilios
+        text: "Yes. One month after Thermopylae, the Athenian navy — with the city fully evacuated — destroyed the Persian fleet in the narrow waters of Salamis Bay. Without his fleet, Xerxes could not supply his army. Without supply, he could not advance. He returned to Persia. The following year, his remaining land forces were destroyed at Plataea. Leonidas bought three days. Three days bought Greece."
+        hint: "The Battle of Salamis (September 480 BC) was masterminded by Themistocles — who baited Xerxes into attacking in a narrow strait, using the exact same principle Leonidas had used on land. The Persian fleet, too large to maneuver, was routed. The following year (479 BC), the Greek army defeated the Persian land forces at the Battle of Plataea, ending the Second Persian Invasion permanently."
+        next: l09_epitaph_setup
+
+      - id: l07_wrong1
+        type: dialogue
+        character: dilios
+        text: "Persia did not retreat after Thermopylae — Xerxes marched on and burned Athens to the ground. What Thermopylae achieved was not a change in Persian will, but a delay that allowed Greece to position itself for the decisive battle at Salamis, one month later."
+        next: l05_choice
+
+      - id: l08_wrong2
+        type: dialogue
+        character: dilios
+        text: "Three hundred men died here — that is not superiority; it is sacrifice. The achievement was strategic, not martial. The delay allowed the fleet to regroup. The fleet won the war. Leonidas gave Themistocles the time he needed. Everything that followed flows from that."
+        next: l05_choice
+
+      - id: l09_epitaph_setup
+        type: dialogue
+        character: narrator
+        text: "Years after the battle, a stone was placed on the hill where they fell. The words were composed by Simonides of Ceos — lyric poet, one of the finest writers of ancient Greece. He chose four lines. Then distilled them to two."
+        next: l10_epitaph
+
+      - id: l10_epitaph
+        type: dialogue
+        character: leonidas
+        text: "Go, tell the Spartans, stranger passing by, that here, obedient to their laws, we lie."
+        hint: "Greek original (Simonides, ~476 BC): Ὦ ξεῖν', ἀγγέλλειν Λακεδαιμονίοις ὅτι τῇδε κείμεθα τοῖς κείνων ῥήμασι πειθόμενοι. Note what it does not say: not 'we died bravely,' not 'we fought gloriously' — but 'obedient to their laws.' A Spartan epitaph about duty, not glory. The laws of Sparta required them to hold. So they held."
+        next: l11_dilios_end
+
+      - id: l11_dilios_end
+        type: dialogue
+        character: dilios
+        text: "The 300 did not hold the pass for three days by accident or luck. They held it because they had spent their entire lives preparing to hold it, and because they had chosen a place where preparation mattered more than numbers. I have carried this story for decades. I will carry it until I die. That is what he sent me to do."
+        next: l12_chat_dilios
+
+      - id: l12_chat_dilios
+        type: chat
+        character: dilios
+        entry_line: "Ask me anything. The battle, the men, what came after — the Salamis campaign, the aftermath at Plataea, what happened to the families of the 300. I have had forty years to remember all of it. I will answer as honestly as I know how."
+        next: l13_end
+
+      - id: l13_end
+        type: dialogue
+        character: narrator
+        text: "THE END · Battle of Thermopylae · 480 BC · 300 Spartans and 700 Thespians held the pass for three days · Athens evacuated; the Persian fleet destroyed at Salamis · Persian land forces defeated at Plataea (479 BC) · Greek civilization — the seedbed of Western democracy, philosophy, and science — survived."
+        hint: "Further reading: Herodotus, 'The Histories,' Book VII (the primary ancient source, written ~440 BC). Steven Pressfield, 'Gates of Fire' (1998, historical novel). Victor Davis Hanson, 'The Western Way of War' (1989). Paul Cartledge, 'Thermopylae: The Battle that Changed the World' (2006)."

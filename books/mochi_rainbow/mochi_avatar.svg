@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="58" fill="#E8882A"/>
+  <circle cx="60" cy="60" r="55" fill="#F0A040"/>
+  <!-- Ears -->
+  <circle cx="28" cy="30" r="16" fill="#E8882A"/>
+  <circle cx="92" cy="30" r="16" fill="#E8882A"/>
+  <circle cx="28" cy="30" r="9" fill="#F5B870"/>
+  <circle cx="92" cy="30" r="9" fill="#F5B870"/>
+  <!-- Head -->
+  <circle cx="60" cy="68" r="40" fill="#F5A050"/>
+  <!-- Face snout -->
+  <ellipse cx="60" cy="80" rx="18" ry="12" fill="#F0C080"/>
+  <!-- Eyes - big and happy -->
+  <circle cx="46" cy="62" r="9" fill="white"/>
+  <circle cx="74" cy="62" r="9" fill="white"/>
+  <circle cx="48" cy="62" r="6" fill="#2A1A0A"/>
+  <circle cx="76" cy="62" r="6" fill="#2A1A0A"/>
+  <!-- Eye shine -->
+  <circle cx="50" cy="60" r="2" fill="white"/>
+  <circle cx="78" cy="60" r="2" fill="white"/>
+  <!-- Nose -->
+  <ellipse cx="60" cy="74" rx="5" ry="3.5" fill="#C05820"/>
+  <!-- Smile -->
+  <path d="M 52,80 Q 60,87 68,80" fill="none" stroke="#C05820" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Rosy cheeks -->
+  <circle cx="38" cy="72" r="7" fill="#F08040" opacity="0.4"/>
+  <circle cx="82" cy="72" r="7" fill="#F08040" opacity="0.4"/>
+</svg>

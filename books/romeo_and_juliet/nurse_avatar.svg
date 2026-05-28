@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Background — warm amber -->
+  <circle cx="60" cy="60" r="58" fill="#7A5030"/>
+  <circle cx="60" cy="60" r="55" fill="#8A6040"/>
+  <!-- White coif/wimple — covering hair entirely -->
+  <ellipse cx="60" cy="42" rx="36" ry="30" fill="#E8E0D0"/>
+  <ellipse cx="60" cy="26" rx="30" ry="16" fill="#F0E8D8"/>
+  <!-- Coif sides draping -->
+  <path d="M 25,38 Q 20,58 22,80" fill="#E8E0D0" stroke="#D0C8B8" stroke-width="1"/>
+  <path d="M 95,38 Q 100,58 98,80" fill="#E8E0D0" stroke="#D0C8B8" stroke-width="1"/>
+  <!-- Face — round, jolly, middle-aged -->
+  <ellipse cx="60" cy="72" rx="26" ry="28" fill="#D4924A"/>
+  <ellipse cx="60" cy="54" rx="24" ry="18" fill="#DCA052"/>
+  <!-- Round rosy cheeks -->
+  <circle cx="40" cy="76" r="12" fill="#E06040" opacity="0.25"/>
+  <circle cx="80" cy="76" r="12" fill="#E06040" opacity="0.25"/>
+  <!-- Eyes — small, merry, squinting with habitual laughter -->
+  <ellipse cx="50" cy="66" rx="8" ry="5" fill="white"/>
+  <ellipse cx="70" cy="66" rx="8" ry="5" fill="white"/>
+  <circle cx="51" cy="66" r="4" fill="#5A3018"/>
+  <circle cx="71" cy="66" r="4" fill="#5A3018"/>
+  <circle cx="51" cy="66" r="2" fill="#1A0808"/>
+  <circle cx="71" cy="66" r="2" fill="#1A0808"/>
+  <circle cx="52" cy="64" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="72" cy="64" r="1.5" fill="white" opacity="0.8"/>
+  <!-- Laugh lines around eyes -->
+  <path d="M 38,68 Q 43,66 48,68" fill="none" stroke="#B87040" stroke-width="1.5" opacity="0.4"/>
+  <path d="M 72,68 Q 77,66 82,68" fill="none" stroke="#B87040" stroke-width="1.5" opacity="0.4"/>
+  <!-- Brows — raised comically mid-gossip -->
+  <path d="M 43,61 Q 51,57 57,60" fill="none" stroke="#6A3818" stroke-width="2.5" stroke-linecap="round"/>
+  <path d="M 63,60 Q 69,57 77,61" fill="none" stroke="#6A3818" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Nose — wide and prominent -->
+  <ellipse cx="60" cy="76" rx="7" ry="5" fill="#C08040" opacity="0.6"/>
+  <circle cx="56" cy="77" r="3" fill="#B07030" opacity="0.5"/>
+  <circle cx="64" cy="77" r="3" fill="#B07030" opacity="0.5"/>
+  <!-- Mouth — open, mid-sentence, always talking -->
+  <path d="M 48,86 Q 60,82 72,86" fill="#C06040" stroke="#A04828" stroke-width="1"/>
+  <path d="M 48,86 Q 60,93 72,86" fill="#9A3828"/>
+  <!-- Double chin hint -->
+  <ellipse cx="60" cy="96" rx="20" ry="8" fill="#C88848" opacity="0.4"/>
+  <!-- Gown — plain working dress -->
+  <rect x="26" y="98" width="68" height="22" fill="#8A6030" rx="2"/>
+  <path d="M 26,98 Q 60,94 94,98" fill="#9A7040" opacity="0.6"/>
+  <!-- White apron -->
+  <rect x="40" y="100" width="40" height="20" fill="#E0D8C8" rx="1" opacity="0.7"/>
+</svg>

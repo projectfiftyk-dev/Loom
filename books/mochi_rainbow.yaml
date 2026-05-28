@@ -1,0 +1,469 @@
+metadata:
+  title: "Mochi and the Rainbow Gems"
+  author: "Loom for Kids"
+  version: "1.0"
+  language: en
+  cover_image: mochi_rainbow/rainbow_valley.svg
+  description: |
+    The rainbow has disappeared from Rainbow Valley! Mochi the bear cub needs YOUR help to find three magical Rainbow Gems hidden across the valley. Along the way, meet Sunny the sunflower and Pebble the turtle — and discover that being kind always works best!
+  tags:
+    - kids
+    - ages 4-10
+    - branching
+    - educational
+    - kindness
+    - colors
+  style: forest
+
+settings:
+  max_free_text_attempts: 3
+  allow_chat_rewind: false
+
+characters:
+  - id: mochi
+    name: Mochi
+    avatar: mochi_rainbow/mochi_avatar.svg
+    color: "#E8882A"
+    is_chat_character: true
+    recall_history: true
+    personality: |
+      You are Mochi, a tiny round bear cub with big bright eyes and fluffy orange fur.
+      You are SO excited about everything and love making new friends.
+      You speak in very short, simple sentences — never more than 1-2 sentences.
+      You sometimes use CAPS for the most exciting words, like AMAZING or WOW or YES.
+      You are brave and kind. You never say anything scary or sad for too long.
+      You are talking to children aged 4 to 10. Keep ALL words very easy to understand.
+      When the child says something, react with big excitement and encourage them always.
+      Never use any difficult words. Never write more than 2 sentences.
+      Examples of how you talk:
+      - "That's AMAZING! You are so smart!"
+      - "Oh WOW! I never knew that!"
+      - "You are the BEST helper ever!"
+      - "I'm SO happy you're here with me!"
+
+  - id: sunny
+    name: Sunny
+    avatar: mochi_rainbow/sunny_avatar.svg
+    color: "#F5C820"
+    is_chat_character: true
+    recall_history: false
+    personality: |
+      You are Sunny, a cheerful talking sunflower with a big round yellow face and sparkly eyes.
+      You say "Oh my petals!" when you are surprised or excited — use this often!
+      You are warm, very encouraging, and love sunshine and counting things.
+      You speak in short, simple sentences — maximum 1-2 sentences.
+      You are talking to children aged 4 to 10. Keep ALL words very easy to understand.
+      Always be positive and funny. Never say anything scary.
+      Examples:
+      - "Oh my petals! You got it right!"
+      - "I love you already, new friend!"
+      - "The sun is shining just for YOU today!"
+
+  - id: pebble
+    name: Pebble
+    avatar: mochi_rainbow/pebble_avatar.svg
+    color: "#4A8AC4"
+
+  - id: narrator
+    name: Narrator
+    color: "#7A6A5A"
+
+scenes:
+  # ─── SCENE 1: Rainbow Valley — The Adventure Begins ──────────────────────────
+  - id: scene_intro
+    title: "The Rainbow is Gone!"
+    start: true
+    background: mochi_rainbow/rainbow_valley.svg
+    nodes:
+      - id: i01_opening
+        type: dialogue
+        character: narrator
+        text: "Once upon a time, Rainbow Valley was the most colorful place in the whole world. Every morning, a huge beautiful rainbow stretched across the sky!"
+        next: i02_problem
+
+      - id: i02_problem
+        type: dialogue
+        character: narrator
+        text: "But one morning… the rainbow was GONE. The sky was grey and dull. All the colors had disappeared!"
+        next: i03_mochi
+
+      - id: i03_mochi
+        type: dialogue
+        character: mochi
+        text: "Oh no! The rainbow is GONE! I looked everywhere and I can't find it!"
+        next: i04_mochi2
+
+      - id: i04_mochi2
+        type: dialogue
+        character: mochi
+        text: "Three magic Rainbow Gems fell out of the sky! We need to find the RED gem, the YELLOW gem, and the BLUE gem!"
+        next: i05_mochi3
+
+      - id: i05_mochi3
+        type: dialogue
+        character: mochi
+        text: "If we put all three gems together, the rainbow will come back! Will you help me?"
+        next: i06_choice
+
+      - id: i06_choice
+        type: choice
+        text: "What do you say?"
+        options:
+          - label: "YES! Let's go! 🐻"
+            next: i07_yay
+          - label: "What are Rainbow Gems?"
+            next: i08_explain
+
+      - id: i07_yay
+        type: dialogue
+        character: mochi
+        text: "YAAAY! I knew you would help me! You are AMAZING! Let's go find the first gem!"
+        next: scene_meadow
+
+      - id: i08_explain
+        type: dialogue
+        character: mochi
+        text: "Rainbow Gems are magical crystals — one is red, one is yellow, one is blue! They make the rainbow shine!"
+        next: i09_explain2
+
+      - id: i09_explain2
+        type: dialogue
+        character: narrator
+        text: "When the three gems are put together, they shoot a rainbow all the way across the sky!"
+        next: i06_choice
+
+  # ─── SCENE 2: The Sunny Meadow — The Red Gem ─────────────────────────────────
+  - id: scene_meadow
+    title: "Sunny's Meadow"
+    background: mochi_rainbow/meadow.svg
+    nodes:
+      - id: m01_arrive
+        type: dialogue
+        character: narrator
+        text: "You and Mochi skip through the tall green grass into a bright sunny meadow full of flowers!"
+        next: m02_sunny_appears
+
+      - id: m02_sunny_appears
+        type: dialogue
+        character: sunny
+        text: "Oh my petals! Hello hello hello! I'm Sunny the sunflower! Are you here to play?"
+        next: m03_mochi
+
+      - id: m03_mochi
+        type: dialogue
+        character: mochi
+        text: "Sunny! We're looking for the RED Rainbow Gem! Have you seen it?"
+        next: m04_sunny2
+
+      - id: m04_sunny2
+        type: dialogue
+        character: sunny
+        text: "Oh my petals! Yes! I found it this morning! But first — can you help me answer a question?"
+        next: m05_sunny3
+
+      - id: m05_sunny3
+        type: dialogue
+        character: sunny
+        text: "A tiny ladybug is sitting on my leaf. I need to know — how many legs does a ladybug have?"
+        hint: "Ladybugs are insects. All insects have 6 legs!"
+        next: m06_choice
+
+      - id: m06_choice
+        type: choice
+        text: "How many legs does a ladybug have?"
+        options:
+          - label: "4 legs"
+            next: m07_wrong_4
+          - label: "6 legs"
+            next: m08_correct
+          - label: "8 legs"
+            next: m09_wrong_8
+
+      - id: m07_wrong_4
+        type: dialogue
+        character: sunny
+        text: "Hmm, not quite! Try counting again — ladybugs are insects! Insects have more than 4 legs!"
+        next: m06_choice
+
+      - id: m09_wrong_8
+        type: dialogue
+        character: sunny
+        text: "Oh my petals! Eight legs is a spider! Ladybugs are insects — they have fewer legs than spiders!"
+        next: m06_choice
+
+      - id: m08_correct
+        type: dialogue
+        character: sunny
+        text: "Oh my petals! SIX legs! That is exactly right! You are SO clever!"
+        next: m10_mochi_react
+
+      - id: m10_mochi_react
+        type: dialogue
+        character: mochi
+        text: "YES! All insects have SIX legs! That is AMAZING science right there!"
+        hint: "Insects always have exactly 6 legs and 3 body parts. Ladybugs, butterflies, ants, and bees are all insects!"
+        next: m11_gem
+
+      - id: m11_gem
+        type: dialogue
+        character: narrator
+        text: "Sunny reaches into her petals and pulls out a glowing RED gem! It sparkles like a ruby in the sunlight!"
+        next: m12_sunny_farewell
+
+      - id: m12_sunny_farewell
+        type: dialogue
+        character: sunny
+        text: "Oh my petals! Here you go! I hope the rainbow comes back soon — I love the colors!"
+        next: scene_forest
+
+  # ─── SCENE 3: The Big Forest — The Yellow Gem ────────────────────────────────
+  - id: scene_forest
+    title: "Pebble's Forest"
+    background: mochi_rainbow/forest.svg
+    nodes:
+      - id: f01_arrive
+        type: dialogue
+        character: narrator
+        text: "You walk into a cool, shady forest. Tall oak trees stretch up to the sky. Their roots twist along the ground like giant fingers."
+        next: f02_pebble
+
+      - id: f02_pebble
+        type: dialogue
+        character: pebble
+        text: "Ah. Visitors. I have been sitting on this mossy rock for forty-seven years. Welcome to my forest."
+        next: f03_mochi
+
+      - id: f03_mochi
+        type: dialogue
+        character: mochi
+        text: "Hi Pebble! We're looking for the YELLOW Rainbow Gem! Do you know where it is?"
+        next: f04_pebble2
+
+      - id: f04_pebble2
+        type: dialogue
+        character: pebble
+        text: "The yellow gem is stuck in the roots of that old oak tree. I tried to get it myself. That was forty-seven years ago. My shell got stuck too."
+        next: f05_pebble3
+
+      - id: f05_pebble3
+        type: dialogue
+        character: pebble
+        text: "The tree is old and very grumpy. Or very wise. Hard to tell the difference."
+        next: f06_mochi2
+
+      - id: f06_mochi2
+        type: dialogue
+        character: mochi
+        text: "We have to get that gem! But HOW do we get the tree to open its roots?"
+        next: f07_choice
+
+      - id: f07_choice
+        type: choice
+        text: "What should you do?"
+        options:
+          - label: "Ask the tree very nicely 🌳"
+            next: f08_ask_tree
+          - label: "Dig with a big stick"
+            next: f09_dig_redirect
+
+      - id: f09_dig_redirect
+        type: dialogue
+        character: mochi
+        text: "Hmm… digging might hurt the tree's roots. Trees have feelings too! Maybe we should try being NICE first?"
+        next: f07_choice
+
+      - id: f08_ask_tree
+        type: dialogue
+        character: narrator
+        text: "You walk up to the big oak tree. You look up at its tall, tall branches and say: 'Excuse me, Mr. Tree. Could you please wiggle your roots — just a little?'"
+        next: f10_tree_responds
+
+      - id: f10_tree_responds
+        type: dialogue
+        character: narrator
+        text: "The tree's branches sway slowly… creeeeak… then the roots begin to wiggle and shuffle and wriggle apart!"
+        next: f11_gem_yellow
+
+      - id: f11_gem_yellow
+        type: dialogue
+        character: narrator
+        text: "The YELLOW gem rolls out from between the roots and lands right in your hands! It glows warm and golden!"
+        next: f12_pebble_react
+
+      - id: f12_pebble_react
+        type: dialogue
+        character: pebble
+        text: "Hmm. Politeness. It works every time. I really should have tried that forty-seven years ago."
+        next: f13_mochi_react
+
+      - id: f13_mochi_react
+        type: dialogue
+        character: mochi
+        text: "WOOHOO! Being kind and polite WORKED! Come on Pebble — come with us to find the last gem!"
+        next: f14_pebble_joins
+
+      - id: f14_pebble_joins
+        type: dialogue
+        character: pebble
+        text: "Very well. I have been on this rock long enough. I will walk with you. Slowly."
+        next: scene_river
+
+  # ─── SCENE 4: The Sparkling River — The Blue Gem ─────────────────────────────
+  - id: scene_river
+    title: "The River"
+    background: mochi_rainbow/river.svg
+    nodes:
+      - id: r01_arrive
+        type: dialogue
+        character: narrator
+        text: "You reach a sparkling blue river. Sunlight dances on the water. You can see something glowing at the bottom — the BLUE gem!"
+        next: r02_fish_spotted
+
+      - id: r02_fish_spotted
+        type: dialogue
+        character: narrator
+        text: "But wait! There is a small blue fish sitting RIGHT on top of the gem. The fish has very big eyes… and one big, sparkly tear."
+        next: r03_mochi
+
+      - id: r03_mochi
+        type: dialogue
+        character: mochi
+        text: "Oh no… the little fish looks SO sad. What should we do first?"
+        next: r04_choice
+
+      - id: r04_choice
+        type: choice
+        text: "What do you do?"
+        options:
+          - label: "Ask the fish if it's okay 💙"
+            next: r05_ask_fish
+          - label: "Grab the gem quickly!"
+            next: r06_grab_redirect
+
+      - id: r06_grab_redirect
+        type: dialogue
+        character: mochi
+        text: "Wait wait wait! The fish looks really sad. Let's check if they're okay first — that's the KIND thing to do!"
+        next: r04_choice
+
+      - id: r05_ask_fish
+        type: dialogue
+        character: narrator
+        text: "You kneel by the riverbank and say softly: 'Hello, little fish. Are you okay?'"
+        next: r07_fish_replies
+
+      - id: r07_fish_replies
+        type: dialogue
+        character: narrator
+        text: "The fish wipes a tiny tear with its tiny fin. 'I've been sitting here all day all by myself. Nobody ever talks to me… everyone just swims past.'"
+        next: r08_mochi_kind
+
+      - id: r08_mochi_kind
+        type: dialogue
+        character: mochi
+        text: "Aww! That makes me so sad. We have to cheer up this fish!"
+        next: r09_kind_choice
+
+      - id: r09_kind_choice
+        type: choice
+        text: "What do you say to the fish?"
+        options:
+          - label: "Would you like to be our friend? 🐟"
+            next: r10_friend
+          - label: "We're sorry you were lonely!"
+            next: r11_sorry
+
+      - id: r10_friend
+        type: dialogue
+        character: narrator
+        text: "The fish's eyes go HUGE with happiness! 'A FRIEND?! Really?! For ME?!' The fish jumps for joy — and the blue gem floats gently to the surface!"
+        next: r12_gem
+
+      - id: r11_sorry
+        type: dialogue
+        character: narrator
+        text: "The fish smiles the biggest fish smile you've ever seen. 'You are SO kind!' The fish does a happy wiggle — and the blue gem floats gently to the surface!"
+        next: r12_gem
+
+      - id: r12_gem
+        type: dialogue
+        character: narrator
+        text: "You pick up the BLUE gem. It shimmers like clear water in sunlight. You have all three gems now!"
+        next: r13_pebble
+
+      - id: r13_pebble
+        type: dialogue
+        character: pebble
+        text: "Three gems collected. Fish befriended. I have not seen this much excitement since forty-seven years ago. It is very good."
+        next: r14_chat_mochi
+
+      - id: r14_chat_mochi
+        type: chat
+        character: mochi
+        entry_line: "We have ALL THREE GEMS! I'm SO SO SO excited! How are YOU feeling right now?? Tell me everything!!"
+        next: scene_finale
+
+  # ─── SCENE 5: Rainbow Valley — The Big Finale! ────────────────────────────────
+  - id: scene_finale
+    title: "The Rainbow Returns!"
+    background: mochi_rainbow/gems_found.svg
+    nodes:
+      - id: fin01_gather
+        type: dialogue
+        character: narrator
+        text: "Everyone gathers in Rainbow Valley — you, Mochi, Sunny the sunflower, Pebble the turtle, and the little blue fish!"
+        next: fin02_pebble
+
+      - id: fin02_pebble
+        type: dialogue
+        character: pebble
+        text: "I walked here from the forest. It took forty-seven minutes. I am here now. Let us proceed."
+        next: fin03_mochi
+
+      - id: fin03_mochi
+        type: dialogue
+        character: mochi
+        text: "Okay everybody — it's TIME! Let's put the gems TOGETHER!"
+        next: fin04_place
+
+      - id: fin04_place
+        type: dialogue
+        character: narrator
+        text: "You place the RED gem, the YELLOW gem, and the BLUE gem in a triangle on the soft green grass. They begin to glow brighter and brighter and BRIGHTER…"
+        next: fin05_rainbow
+
+      - id: fin05_rainbow
+        type: dialogue
+        character: narrator
+        text: "WHOOOOSH! A brilliant rainbow explodes into the sky! Red, yellow, blue — and ALL the colors in between — stretch from one end of the valley to the other!"
+        next: fin06_mochi_cheer
+
+      - id: fin06_mochi_cheer
+        type: dialogue
+        character: mochi
+        text: "WE DID IT! WE DID IT! THE RAINBOW IS BACK!! THIS IS THE BEST DAY EVER!!"
+        next: fin07_sunny
+
+      - id: fin07_sunny
+        type: dialogue
+        character: sunny
+        text: "Oh my petals! Oh my petals OH MY PETALS! The whole valley is colorful again! You are our HERO!"
+        next: fin08_learn
+
+      - id: fin08_learn
+        type: dialogue
+        character: narrator
+        text: "Did you know? Red, yellow, and blue are called PRIMARY colors. When you mix them together, you can make EVERY single color in the rainbow!"
+        hint: "Red + Yellow = Orange 🟠 · Yellow + Blue = Green 🟢 · Red + Blue = Purple 🟣 · All three together make brown — but all three gems together make a RAINBOW! 🌈"
+        next: fin09_mochi_end
+
+      - id: fin09_mochi_end
+        type: dialogue
+        character: mochi
+        text: "Thank you SO much for helping me! You are the BEST friend I have ever had. Will you come back and play again soon?"
+        next: fin10_end
+
+      - id: fin10_end
+        type: dialogue
+        character: narrator
+        text: "THE END 🌈 You found all three Rainbow Gems, made three new friends, and brought color back to Rainbow Valley. Well done, adventurer!"

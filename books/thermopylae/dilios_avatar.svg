@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120">
+  <!-- Background — steel blue -->
+  <circle cx="60" cy="60" r="58" fill="#2A5A7A"/>
+  <circle cx="60" cy="60" r="55" fill="#3A6A8A"/>
+
+  <!-- Helmet — pushed back on head, storyteller at ease -->
+  <ellipse cx="60" cy="30" rx="30" ry="22" fill="#8B6914"/>
+  <ellipse cx="60" cy="28" rx="26" ry="19" fill="#C89820"/>
+  <!-- Helmet crest — shorter, at rest -->
+  <rect x="56" y="10" width="8" height="20" fill="#2A5A7A" rx="2"/>
+  <ellipse cx="60" cy="10" rx="10" ry="5" fill="#3A6A9A"/>
+  <!-- Helmet brow -->
+  <path d="M 32,32 Q 60,24 88,32" fill="none" stroke="#D0A830" stroke-width="2.5"/>
+
+  <!-- Face — younger, thoughtful, a storyteller's eyes -->
+  <ellipse cx="60" cy="68" rx="24" ry="22" fill="#C87850"/>
+  <!-- Eyes — wide, observant, seen too much -->
+  <circle cx="50" cy="63" r="8" fill="#E8D8C0"/>
+  <circle cx="70" cy="63" r="8" fill="#E8D8C0"/>
+  <circle cx="51" cy="63" r="5" fill="#2A3A18"/>
+  <circle cx="71" cy="63" r="5" fill="#2A3A18"/>
+  <circle cx="52" cy="62" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="72" cy="62" r="1.5" fill="white" opacity="0.8"/>
+  <!-- Eyebrows — raised slightly, the eternal question -->
+  <path d="M 43,56 Q 50,52 57,56" fill="none" stroke="#8B5A30" stroke-width="2" stroke-linecap="round"/>
+  <path d="M 63,56 Q 70,52 77,56" fill="none" stroke="#8B5A30" stroke-width="2" stroke-linecap="round"/>
+  <!-- Nose — straight -->
+  <path d="M 58,65 Q 57,72 60,74 Q 63,72 62,65" fill="#B07050" stroke="#A06040" stroke-width="1"/>
+  <!-- Mouth — slight smile, the storyteller -->
+  <path d="M 51,80 Q 60,85 69,80" fill="none" stroke="#9A5840" stroke-width="2.5" stroke-linecap="round"/>
+  <!-- Laugh lines — he has smiled telling this story -->
+  <path d="M 38,72 Q 42,78 44,82" fill="none" stroke="#A07050" stroke-width="1.5" opacity="0.5"/>
+  <path d="M 82,72 Q 78,78 76,82" fill="none" stroke="#A07050" stroke-width="1.5" opacity="0.5"/>
+
+  <!-- Cloak / tunic at bottom — blue, the storyteller's color -->
+  <rect x="30" y="94" width="60" height="20" fill="#3A5A7A" rx="3"/>
+  <path d="M 30,94 Q 60,89 90,94" fill="#4A6A8A" opacity="0.7"/>
+  <!-- Writing tablet — small, tucked at side — he records history -->
+  <rect x="78" y="90" width="14" height="18" fill="#D4A870" rx="2" opacity="0.9"/>
+  <line x1="80" y1="95" x2="90" y2="95" stroke="#8B6020" stroke-width="1" opacity="0.7"/>
+  <line x1="80" y1="99" x2="90" y2="99" stroke="#8B6020" stroke-width="1" opacity="0.7"/>
+  <line x1="80" y1="103" x2="90" y2="103" stroke="#8B6020" stroke-width="1" opacity="0.7"/>
+</svg>

@@ -1,0 +1,196 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="night_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#050818"/>
+      <stop offset="40%" stop-color="#0A1028"/>
+      <stop offset="80%" stop-color="#1A1830"/>
+      <stop offset="100%" stop-color="#2A2035"/>
+    </linearGradient>
+    <linearGradient id="garden_floor" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#1A2A10"/>
+      <stop offset="100%" stop-color="#0A1808"/>
+    </linearGradient>
+    <radialGradient id="moon_glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F0E8C0" stop-opacity="0.4"/>
+      <stop offset="100%" stop-color="#F0E8C0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="window_glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F5C040" stop-opacity="0.5"/>
+      <stop offset="100%" stop-color="#F5C040" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <!-- Deep night sky -->
+  <rect width="1200" height="675" fill="url(#night_sky)"/>
+
+  <!-- Stars — many, bright -->
+  <circle cx="80" cy="30" r="1.5" fill="white" opacity="0.9"/>
+  <circle cx="160" cy="15" r="1" fill="white" opacity="0.7"/>
+  <circle cx="240" cy="45" r="2" fill="white" opacity="0.85"/>
+  <circle cx="320" cy="20" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="400" cy="55" r="1" fill="white" opacity="0.7"/>
+  <circle cx="480" cy="12" r="1.5" fill="white" opacity="0.9"/>
+  <circle cx="560" cy="38" r="1" fill="white" opacity="0.7"/>
+  <circle cx="650" cy="22" r="2" fill="white" opacity="0.8"/>
+  <circle cx="720" cy="48" r="1.5" fill="white" opacity="0.85"/>
+  <circle cx="800" cy="18" r="1" fill="white" opacity="0.7"/>
+  <circle cx="880" cy="35" r="2" fill="white" opacity="0.9"/>
+  <circle cx="960" cy="10" r="1.5" fill="white" opacity="0.8"/>
+  <circle cx="1040" cy="42" r="1" fill="white" opacity="0.75"/>
+  <circle cx="1120" cy="25" r="2" fill="white" opacity="0.85"/>
+  <circle cx="1170" cy="55" r="1.5" fill="white" opacity="0.8"/>
+  <!-- More stars -->
+  <circle cx="110" cy="80" r="1" fill="white" opacity="0.6"/>
+  <circle cx="290" cy="70" r="1" fill="white" opacity="0.65"/>
+  <circle cx="530" cy="75" r="1" fill="white" opacity="0.6"/>
+  <circle cx="750" cy="68" r="1" fill="white" opacity="0.65"/>
+  <circle cx="1000" cy="72" r="1" fill="white" opacity="0.6"/>
+
+  <!-- MOON — high and bright, the famous moon Juliet swears by -->
+  <circle cx="900" cy="100" r="70" fill="#F0E8C0" opacity="0.15"/>
+  <circle cx="900" cy="100" r="45" fill="#F5ECC8" opacity="0.4"/>
+  <circle cx="900" cy="100" r="32" fill="#F8F0D8"/>
+  <!-- Moon surface texture -->
+  <circle cx="890" cy="92" r="8" fill="#E8E0C0" opacity="0.4"/>
+  <circle cx="910" cy="108" r="6" fill="#E8E0C0" opacity="0.3"/>
+  <circle cx="886" cy="108" r="4" fill="#E8E0C0" opacity="0.35"/>
+  <!-- Moon glow -->
+  <circle cx="900" cy="100" r="130" fill="url(#moon_glow)"/>
+
+  <!-- Garden trees and shrubs - dark silhouettes -->
+  <!-- Large cypresses left -->
+  <ellipse cx="80" cy="320" rx="38" ry="160" fill="#0A1808"/>
+  <ellipse cx="80" cy="250" rx="28" ry="80" fill="#0E1E0A"/>
+  <ellipse cx="160" cy="340" rx="32" ry="140" fill="#0A1808"/>
+  <ellipse cx="160" cy="280" rx="24" ry="70" fill="#0E1E0A"/>
+  <!-- Bushes and rose garden right -->
+  <ellipse cx="1100" cy="400" rx="80" ry="50" fill="#0A1808"/>
+  <ellipse cx="1040" cy="380" rx="60" ry="45" fill="#0E1E0A"/>
+  <ellipse cx="1150" cy="360" rx="50" ry="40" fill="#0A1808"/>
+  <!-- Ground cover -->
+  <ellipse cx="350" cy="490" rx="100" ry="25" fill="#0A1808" opacity="0.7"/>
+  <ellipse cx="700" cy="495" rx="120" ry="20" fill="#0A1808" opacity="0.6"/>
+
+  <!-- Garden ground -->
+  <rect x="0" y="510" width="1200" height="165" fill="url(#garden_floor)"/>
+  <rect x="0" y="510" width="1200" height="4" fill="#2A3A18" opacity="0.7"/>
+  <!-- Stone path through garden -->
+  <ellipse cx="500" cy="515" rx="80" ry="15" fill="#3A3828" opacity="0.5"/>
+  <ellipse cx="500" cy="560" rx="70" ry="12" fill="#3A3828" opacity="0.4"/>
+
+  <!-- Orchard wall — Romeo has climbed it -->
+  <rect x="0" y="490" width="200" height="30" fill="#4A3A28"/>
+  <rect x="0" y="487" width="200" height="8" fill="#5A4A30" opacity="0.8"/>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- CAPULET HOUSE — center-right, warm stone façade       -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- Main facade -->
+  <rect x="480" y="80" width="540" height="450" fill="#6A5038"/>
+  <rect x="484" y="84" width="532" height="442" fill="#7A6048"/>
+  <!-- Stone courses -->
+  <path d="M 480,160 L 1020,160" stroke="#5A4030" stroke-width="2" opacity="0.4"/>
+  <path d="M 480,240 L 1020,240" stroke="#5A4030" stroke-width="2" opacity="0.4"/>
+  <path d="M 480,320 L 1020,320" stroke="#5A4030" stroke-width="2" opacity="0.4"/>
+  <path d="M 480,400 L 1020,400" stroke="#5A4030" stroke-width="2" opacity="0.4"/>
+  <!-- Windows — dark (everyone asleep) -->
+  <rect x="510" y="140" width="90" height="110" fill="#1A1808" rx="3"/>
+  <rect x="513" y="143" width="84" height="104" fill="#1E1C10" rx="2"/>
+  <rect x="900" y="140" width="90" height="110" fill="#1A1808" rx="3"/>
+  <rect x="903" y="143" width="84" height="104" fill="#1E1C10" rx="2"/>
+  <rect x="510" y="290" width="90" height="110" fill="#1A1808" rx="3"/>
+  <rect x="513" y="293" width="84" height="104" fill="#1E1C10" rx="2"/>
+  <rect x="900" y="290" width="90" height="110" fill="#1A1808" rx="3"/>
+  <rect x="903" y="293" width="84" height="104" fill="#1E1C10" rx="2"/>
+
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- JULIET'S BALCONY — lit window, center of façade  -->
+  <!-- ══════════════════════════════════════════════════ -->
+  <!-- Balcony stone base -->
+  <rect x="660" y="310" width="180" height="16" fill="#8A7060" rx="3"/>
+  <rect x="655" y="322" width="190" height="10" fill="#9A8070" rx="2"/>
+  <!-- Balcony railing -->
+  <rect x="660" y="280" width="180" height="35" fill="#7A6050" opacity="0.8"/>
+  <!-- Railing bars -->
+  <line x1="672" y1="280" x2="672" y2="315" stroke="#9A8060" stroke-width="4"/>
+  <line x1="694" y1="280" x2="694" y2="315" stroke="#9A8060" stroke-width="4"/>
+  <line x1="716" y1="280" x2="716" y2="315" stroke="#9A8060" stroke-width="4"/>
+  <line x1="738" y1="280" x2="738" y2="315" stroke="#9A8060" stroke-width="4"/>
+  <line x1="760" y1="280" x2="760" y2="315" stroke="#9A8060" stroke-width="4"/>
+  <line x1="782" y1="280" x2="782" y2="315" stroke="#9A8060" stroke-width="4"/>
+  <line x1="804" y1="280" x2="804" y2="315" stroke="#9A8060" stroke-width="4"/>
+  <line x1="826" y1="280" x2="826" y2="315" stroke="#9A8060" stroke-width="4"/>
+  <!-- Balcony door/arch opening -->
+  <rect x="690" y="160" width="120" height="130" fill="#2A1A08"/>
+  <path d="M 690,160 Q 750,120 810,160" fill="#3A2818"/>
+  <!-- Window glow — warm candlelight spilling out -->
+  <rect x="694" y="163" width="112" height="124" fill="#F5D060" opacity="0.2"/>
+  <!-- Glow on balcony floor from open door -->
+  <ellipse cx="750" cy="305" rx="80" ry="20" fill="url(#window_glow)"/>
+  <!-- Glow spilling into garden below -->
+  <ellipse cx="750" cy="450" rx="120" ry="80" fill="#F5C040" opacity="0.07"/>
+
+  <!-- ═══════════════════════════════════════════════════════ -->
+  <!-- JULIET — on the balcony, speaking to the night        -->
+  <!-- ═══════════════════════════="========================= -->
+  <!-- Her figure, lit by candlelight behind her -->
+  <!-- Gown — white/cream, catching the light -->
+  <rect x="736" y="250" width="28" height="50" fill="#E8E0CC" rx="3"/>
+  <path d="M 730,268 Q 720,285 718,310" fill="#DDD5C0" opacity="0.9"/>
+  <path d="M 770,268 Q 780,285 782,310" fill="#DDD5C0" opacity="0.9"/>
+  <!-- Body -->
+  <ellipse cx="750" cy="248" rx="18" ry="16" fill="#E8C8A0"/>
+  <!-- Head -->
+  <circle cx="750" cy="230" r="20" fill="#ECC8A0"/>
+  <!-- Dark hair loose/falling — she is in her nightgown, at ease -->
+  <ellipse cx="750" cy="220" rx="22" ry="16" fill="#3A2010"/>
+  <path d="M 731,225 Q 726,240 729,260" fill="none" stroke="#2A1808" stroke-width="7" stroke-linecap="round"/>
+  <path d="M 769,225 Q 774,240 771,260" fill="none" stroke="#2A1808" stroke-width="7" stroke-linecap="round"/>
+  <!-- Face — lit from behind, looking outward, speaking -->
+  <circle cx="746" cy="232" r="3" fill="#2A1808"/>
+  <circle cx="754" cy="232" r="3" fill="#2A1808"/>
+  <!-- Mouth slightly open — speaking -->
+  <path d="M 745,240 Q 750,244 755,240" fill="none" stroke="#C06060" stroke-width="2" stroke-linecap="round"/>
+  <!-- One arm extended — gesture of speaking to the night -->
+  <path d="M 730,258 Q 710,250 700,240" fill="none" stroke="#E8C8A0" stroke-width="9" stroke-linecap="round"/>
+  <ellipse cx="697" cy="238" rx="10" ry="7" fill="#E8C8A0"/>
+
+  <!-- Her candlelight halo -->
+  <ellipse cx="750" cy="260" rx="60" ry="70" fill="#F5C040" opacity="0.08"/>
+
+  <!-- ════════════════════════════════════════════ -->
+  <!-- ROMEO — in the shadows below, looking up   -->
+  <!-- ════════════════════════════════════════════ -->
+  <!-- Dark cloak, barely visible — moonlight catches him slightly -->
+  <ellipse cx="430" cy="518" rx="28" ry="10" fill="#0A1808" opacity="0.5"/>
+  <!-- Body in dark cloak -->
+  <rect x="415" y="455" width="30" height="65" fill="#1A1410" opacity="0.9"/>
+  <!-- Head, face turned up toward the balcony -->
+  <circle cx="430" cy="447" r="22" fill="#1A1410" opacity="0.9"/>
+  <!-- Face catching the barest moonlight -->
+  <ellipse cx="434" cy="450" rx="12" ry="13" fill="#C09070" opacity="0.7"/>
+  <!-- Eyes looking upward — toward her -->
+  <circle cx="430" cy="447" r="3" fill="#2A1808" opacity="0.8"/>
+  <circle cx="440" cy="446" r="3" fill="#2A1808" opacity="0.8"/>
+  <!-- Mask tucked away — he's taken it off -->
+  <rect x="408" y="452" width="14" height="10" fill="#C8B860" opacity="0.5" rx="2"/>
+
+  <!-- He stands close to the ivy-covered wall of the house -->
+  <!-- Ivy climbing the wall -->
+  <path d="M 480,400 Q 490,350 485,300 Q 490,250 488,200" fill="none" stroke="#1A2A10" stroke-width="8" opacity="0.7"/>
+  <ellipse cx="492" cy="365" rx="14" ry="9" fill="#1A2A10" transform="rotate(-20 492 365)" opacity="0.8"/>
+  <ellipse cx="488" cy="320" rx="12" ry="8" fill="#2A3A18" transform="rotate(15 488 320)" opacity="0.8"/>
+  <ellipse cx="490" cy="275" rx="13" ry="9" fill="#1A2A10" transform="rotate(-10 490 275)" opacity="0.8"/>
+
+  <!-- Rose climbing left wall — romantic detail -->
+  <path d="M 250,520 Q 245,460 250,380 Q 248,300 252,220" fill="none" stroke="#1A2010" stroke-width="5" opacity="0.7"/>
+  <circle cx="255" cy="375" r="8" fill="#8B1A30" opacity="0.8"/>
+  <circle cx="249" cy="290" r="7" fill="#8B1A30" opacity="0.7"/>
+  <circle cx="253" cy="220" r="8" fill="#8B1A30" opacity="0.8"/>
+
+  <!-- Moonlight path on garden floor -->
+  <ellipse cx="600" cy="540" rx="200" ry="30" fill="#F0E8C0" opacity="0.06"/>
+
+  <!-- Label -->
+  <text x="60" y="650" font-family="Georgia,'Times New Roman',serif" font-size="24" fill="#D8D0C0" opacity="0.65" font-style="italic">The Capulet Garden · A Moonlit Night · Verona</text>
+</svg>
