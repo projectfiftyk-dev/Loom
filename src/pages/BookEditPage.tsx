@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Mic2, FileText, Sparkles, Edit3, Volume2,
   Save, AlertCircle, ChevronDown, ChevronRight, Check, ImagePlus, ImageOff, X,
+  Plus, Trash2, MessageCircle,
 } from 'lucide-react';
 import { useApp } from '../context/AppContext';
 import { BOOK_THEMES } from '../styles/palettes';
@@ -27,6 +28,10 @@ interface LocalChar {
   name: string;
   avatar?: string;
   color?: string;
+  personality?: string;
+  is_chat_character?: boolean;
+  recall_history?: boolean;
+  _isNew?: boolean;
   [key: string]: any;
 }
 
@@ -124,6 +129,189 @@ function CoverPicker({ value, onChange, bookId, isDark }: {
   );
 }
 
+// ── Character Card ─────────────────────────────────────────────────────────────
+
+function Toggle({ on, onChange, isDark }: { on: boolean; onChange: (v: boolean) => void; isDark: boolean }) {
+  return (
+    <button
+      type="button"
+      onClick={() => onChange(!on)}
+      className={clsx(
+        'relative w-9 h-5 rounded-full transition-colors shrink-0',
+        on ? 'bg-blue-500' : isDark ? 'bg-[#2D2B47]' : 'bg-gray-200',
+      )}>
+      <span className={clsx(
+        'absolute top-0.5 left-0.5 w-4 h-4 rounded-full bg-white shadow-sm transition-transform',
+        on ? 'translate-x-4' : 'translate-x-0',
+      )} />
+    </button>
+  );
+}
+
+function CharacterCard({ char, isDark, expanded, onToggle, onUpdate, onDelete }: {
+  char: LocalChar;
+  isDark: boolean;
+  expanded: boolean;
+  onToggle: () => void;
+  onUpdate: (field: string, value: any) => void;
+  onDelete: () => void;
+}) {
+  const [idTouched, setIdTouched] = useState(!char._isNew);
+
+  const handleNameChange = (name: string) => {
+    onUpdate('name', name);
+    if (!idTouched) {
+      const generated = name.toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '').trim()
+        .replace(/\s+/g, '_').slice(0, 30);
+      onUpdate('id', generated || char.id);
+    }
+  };
+
+  const initial = (char.name || char.id || '?').charAt(0).toUpperCase();
+
+  return (
+    <div className={clsx('rounded-xl border overflow-hidden',
+      isDark ? 'bg-[#16152B] border-[#2D2B47]' : 'bg-violet-50/50 border-[#E2DFFF]')}>
+
+      {/* Header row */}
+      <div onClick={onToggle}
+        className={clsx('flex items-center gap-3 px-3 py-2.5 cursor-pointer transition-colors select-none',
+          isDark ? 'hover:bg-white/[0.02]' : 'hover:bg-violet-50')}>
+        <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 flex items-center justify-center text-xs font-bold"
+          style={{
+            background: char.color || (isDark ? '#2D2B47' : '#E2DFFF'),
+            color: char.color ? '#fff' : (isDark ? '#8B87B8' : '#7C6EA8'),
+            boxShadow: char.color ? `0 0 0 2px ${char.color}55` : undefined,
+          }}>
+          {char.avatar
+            ? <img src={`/book-assets/${char.avatar}`} alt={char.name} className="w-full h-full object-cover" />
+            : initial}
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className={clsx('text-sm font-medium truncate', isDark ? 'text-white' : 'text-[#1A1839]')}>
+            {char.name || <em className="opacity-40 not-italic">(unnamed)</em>}
+          </p>
+          <p className={clsx('text-xs font-mono truncate', isDark ? 'text-[#5A5780]' : 'text-violet-300')}>{char.id}</p>
+        </div>
+        <div className="flex items-center gap-1.5 shrink-0">
+          {char.is_chat_character && <MessageCircle className="w-3.5 h-3.5 text-blue-400" />}
+          {char.color && <span className="w-2.5 h-2.5 rounded-full" style={{ background: char.color }} />}
+          {expanded
+            ? <ChevronDown className={clsx('w-4 h-4', isDark ? 'text-[#5A5780]' : 'text-violet-300')} />
+            : <ChevronRight className={clsx('w-4 h-4', isDark ? 'text-[#5A5780]' : 'text-violet-300')} />}
+        </div>
+      </div>
+
+      {/* Expanded form */}
+      {expanded && (
+        <div className={clsx('border-t px-3 pt-3 pb-4 space-y-3',
+          isDark ? 'border-[#2D2B47]' : 'border-[#E2DFFF]')}>
+
+          {/* Name + ID */}
+          <div className="grid grid-cols-2 gap-2">
+            <div>
+              <label className={clsx('block text-xs font-medium mb-1', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>
+                Name
+              </label>
+              <input value={char.name} onChange={e => handleNameChange(e.target.value)}
+                placeholder="e.g. Carlos" className={inputCls(isDark)} />
+            </div>
+            <div>
+              <label className={clsx('block text-xs font-medium mb-1', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>
+                ID {!char._isNew && <span className="opacity-40 font-normal">(locked)</span>}
+              </label>
+              <input value={char.id}
+                onChange={e => { setIdTouched(true); onUpdate('id', e.target.value); }}
+                placeholder="e.g. carlos"
+                readOnly={!char._isNew}
+                className={clsx(inputCls(isDark), !char._isNew && 'opacity-50 cursor-not-allowed')} />
+            </div>
+          </div>
+
+          {/* Color */}
+          <div className="flex items-center gap-3">
+            <label className={clsx('text-xs font-medium shrink-0', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>
+              Color
+            </label>
+            <label className="cursor-pointer shrink-0">
+              <input type="color" value={char.color || '#7C3AED'}
+                onChange={e => onUpdate('color', e.target.value)} className="sr-only" />
+              <div className="w-7 h-7 rounded-lg border-2 transition-all hover:scale-110"
+                style={{
+                  background: char.color || (isDark ? '#2D2B47' : '#E2DFFF'),
+                  borderColor: char.color || (isDark ? '#3D3B57' : '#C4B5FD'),
+                }} />
+            </label>
+            {char.color && (
+              <>
+                <span className={clsx('text-xs font-mono', isDark ? 'text-[#8B87B8]' : 'text-violet-400')}>
+                  {char.color}
+                </span>
+                <button onClick={() => onUpdate('color', '')}
+                  className={clsx('p-1 rounded transition-colors',
+                    isDark ? 'text-[#5A5780] hover:text-red-400' : 'text-violet-300 hover:text-red-500')}>
+                  <X className="w-3 h-3" />
+                </button>
+              </>
+            )}
+          </div>
+
+          {/* Chat character toggle */}
+          <div className="flex items-center justify-between gap-3">
+            <div className="flex items-center gap-2 min-w-0">
+              <MessageCircle className={clsx('w-4 h-4 shrink-0', isDark ? 'text-[#8B87B8]' : 'text-violet-400')} />
+              <div>
+                <p className={clsx('text-sm font-medium', isDark ? 'text-white/80' : 'text-[#1A1839]')}>Chat character</p>
+                <p className={clsx('text-xs', isDark ? 'text-[#5A5780]' : 'text-violet-300')}>
+                  Players can have live conversations with this character
+                </p>
+              </div>
+            </div>
+            <Toggle on={!!char.is_chat_character} onChange={v => onUpdate('is_chat_character', v)} isDark={isDark} />
+          </div>
+
+          {char.is_chat_character && (
+            <div className={clsx('space-y-3 pl-3 ml-1 border-l-2',
+              isDark ? 'border-blue-500/25' : 'border-blue-300/40')}>
+              <div>
+                <label className={clsx('block text-xs font-medium mb-1', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>
+                  Personality & Instructions
+                </label>
+                <textarea rows={4} value={char.personality || ''}
+                  onChange={e => onUpdate('personality', e.target.value)}
+                  placeholder={`Describe ${char.name || 'this character'}'s personality, speaking style, and how they should respond to the player…`}
+                  className={clsx(inputCls(isDark), 'resize-none')} />
+              </div>
+
+              <div className="flex items-start justify-between gap-3">
+                <div>
+                  <p className={clsx('text-sm font-medium', isDark ? 'text-white/80' : 'text-[#1A1839]')}>
+                    Recall past conversations
+                  </p>
+                  <p className={clsx('text-xs mt-0.5', isDark ? 'text-[#5A5780]' : 'text-violet-300')}>
+                    The character remembers previous chat sessions with this player
+                  </p>
+                </div>
+                <Toggle on={!!char.recall_history} onChange={v => onUpdate('recall_history', v)} isDark={isDark} />
+              </div>
+            </div>
+          )}
+
+          {/* Delete */}
+          <div className={clsx('flex justify-end pt-2 border-t', isDark ? 'border-[#2D2B47]' : 'border-[#E2DFFF]')}>
+            <button onClick={onDelete}
+              className={clsx('flex items-center gap-1.5 text-xs font-medium px-3 py-1.5 rounded-lg transition-colors',
+                isDark ? 'text-red-400 hover:bg-red-500/10' : 'text-red-500 hover:bg-red-50')}>
+              <Trash2 className="w-3.5 h-3.5" />Remove character
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Main page ──────────────────────────────────────────────────────────────────
 
 export default function BookEditPage() {
@@ -137,6 +325,8 @@ export default function BookEditPage() {
     title: '', author: '', description: '', language: 'en', tags: '', style: 'dark', version: '0.1',
   });
   const [characters, setCharacters] = useState<LocalChar[]>([]);
+  const [expandedChars, setExpandedChars] = useState<Set<string>>(new Set());
+  const [deleteWarning, setDeleteWarning] = useState<{ id: string; name: string; nodeCount: number } | null>(null);
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [saveError, setSaveError] = useState<string | null>(null);
@@ -184,8 +374,56 @@ export default function BookEditPage() {
     setDirty(true);
   };
 
-  const updateCharColor = (id: string, color: string) => {
-    setCharacters(prev => prev.map(c => c.id === id ? { ...c, color } : c));
+  const updateCharField = (charId: string, field: string, value: any) => {
+    if (field === 'id' && typeof value === 'string') {
+      setExpandedChars(prev => {
+        if (!prev.has(charId)) return prev;
+        const next = new Set(prev);
+        next.delete(charId);
+        next.add(value);
+        return next;
+      });
+    }
+    setCharacters(prev => prev.map(c => c.id === charId ? { ...c, [field]: value } : c));
+    setDirty(true);
+  };
+
+  const toggleCharExpand = (id: string) => {
+    setExpandedChars(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  };
+
+  const countCharNodes = (charId: string): number =>
+    (rawStory?.scenes || []).flatMap((s: any) => s.nodes || [])
+      .filter((n: any) => n.type === 'dialogue' && n.character === charId).length;
+
+  const addCharacter = () => {
+    const tempId = `new_char_${Date.now()}`;
+    setCharacters(prev => [...prev, { id: tempId, name: '', color: '', _isNew: true }]);
+    setExpandedChars(prev => new Set([...prev, tempId]));
+    setDirty(true);
+  };
+
+  const requestDeleteCharacter = (char: LocalChar) => {
+    setDeleteWarning({ id: char.id, name: char.name || char.id, nodeCount: countCharNodes(char.id) });
+  };
+
+  const confirmDeleteCharacter = () => {
+    if (!deleteWarning) return;
+    const { id } = deleteWarning;
+    setCharacters(prev => prev.filter(c => c.id !== id));
+    setRawStory(prev => prev ? ({
+      ...prev,
+      scenes: (prev.scenes || []).map((s: any) => ({
+        ...s,
+        nodes: (s.nodes || []).filter((n: any) => !(n.type === 'dialogue' && n.character === id)),
+      })),
+    }) : prev);
+    setExpandedChars(prev => { const next = new Set(prev); next.delete(id); return next; });
+    setDeleteWarning(null);
     setDirty(true);
   };
 
@@ -206,7 +444,15 @@ export default function BookEditPage() {
           style: meta.style,
           version: meta.version,
         },
-        characters: characters.map(c => ({ ...c, color: c.color || undefined })),
+        characters: characters
+          .filter(c => c.id && !c.id.startsWith('new_char_') || c.name)
+          .map(({ _isNew, ...rest }) => ({
+            ...rest,
+            color: rest.color || undefined,
+            personality: rest.personality || undefined,
+            is_chat_character: rest.is_chat_character || undefined,
+            recall_history: rest.recall_history || undefined,
+          })),
       };
       const res = await fetch(`/api/books/${bookId}`, {
         method: 'PUT', headers: { 'Content-Type': 'application/json' },
@@ -340,56 +586,33 @@ export default function BookEditPage() {
         </SectionCard>
 
         {/* Characters */}
-        {characters.length > 0 && (
-          <SectionCard title="Characters" isDark={isDark}>
-            <p className={clsx('text-xs mb-3', isDark ? 'text-[#8B87B8]' : 'text-violet-400')}>
-              Assign a color to each character — it tints their dialogue bubbles and accent line in the reader.
-            </p>
-            <div className="space-y-2">
-              {characters.map(char => (
-                <div key={char.id} className={clsx('flex items-center gap-3 px-3 py-2.5 rounded-xl border',
-                  isDark ? 'bg-[#16152B] border-[#2D2B47]' : 'bg-violet-50/50 border-[#E2DFFF]')}>
-                  <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 flex items-center justify-center text-xs font-bold"
-                    style={{
-                      background: char.color || (isDark ? '#2D2B47' : '#E2DFFF'),
-                      color: char.color ? '#fff' : (isDark ? '#8B87B8' : '#7C6EA8'),
-                      boxShadow: char.color ? `0 0 0 2px ${char.color}55` : undefined,
-                    }}>
-                    {char.avatar
-                      ? <img src={`/book-assets/${char.avatar}`} alt={char.name} className="w-full h-full object-cover" />
-                      : char.name.charAt(0).toUpperCase()}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className={clsx('text-sm font-medium truncate', isDark ? 'text-white' : 'text-[#1A1839]')}>{char.name}</p>
-                    <p className={clsx('text-xs font-mono truncate', isDark ? 'text-[#5A5780]' : 'text-violet-300')}>{char.id}</p>
-                  </div>
-                  <div className="flex items-center gap-2 shrink-0">
-                    {char.color && (
-                      <span className={clsx('text-xs font-mono', isDark ? 'text-[#8B87B8]' : 'text-violet-400')}>{char.color}</span>
-                    )}
-                    <label className="cursor-pointer">
-                      <input type="color" value={char.color || '#7C3AED'}
-                        onChange={e => updateCharColor(char.id, e.target.value)}
-                        className="sr-only" />
-                      <div className="w-7 h-7 rounded-lg border-2 transition-all hover:scale-110 cursor-pointer"
-                        style={{
-                          background: char.color || (isDark ? '#2D2B47' : '#E2DFFF'),
-                          borderColor: char.color || (isDark ? '#3D3B57' : '#C4B5FD'),
-                        }} />
-                    </label>
-                    {char.color && (
-                      <button onClick={() => updateCharColor(char.id, '')}
-                        className={clsx('p-1 rounded transition-colors',
-                          isDark ? 'text-[#5A5780] hover:text-red-400' : 'text-violet-300 hover:text-red-500')}>
-                        <X className="w-3 h-3" />
-                      </button>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </SectionCard>
-        )}
+        <SectionCard title="Characters" isDark={isDark}>
+          <p className={clsx('text-xs mb-3', isDark ? 'text-[#8B87B8]' : 'text-violet-400')}>
+            Manage characters — assign colors, configure chat behaviour, and add or remove entries.
+          </p>
+          <div className="space-y-2">
+            {characters.map(char => (
+              <CharacterCard
+                key={char.id}
+                char={char}
+                isDark={isDark}
+                expanded={expandedChars.has(char.id)}
+                onToggle={() => toggleCharExpand(char.id)}
+                onUpdate={(field, value) => updateCharField(char.id, field, value)}
+                onDelete={() => requestDeleteCharacter(char)}
+              />
+            ))}
+            <button onClick={addCharacter}
+              className={clsx(
+                'w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl border-2 border-dashed text-sm font-medium transition-colors',
+                isDark
+                  ? 'border-[#2D2B47] text-[#5A5780] hover:border-violet-500/50 hover:text-violet-400'
+                  : 'border-[#E2DFFF] text-violet-300 hover:border-violet-300 hover:text-violet-500',
+              )}>
+              <Plus className="w-4 h-4" />Add Character
+            </button>
+          </div>
+        </SectionCard>
 
         {/* Editing Tools */}
         <div className={clsx('pt-2 border-t', isDark ? 'border-[#2D2B47]' : 'border-[#E2DFFF]')}>
@@ -413,6 +636,53 @@ export default function BookEditPage() {
           </div>
         </div>
       </main>
+
+      {/* Delete warning modal */}
+      {deleteWarning && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm">
+          <div className={clsx(
+            'w-full max-w-sm rounded-2xl border p-6 shadow-2xl',
+            isDark ? 'bg-[#1E1C30] border-[#2D2B47]' : 'bg-white border-[#E2DFFF]',
+          )}>
+            <div className="flex items-start gap-3 mb-4">
+              <div className={clsx('w-9 h-9 rounded-xl flex items-center justify-center shrink-0',
+                isDark ? 'bg-red-500/10' : 'bg-red-50')}>
+                <Trash2 className="w-4 h-4 text-red-400" />
+              </div>
+              <div>
+                <h2 className={clsx('font-bold text-base', isDark ? 'text-white' : 'text-[#1A1839]')}>
+                  Remove "{deleteWarning.name}"?
+                </h2>
+                <p className={clsx('text-sm mt-0.5', isDark ? 'text-[#8B87B8]' : 'text-violet-400')}>
+                  This character will be removed from the book.
+                </p>
+              </div>
+            </div>
+
+            {deleteWarning.nodeCount > 0 && (
+              <div className="flex items-start gap-2.5 mb-4 px-3 py-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20">
+                <AlertCircle className="w-4 h-4 text-amber-400 shrink-0 mt-0.5" />
+                <p className="text-sm text-amber-300">
+                  <strong>{deleteWarning.nodeCount} dialogue node{deleteWarning.nodeCount > 1 ? 's' : ''}</strong> referencing
+                  this character will be deleted from the script. Other nodes pointing to them will have unresolved links.
+                </p>
+              </div>
+            )}
+
+            <div className={clsx('flex gap-2 justify-end pt-3 border-t', isDark ? 'border-[#2D2B47]' : 'border-[#E2DFFF]')}>
+              <button onClick={() => setDeleteWarning(null)}
+                className={clsx('px-4 py-2 text-sm rounded-xl transition-colors',
+                  isDark ? 'text-[#8B87B8] hover:text-white' : 'text-violet-400 hover:text-violet-700')}>
+                Cancel
+              </button>
+              <button onClick={confirmDeleteCharacter}
+                className="px-4 py-2 text-sm font-semibold bg-red-500 hover:bg-red-400 text-white rounded-xl transition-colors">
+                Remove
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -23,6 +23,8 @@ export interface Character {
   voice?: string;
   personality?: string | null;
   color?: string;
+  is_chat_character?: boolean;
+  recall_history?: boolean;
 }
 
 export interface ChoiceOption {
