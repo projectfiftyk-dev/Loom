@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Send, Lightbulb, AlertCircle, CheckCircle } from 'lucide-react';
-import type { FreeTextNode } from '../../types/story';
+import type { FreeTextNode, FreeTextAttempt } from '../../types/story';
 import type { BookPalette } from '../../styles/palettes';
 import { useApp } from '../../context/AppContext';
 import { evaluateFreeText } from '../../api/client';
@@ -10,13 +10,14 @@ interface Props {
   node: FreeTextNode;
   isDark: boolean;
   onNavigate: (nodeId: string) => void;
+  onAttempt?: (attempt: FreeTextAttempt) => void;
   maxAttempts: number;
   palette: BookPalette;
 }
 
 type EvalState = 'idle' | 'loading' | 'success' | 'fail';
 
-export default function FreeTextNodeView({ node, onNavigate, maxAttempts, palette }: Props) {
+export default function FreeTextNodeView({ node, onNavigate, onAttempt, maxAttempts, palette }: Props) {
   const { llmProvider, apiKey } = useApp();
   const [input, setInput] = useState('');
   const [attempts, setAttempts] = useState(0);
@@ -28,11 +29,13 @@ export default function FreeTextNodeView({ node, onNavigate, maxAttempts, palett
   const handleSubmit = async () => {
     if (!input.trim()) return;
     setEvalState('loading');
+    const trimmed = input.trim();
     try {
-      const result = await evaluateFreeText(llmProvider, apiKey, node.prompt, node.goal, input.trim());
+      const result = await evaluateFreeText(llmProvider, apiKey, node.prompt, node.goal, trimmed);
       const newAttempts = attempts + 1;
       setAttempts(newAttempts);
       setEvalReason(result.reason);
+      onAttempt?.({ nodeId: node.id, prompt: node.prompt, response: trimmed, success: result.success });
       if (result.success) {
         setEvalState('success');
         setTimeout(() => onNavigate(node.on_success), 1200);
@@ -45,6 +48,7 @@ export default function FreeTextNodeView({ node, onNavigate, maxAttempts, palett
     } catch {
       setEvalState('fail');
       setEvalReason('Could not evaluate — continuing anyway.');
+      onAttempt?.({ nodeId: node.id, prompt: node.prompt, response: trimmed, success: false });
       setTimeout(() => onNavigate(node.on_success), 1500);
     }
   };

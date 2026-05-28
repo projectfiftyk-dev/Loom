@@ -113,3 +113,10 @@ export interface ChatMessage {
   role: 'user' | 'assistant';
   content: string;
 }
+
+export interface FreeTextAttempt {
+  nodeId: string;
+  prompt: string;
+  response: string;
+  success: boolean;
+}

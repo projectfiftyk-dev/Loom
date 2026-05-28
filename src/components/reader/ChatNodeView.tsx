@@ -1,10 +1,11 @@
 import { useState, useRef, useEffect } from 'react';
 import { Send, X } from 'lucide-react';
-import type { ChatNode, Character, Story, ChatMessage } from '../../types/story';
+import type { ChatNode, Character, Story, ChatMessage, FreeTextAttempt } from '../../types/story';
 import type { BookPalette } from '../../styles/palettes';
 import { hexToRgba } from '../../styles/palettes';
 import { useApp } from '../../context/AppContext';
 import { chatWithCharacter } from '../../api/client';
+import { buildRecallContext } from '../../utils/sessionContext';
 import clsx from 'clsx';
 
 interface Props {
@@ -15,9 +16,11 @@ interface Props {
   onUpdateHistory: (msgs: ChatMessage[]) => void;
   onClose: () => void;
   palette: BookPalette;
+  chatHistories?: Record<string, ChatMessage[]>;
+  freeTextAttempts?: FreeTextAttempt[];
 }
 
-export default function ChatNodeView({ node, story, history, onUpdateHistory, onClose, palette }: Props) {
+export default function ChatNodeView({ node, story, history, onUpdateHistory, onClose, palette, chatHistories, freeTextAttempts }: Props) {
   const { llmProvider, apiKey } = useApp();
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
@@ -51,7 +54,17 @@ export default function ChatNodeView({ node, story, history, onUpdateHistory, on
         return `${name}: "${d.text}"`;
       })
       .join('\n');
-    return `${personality}\n\n--- Story context so far ---\n${storyContext}\n\nRespond in character. Keep responses concise (1-3 sentences).`;
+
+    const base = `${personality}\n\n--- Story context so far ---\n${storyContext}`;
+
+    if (character.recall_history && chatHistories && freeTextAttempts) {
+      const recall = buildRecallContext(character.id, story, chatHistories, freeTextAttempts);
+      if (recall) {
+        return `${base}\n\n--- Session memory ---\n${recall}\n\nRespond in character. Keep responses concise (1-3 sentences).`;
+      }
+    }
+
+    return `${base}\n\nRespond in character. Keep responses concise (1-3 sentences).`;
   };
 
   const sendMessage = async () => {

@@ -7,7 +7,7 @@ import { fetchBookYaml } from '../api/client';
 import { getPaletteForStyle, hexToRgba } from '../styles/palettes';
 import type {
   Story, StoryNode, Scene, ChatMessage,
-  DialogueNode, Character,
+  DialogueNode, Character, FreeTextAttempt,
 } from '../types/story';
 import ChoiceNodeView from '../components/reader/ChoiceNodeView';
 import FreeTextNodeView from '../components/reader/FreeTextNodeView';
@@ -44,6 +44,7 @@ export default function ReaderPage() {
   const [error, setError] = useState<string | null>(null);
   const [currentNodeId, setCurrentNodeId] = useState('');
   const [chatHistories, setChatHistories] = useState<Record<string, ChatMessage[]>>({});
+  const [freeTextAttempts, setFreeTextAttempts] = useState<FreeTextAttempt[]>([]);
   const [finished, setFinished] = useState(false);
   const [audioConfig, setAudioConfig] = useState<Record<string, string>>({});
   const [isPlaying, setIsPlaying] = useState(false);
@@ -138,7 +139,15 @@ export default function ReaderPage() {
     audioRef.current = a;
     a.onended = () => { setIsPlaying(false); advanceRef.current(); };
     a.play().then(() => setIsPlaying(true)).catch(() => setIsPlaying(false));
+    return () => { a.onended = null; a.pause(); audioRef.current = null; };
   }, [currentNodeId, audioConfig]);
+
+  // Stop audio when the story finishes (finished screen has no nodes)
+  useEffect(() => {
+    if (!finished) return;
+    if (audioRef.current) { audioRef.current.onended = null; audioRef.current.pause(); audioRef.current = null; }
+    setIsPlaying(false); setIsPaused(false);
+  }, [finished]);
 
   // ── derived ─────────────────────────────────────────────────────────────
   const currentNode = currentNodeId ? nodeMap.get(currentNodeId) : null;
@@ -204,7 +213,7 @@ export default function ReaderPage() {
           <button
             onClick={() => {
               const s = story.scenes.find(sc => sc.start);
-              if (s?.nodes?.[0]) { setCurrentNodeId(s.nodes[0].id); setFinished(false); setChatHistories({}); }
+              if (s?.nodes?.[0]) { setCurrentNodeId(s.nodes[0].id); setFinished(false); setChatHistories({}); setFreeTextAttempts([]); }
             }}
             className="flex items-center justify-center gap-2 py-3 rounded-xl border border-white/15 text-white/50 hover:text-white transition-colors"
           >
@@ -357,7 +366,8 @@ export default function ReaderPage() {
           {currentNode.type === 'free_text' && (
             <div className="flex flex-col justify-center flex-1">
               <FreeTextNodeView node={currentNode} isDark={true} onNavigate={navigateTo}
-                maxAttempts={story.settings?.max_free_text_attempts ?? 3} palette={palette} />
+                maxAttempts={story.settings?.max_free_text_attempts ?? 3} palette={palette}
+                onAttempt={a => setFreeTextAttempts(prev => [...prev, a])} />
             </div>
           )}
 
@@ -366,7 +376,9 @@ export default function ReaderPage() {
               history={chatHistories[chatKey] ?? []}
               onUpdateHistory={msgs => setChatHistories(prev => ({ ...prev, [chatKey]: msgs }))}
               onClose={() => currentNode.next && navigateTo(currentNode.next)}
-              palette={palette} />
+              palette={palette}
+              chatHistories={chatHistories}
+              freeTextAttempts={freeTextAttempts} />
           )}
         </div>
       )}
