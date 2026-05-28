@@ -1,0 +1,426 @@
+metadata:
+  title: "Ein Tag in Berlin"
+  author: "Loom for Language"
+  version: "1.0"
+  language: de
+  cover_image: ein_tag_in_berlin/berlin_morning.svg
+  description: |
+    Step off the U-Bahn at Alexanderplatz with no German and a dead phone. Two locals — warm café owner Lena and precise bookshop keeper Felix — will walk you through greetings, ordering, numbers, and directions. By the end of today, you'll know enough to survive Berlin.
+  tags:
+    - language-learning
+    - german
+    - beginner
+    - A1
+    - interactive
+  style: forest
+
+settings:
+  max_free_text_attempts: 3
+  allow_chat_rewind: false
+
+characters:
+  - id: lena
+    name: Lena Müller
+    avatar: ein_tag_in_berlin/lena_avatar.svg
+    color: "#C8714A"
+    is_chat_character: true
+    recall_history: true
+    personality: |
+      You are Lena, a warm and playful café owner in Berlin in her late 20s.
+      You always lead with German, then give a hint in English only if the player seems genuinely confused — never translate automatically.
+      You know the player is an absolute beginner and you are patient and encouraging.
+      If they managed to order something earlier in the session, reference it warmly: "Du hast das vorhin so gut gemacht!"
+      If they struggled, encourage them: "Kein Problem — das ist am Anfang schwer!"
+      Never lecture. Stay in character. Make learning feel like a real conversation with a friend.
+      Keep responses to 2–3 sentences. Mix German and English naturally, leaning German.
+
+  - id: felix
+    name: Felix Bauer
+    avatar: ein_tag_in_berlin/felix_avatar.svg
+    color: "#4A7A8A"
+    is_chat_character: true
+    recall_history: false
+    personality: |
+      You are Felix, a bookshop owner in Berlin in his early 50s. You are formal, precise, and believe in learning by immersion.
+      You speak German correctly and use English only when the player is truly stuck — and even then, reluctantly.
+      You use formal "Sie" and "Ihnen" when addressing the player, never "du".
+      You are not unfriendly — you appreciate genuine effort and will acknowledge it briefly.
+      Dry sense of humour, rarely expressed. Keep responses to 2–3 sentences.
+
+scenes:
+  # ─── SCENE 1: Introduction ────────────────────────────────────────────────────
+  - id: scene_intro
+    title: "Willkommen in Berlin"
+    start: true
+    background: ein_tag_in_berlin/berlin_morning.svg
+    nodes:
+      - id: s01_arrival
+        type: dialogue
+        character: narrator
+        text: "You've just stepped off the U-Bahn at Alexanderplatz. It's a bright Tuesday morning in Berlin, and you don't speak a word of German. Your phone is dead. You have a coffee to find, a bookshop to locate, and a whole day ahead of you."
+        next: s02_premise
+
+      - id: s02_premise
+        type: dialogue
+        character: narrator
+        text: "The good news: two Berliners are willing to help. The bad news: they'd much rather speak German than English. By the end of today you'll know greetings, how to order food and drink, numbers up to ten, and how to ask for directions."
+        next: s03_grammar_preview
+
+      - id: s03_grammar_preview
+        type: dialogue
+        character: narrator
+        text: "One thing before you start. German has two ways to say 'you': informal du (for friends and peers) and formal Sie (for strangers and professionals). You'll hear both today. Don't worry — context will make it obvious which is which."
+        hint: "du = informal 'you' — friends, young people, first names · Sie = formal 'you' — strangers, professionals, people older than you · Getting this wrong is rarely offensive, but getting it right makes a good impression."
+        next: s04_lena_appears
+
+      - id: s04_lena_appears
+        type: dialogue
+        character: lena
+        text: "Hallo! Du siehst ein bisschen verloren aus. Kann ich helfen?"
+        hint: "Hello! You look a little lost. Can I help? · verloren = lost · Kann ich helfen? = Can I help?"
+        next: scene_greetings
+
+  # ─── SCENE 2: Greetings ───────────────────────────────────────────────────────
+  - id: scene_greetings
+    title: "Guten Morgen — Greetings"
+    background: ein_tag_in_berlin/berlin_morning.svg
+    nodes:
+      - id: g01_morning
+        type: dialogue
+        character: lena
+        text: "Guten Morgen! Ich bin Lena. Ich habe ein Café gleich um die Ecke — komm, ich zeige es dir!"
+        hint: "Good morning! I'm Lena. I have a café just around the corner — come, I'll show it to you! · gleich um die Ecke = just around the corner"
+        next: g02_greetings_lesson
+
+      - id: g02_greetings_lesson
+        type: dialogue
+        character: narrator
+        text: "The time of day changes your greeting in German. Morning is Guten Morgen, afternoon is Guten Tag, evening is Guten Abend. For a casual hello any time: just say Hallo. To say goodbye: Tschüss (informal) or Auf Wiedersehen (formal)."
+        hint: "Guten Morgen = Good morning · Guten Tag = Good afternoon/day · Guten Abend = Good evening · Hallo = Hello (anytime) · Tschüss = Bye (informal) · Auf Wiedersehen = Goodbye (formal)"
+        next: g03_lena_asks_name
+
+      - id: g03_lena_asks_name
+        type: dialogue
+        character: lena
+        text: "Und wie heißt du? Ich heiße Lena — das weißt du schon!"
+        hint: "And what's your name? I'm called Lena — you already know that! · Wie heißt du? = What are you called? (informal) · Ich heiße… = My name is… / I am called…"
+        next: g04_name_choice
+
+      - id: g04_name_choice
+        type: choice
+        prompt: "Lena just introduced herself: 'Ich heiße Lena.' How do you tell her your name in German?"
+        options:
+          - label: "Ich heiße … (I am called…)"
+            correct: true
+            next: g05_lena_correct
+          - label: "Mein Name ist … (My name is… — more formal)"
+            correct: true
+            next: g05_lena_correct
+          - label: "Du heißt … (Your name is…)"
+            correct: false
+            next: g04b_wrong_name
+
+      - id: g04b_wrong_name
+        type: dialogue
+        character: lena
+        text: "Hmm, nicht ganz! 'Du heißt' bedeutet 'your name is' — das ist, wenn du über jemand anderen sprichst. Für dich selbst sagst du 'Ich heiße'. Versuch es nochmal!"
+        hint: "Not quite! 'Du heißt' = your name is (talking about someone else). For yourself: 'Ich heiße…' · ich = I · du = you · heiße/heißt = am called / are called"
+        next: g04_name_choice
+
+      - id: g05_lena_correct
+        type: dialogue
+        character: lena
+        text: "Sehr schön! Schön, dich kennenzulernen. Na dann — komm mit!"
+        hint: "Very nice! Nice to meet you. Well then — come along! · schön = nice/beautiful · Schön, dich kennenzulernen = Nice to meet you (informal)"
+        next: scene_cafe_arrival
+
+  # ─── SCENE 3: Arriving at the café ───────────────────────────────────────────
+  - id: scene_cafe_arrival
+    title: "Das Café Morgenrot"
+    background: ein_tag_in_berlin/cafe_exterior.svg
+    nodes:
+      - id: ca01_outside
+        type: dialogue
+        character: narrator
+        text: "Lena leads you down a quiet side street to a small café with a hand-painted sign above the door: Café Morgenrot. The smell of coffee reaches the street."
+        next: ca02_felix_passes
+
+      - id: ca02_felix_passes
+        type: dialogue
+        character: felix
+        text: "Guten Tag, Lena."
+        hint: "Good day / Good afternoon, Lena. · Felix uses 'Guten Tag' — neutral, slightly formal, used throughout the day. This is your first meeting with Felix."
+        next: ca03_lena_introduces
+
+      - id: ca03_lena_introduces
+        type: dialogue
+        character: lena
+        text: "Felix! Das ist mein neuer Bekannter. Er — oder sie — lernt Deutsch!"
+        hint: "Felix! This is my new acquaintance. He — or she — is learning German! · lernt = is learning · Deutsch = German"
+        next: ca04_felix_nods
+
+      - id: ca04_felix_nods
+        type: dialogue
+        character: felix
+        text: "Ah. Willkommen in Berlin. Deutsch ist eine schöne Sprache. Viel Erfolg."
+        hint: "Ah. Welcome to Berlin. German is a beautiful language. Good luck. · Viel Erfolg = Much success / Good luck (used for learning challenges)"
+        next: ca05_felix_leaves
+
+      - id: ca05_felix_leaves
+        type: dialogue
+        character: narrator
+        text: "Felix tips his head slightly and continues down the street. Lena pushes open the café door. 'Er ist nett,' she says quietly. 'Er ist nur ein bisschen ernst.'"
+        hint: "He is nice. He is just a little serious. · nett = nice · ernst = serious/earnest"
+        next: scene_ordering
+
+  # ─── SCENE 4: Ordering ───────────────────────────────────────────────────────
+  - id: scene_ordering
+    title: "Bestellen — Ordering"
+    background: ein_tag_in_berlin/cafe_interior.svg
+    nodes:
+      - id: o01_menu
+        type: dialogue
+        character: lena
+        text: "So! Was möchtest du trinken? Wir haben Kaffee, Tee, Wasser, Milch, und Orangensaft."
+        hint: "So! What would you like to drink? We have coffee, tea, water, milk, and orange juice. · Was möchtest du? = What would you like? · trinken = to drink"
+        next: o02_narrator_pattern
+
+      - id: o02_narrator_pattern
+        type: dialogue
+        character: narrator
+        text: "To order politely in German use: 'Ich hätte gern…' (I would like…) — the most natural phrase. Or the simpler '[drink], bitte!' (A [drink], please!). The word 'bitte' does double duty: please when asking, and you're welcome when responding."
+        hint: "Ich hätte gern einen Kaffee = I would like a coffee · Einen Tee, bitte = A tea, please · bitte = please (asking) / you're welcome (responding) · danke / danke schön = thank you / thank you very much"
+        next: o03_lena_waits
+
+      - id: o03_lena_waits
+        type: dialogue
+        character: lena
+        text: "Na? Was darf es sein?"
+        hint: "Well? What will it be? · 'Was darf es sein?' is the classic German 'What can I get you?' used in cafés, shops, and counters everywhere."
+        next: o04_order_freetext
+
+      - id: o04_order_freetext
+        type: free_text
+        prompt: "Order something to drink in German. Use 'Ich hätte gern…' or just '[drink], bitte'. Try: Kaffee, Tee, Wasser, Milch, or Orangensaft."
+        goal: "The player attempts to order a drink in German. Accept any response that includes a recognisable German drink word (Kaffee, Tee, Wasser, Milch, Orangensaft) in a plausible ordering context. 'Bitte' is a bonus but not required. Imperfect grammar is fine — the intent to order in German is what matters."
+        hint: "Try: 'Einen Kaffee, bitte.' or 'Ich hätte gern einen Tee.' — don't worry about being perfect, Lena is patient!"
+        on_success: o05_lena_great
+        on_fail: o04b_lena_hint
+        on_exhausted: o05_lena_orders_for_you
+        max_attempts: 3
+
+      - id: o04b_lena_hint
+        type: dialogue
+        character: lena
+        text: "Fast! Versuch es so: 'Ich hätte gern einen Kaffee.' Oder ganz einfach: 'Kaffee, bitte!' Noch ein Versuch?"
+        hint: "Almost! Try it like this: 'I would like a coffee.' Or very simply: 'Coffee, please!' One more try? · fast = almost · noch ein Versuch = one more try"
+        next: o03_lena_waits
+
+      - id: o05_lena_great
+        type: dialogue
+        character: lena
+        text: "Wunderbar! Du machst das super. Einen Moment, bitte — ich kümmere mich darum."
+        hint: "Wonderful! You're doing great. One moment, please — I'll take care of it. · wunderbar = wonderful · Einen Moment = one moment · ich kümmere mich darum = I'll take care of it"
+        next: o06_numbers_intro
+
+      - id: o05_lena_orders_for_you
+        type: dialogue
+        character: lena
+        text: "Kein Problem! Das lernt sich. Ich bestelle für dich — einen Kaffee! Nächstes Mal schaffst du es."
+        hint: "No problem! That takes practice. I'll order for you — a coffee! Next time you'll manage it. · Das lernt sich = That takes practice (lit. That learns itself) · Nächstes Mal = next time · schaffen = to manage/achieve"
+        next: o06_numbers_intro
+
+      - id: o06_numbers_intro
+        type: dialogue
+        character: narrator
+        text: "While the coffee brews, let's learn the numbers you'll need for prices. In German, one to ten are: eins, zwei, drei, vier, fünf, sechs, sieben, acht, neun, zehn."
+        hint: "1 = eins · 2 = zwei · 3 = drei · 4 = vier · 5 = fünf · 6 = sechs · 7 = sieben · 8 = acht · 9 = neun · 10 = zehn"
+        next: o07_lena_counts
+
+      - id: o07_lena_counts
+        type: dialogue
+        character: lena
+        text: "Hör zu — eins, zwei, drei, vier, fünf! Siehst du die Finger? Und weiter: sechs, sieben, acht, neun, zehn!"
+        hint: "Listen — one, two, three, four, five! See the fingers? And continuing: six, seven, eight, nine, ten! · Hör zu = Listen"
+        next: o08_lena_price
+
+      - id: o08_lena_price
+        type: dialogue
+        character: lena
+        text: "So — das macht zwei Euro fünfzig, bitte."
+        hint: "There — that comes to two euros fifty, please. · das macht = that comes to · Euro = euro · fünfzig = fifty"
+        next: o09_number_choice
+
+      - id: o09_number_choice
+        type: choice
+        prompt: "Lena said: 'Das macht drei Euro.' How much does the drink cost?"
+        options:
+          - label: "3 euros"
+            correct: true
+            next: o10_pay
+          - label: "2 euros"
+            correct: false
+            next: o09b_wrong_number
+          - label: "13 euros"
+            correct: false
+            next: o09b_wrong_number
+
+      - id: o09b_wrong_number
+        type: dialogue
+        character: lena
+        text: "Nein, nein! Drei — das ist die Nummer drei. Eins, zwei, DREI — hörst du? Noch einmal!"
+        hint: "No, no! Drei = three, that is number three. One, two, THREE — do you hear? Once more! · Hörst du? = Do you hear?"
+        next: o09_number_choice
+
+      - id: o10_pay
+        type: dialogue
+        character: lena
+        text: "Genau! Sehr gut. Und wenn du fertig bist und gehen möchtest, sagst du einfach: 'Die Rechnung, bitte!'"
+        hint: "Exactly! Very good. And when you're done and want to leave, you simply say: 'The bill, please!' · die Rechnung = the bill · fertig = done/finished · einfach = simply"
+        next: scene_chat_lena
+
+  # ─── SCENE 5: Chat with Lena ─────────────────────────────────────────────────
+  - id: scene_chat_lena
+    title: "Ein Gespräch mit Lena"
+    background: ein_tag_in_berlin/cafe_interior.svg
+    nodes:
+      - id: cl01_chat
+        type: chat
+        character: lena
+        entry_line: "Du lernst wirklich schnell! Ich bin beeindruckt. Hast du noch Fragen? Wir können auf Deutsch oder Englisch reden — ganz wie du möchtest."
+        next: scene_bookshop
+
+  # ─── SCENE 6: Felix's bookshop ───────────────────────────────────────────────
+  - id: scene_bookshop
+    title: "Felix' Buchhandlung"
+    background: ein_tag_in_berlin/bookshop_exterior.svg
+    nodes:
+      - id: b01_narrator
+        type: dialogue
+        character: narrator
+        text: "Mid-morning. Lena mentioned Felix has a bookshop a few streets east — and that he enjoys giving impromptu German lessons to anyone willing to listen. You decide to find out."
+        next: b02_felix_greets
+
+      - id: b02_felix_greets
+        type: dialogue
+        character: felix
+        text: "Guten Tag. Willkommen in meiner Buchhandlung. Wie kann ich Ihnen helfen?"
+        hint: "Good day. Welcome to my bookshop. How can I help you? · Notice: Felix says 'Ihnen' (formal you), not 'dir' (informal). This is the formal register — Sie/Ihnen instead of du/dir."
+        next: b03_narrator_formal
+
+      - id: b03_narrator_formal
+        type: dialogue
+        character: narrator
+        text: "Notice Felix said 'Ihnen' — the formal you. Lena used 'dir'. Same meaning, different register. With Felix, use Sie and Ihnen. With Lena, use du and dir. Germans take this distinction seriously, but they forgive beginners."
+        hint: "Informal (du): Wie heißt du? · Kann ich dir helfen? · Danke dir · Formal (Sie): Wie heißen Sie? · Kann ich Ihnen helfen? · Ich danke Ihnen · Rule of thumb: if in doubt with a stranger over 40, use Sie."
+        next: b04_felix_directions_intro
+
+      - id: b04_felix_directions_intro
+        type: dialogue
+        character: felix
+        text: "Sie möchten Deutsch lernen? Gut. Dann lernen wir heute Richtungen. Das ist praktisch, wenn man sich in einer fremden Stadt befindet."
+        hint: "You want to learn German? Good. Then today we'll learn directions. That is practical when you find yourself in an unfamiliar city. · Richtungen = directions · praktisch = practical · fremd = foreign/unfamiliar"
+        next: b05_felix_directions
+
+      - id: b05_felix_directions
+        type: dialogue
+        character: felix
+        text: "Wiederholen Sie nach mir: Links. Rechts. Geradeaus. Hier. Dort."
+        hint: "Repeat after me: Left. Right. Straight ahead. Here. There. · Wiederholen Sie = Repeat (formal command) · These five words will get you unlost anywhere in Germany."
+        next: b06_directions_choice
+
+      - id: b06_directions_choice
+        type: choice
+        prompt: "Felix says: 'Das Café Morgenrot ist links.' Which direction is the café?"
+        options:
+          - label: "Left"
+            correct: true
+            next: b07_felix_approves
+          - label: "Right"
+            correct: false
+            next: b06b_wrong_dir
+          - label: "Straight ahead"
+            correct: false
+            next: b06b_wrong_dir
+
+      - id: b06b_wrong_dir
+        type: dialogue
+        character: felix
+        text: "Nein. Links ist links. Rechts ist rechts. Das ist wichtig. Bitte merken Sie sich das."
+        hint: "No. Left is left. Right is right. That is important. Please remember that. · merken = to remember, to note · Felix does not waste words."
+        next: b06_directions_choice
+
+      - id: b07_felix_approves
+        type: dialogue
+        character: felix
+        text: "Korrekt. Gut gemacht. Jetzt — eine kleine Aufgabe für Sie."
+        hint: "Correct. Well done. Now — a small task for you. · gut gemacht = well done · eine Aufgabe = a task, an exercise · klein = small"
+        next: b08_ask_price_freetext
+
+      - id: b08_ask_price_freetext
+        type: free_text
+        prompt: "Ask Felix how much a book costs. In German: 'Was kostet das Buch?' or 'Wie viel kostet das?'"
+        goal: "The player asks about the price of something in German. Accept any response containing 'kostet', 'wie viel', 'was kostet', 'Preis', or a recognisable attempt at a price question. Imperfect grammar is fine — the intent to ask in German is what matters."
+        hint: "Was kostet das? = What does that cost? · Wie viel kostet das Buch? = How much does the book cost? · das Buch = the book · kosten = to cost"
+        on_success: b09_felix_price
+        on_fail: b08b_felix_hint
+        on_exhausted: b09_felix_price
+        max_attempts: 3
+
+      - id: b08b_felix_hint
+        type: dialogue
+        character: felix
+        text: "Noch einmal, bitte. Die Frage lautet: 'Was kostet das?' — Drei Wörter. Was. Kostet. Das. Versuchen Sie es."
+        hint: "Once more, please. The question is: 'What does that cost?' — Three words. What. Costs. That. Try it. · lautet = reads/goes (for sentences) · Felix breaks it down with precision."
+        next: b07_felix_approves
+
+      - id: b09_felix_price
+        type: dialogue
+        character: felix
+        text: "Das Buch kostet acht Euro. Acht — die Nummer acht. Haben Sie Ihre Zahlen geübt?"
+        hint: "The book costs eight euros. Eight — the number eight. Have you practised your numbers? · acht = 8 · Zahlen = numbers · üben = to practise · Haben Sie geübt? = Have you practised? (formal)"
+        next: b10_chat_felix
+
+      - id: b10_chat_felix
+        type: chat
+        character: felix
+        entry_line: "Noch Fragen? Ich habe Zeit. Fragen Sie ruhig auf Deutsch — Fehler sind erlaubt und sogar erwünscht."
+        next: scene_farewell
+
+  # ─── SCENE 7: Farewell ───────────────────────────────────────────────────────
+  - id: scene_farewell
+    title: "Auf Wiedersehen"
+    end: true
+    background: ein_tag_in_berlin/berlin_morning.svg
+    nodes:
+      - id: f01_narrator
+        type: dialogue
+        character: narrator
+        text: "Late morning. The Berlin sun is warm on the cobblestones outside Alexanderplatz. You've made it through your first day — with two rather different kinds of help."
+        next: f02_lena_farewell
+
+      - id: f02_lena_farewell
+        type: dialogue
+        character: lena
+        text: "Bis bald! Du machst das wirklich gut. Komm bald wieder vorbei — nächstes Mal bestellst du ganz alleine!"
+        hint: "See you soon! You're really doing well. Come back soon — next time you'll order completely on your own! · bis bald = see you soon · ganz alleine = completely alone/by yourself"
+        next: f03_felix_farewell
+
+      - id: f03_felix_farewell
+        type: dialogue
+        character: felix
+        text: "Auf Wiedersehen. Sie haben heute gut gearbeitet. Üben Sie die Zahlen."
+        hint: "Goodbye. You worked well today. Practise the numbers. · Auf Wiedersehen = formal goodbye · gut gearbeitet = worked well · üben = to practise · Felix's highest praise: brief and sincere."
+        next: f04_narrator_recap
+
+      - id: f04_narrator_recap
+        type: dialogue
+        character: narrator
+        text: "Here is what you learned in Berlin today: Greetings by time of day. How to introduce yourself. Ordering food and drink. Numbers one to ten. The formal and informal 'you'. How to ask what something costs. Directions: left, right, straight ahead. And how to ask for the bill."
+        hint: "Vocab card — Greetings: Hallo · Guten Morgen · Guten Tag · Guten Abend · Tschüss · Auf Wiedersehen | Self: Ich heiße… · Wie heißt du? / Wie heißen Sie? | Ordering: Ich hätte gern… · [item], bitte · Die Rechnung, bitte | Numbers: eins zwei drei vier fünf sechs sieben acht neun zehn | Directions: links · rechts · geradeaus · hier · dort | Useful: bitte · danke · Entschuldigung · Wie bitte?"
+        next: f05_end
+
+      - id: f05_end
+        type: dialogue
+        character: narrator
+        text: "Bis zum nächsten Mal — until next time. Berlin will be waiting."

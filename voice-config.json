@@ -7,10 +7,29 @@
     "cafe_espanol::carlos": {
       "voiceId": "bIHbv24MWmeRgasZH58o",
       "voiceName": "Will - Relaxed Optimist"
+    },
+    "ein_tag_in_berlin::lena": {
+      "voiceId": "hpp4J3VqNfWAUOO0d1Us",
+      "voiceName": "Bella - Professional, Bright, Warm"
+    },
+    "ein_tag_in_berlin::felix": {
+      "voiceId": "CwhRBWXzGAHq8TQ4Fs17",
+      "voiceName": "Roger - Laid-Back, Casual, Resonant"
+    },
+    "ein_tag_in_berlin::narrator": {
+      "voiceId": "JBFqnCBsd6RMkjVDRZzb",
+      "voiceName": "George - Warm, Captivating Storyteller"
     }
   },
   "testedCombinations": {
     "carlos::bIHbv24MWmeRgasZH58o": "voice-tests/carlos_bIHbv24MWmeRgasZH58o.mp3",
-    "narrator::nPczCjzI2devNBz1zQrb": "voice-tests/narrator_nPczCjzI2devNBz1zQrb.mp3"
+    "narrator::nPczCjzI2devNBz1zQrb": "voice-tests/narrator_nPczCjzI2devNBz1zQrb.mp3",
+    "lena::FGY2WhTYpPnrIDTdsKH5": "voice-tests/lena_FGY2WhTYpPnrIDTdsKH5.mp3",
+    "lena::Xb7hH8MSUJpSbSDYk0k2": "voice-tests/lena_Xb7hH8MSUJpSbSDYk0k2.mp3",
+    "lena::hpp4J3VqNfWAUOO0d1Us": "voice-tests/lena_hpp4J3VqNfWAUOO0d1Us.mp3",
+    "felix::CwhRBWXzGAHq8TQ4Fs17": "voice-tests/felix_CwhRBWXzGAHq8TQ4Fs17.mp3",
+    "narrator::JBFqnCBsd6RMkjVDRZzb": "voice-tests/narrator_JBFqnCBsd6RMkjVDRZzb.mp3",
+    "narrator::N2lVS1w4EtoT3dr4eOWO": "voice-tests/narrator_N2lVS1w4EtoT3dr4eOWO.mp3",
+    "narrator::SOYHLrjzK2X1ezoPC6cr": "voice-tests/narrator_SOYHLrjzK2X1ezoPC6cr.mp3"
   }
 }

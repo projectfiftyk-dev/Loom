@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="675" viewBox="0 0 1200 675">
+  <defs>
+    <linearGradient id="street_sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#C8DCE8"/>
+      <stop offset="100%" stop-color="#E0CEAD"/>
+    </linearGradient>
+  </defs>
+  <!-- Sky -->
+  <rect width="1200" height="675" fill="url(#street_sky)"/>
+  <!-- Street -->
+  <rect x="0" y="520" width="1200" height="155" fill="#5A5040"/>
+  <rect x="0" y="520" width="1200" height="3" fill="#7A6850" opacity="0.6"/>
+  <!-- Building façade -->
+  <rect x="200" y="100" width="800" height="440" fill="#C4A882"/>
+  <rect x="200" y="100" width="800" height="440" fill="#B89660" opacity="0.3"/>
+  <!-- Window rows -->
+  <rect x="260" y="150" width="90" height="110" fill="#3A5070" opacity="0.7"/>
+  <rect x="400" y="150" width="90" height="110" fill="#3A5070" opacity="0.7"/>
+  <rect x="710" y="150" width="90" height="110" fill="#3A5070" opacity="0.7"/>
+  <rect x="850" y="150" width="90" height="110" fill="#3A5070" opacity="0.7"/>
+  <rect x="260" y="300" width="90" height="110" fill="#3A5070" opacity="0.7"/>
+  <rect x="400" y="300" width="90" height="110" fill="#3A5070" opacity="0.7"/>
+  <rect x="710" y="300" width="90" height="110" fill="#3A5070" opacity="0.7"/>
+  <rect x="850" y="300" width="90" height="110" fill="#3A5070" opacity="0.7"/>
+  <!-- Café door (arched) -->
+  <rect x="530" y="330" width="140" height="210" fill="#5A3A22" rx="70" ry="10"/>
+  <rect x="545" y="340" width="110" height="200" fill="#3A2818" rx="55" ry="5"/>
+  <!-- Awning -->
+  <polygon points="180,250 1020,250 980,310 220,310" fill="#8B4513"/>
+  <polygon points="180,250 1020,250 980,310 220,310" fill="none" stroke="#6B3010" stroke-width="3"/>
+  <!-- Awning stripes -->
+  <line x1="280" y1="250" x2="260" y2="310" stroke="#6B3010" stroke-width="2" opacity="0.5"/>
+  <line x1="380" y1="250" x2="360" y2="310" stroke="#6B3010" stroke-width="2" opacity="0.5"/>
+  <line x1="480" y1="250" x2="460" y2="310" stroke="#6B3010" stroke-width="2" opacity="0.5"/>
+  <line x1="580" y1="250" x2="560" y2="310" stroke="#6B3010" stroke-width="2" opacity="0.5"/>
+  <line x1="680" y1="250" x2="660" y2="310" stroke="#6B3010" stroke-width="2" opacity="0.5"/>
+  <line x1="780" y1="250" x2="760" y2="310" stroke="#6B3010" stroke-width="2" opacity="0.5"/>
+  <line x1="880" y1="250" x2="860" y2="310" stroke="#6B3010" stroke-width="2" opacity="0.5"/>
+  <line x1="980" y1="250" x2="960" y2="310" stroke="#6B3010" stroke-width="2" opacity="0.5"/>
+  <!-- Sign -->
+  <rect x="440" y="180" width="320" height="55" fill="#2A1A0A" rx="6"/>
+  <text x="600" y="218" font-family="Georgia,'Times New Roman',serif" font-size="30" fill="#F0D890"
+        text-anchor="middle" font-style="italic">Café Morgenrot</text>
+  <!-- Label -->
+  <text x="80" y="610" font-family="Georgia,'Times New Roman',serif" font-size="26" fill="#F0E6CC" opacity="0.7" font-style="italic">Berlin · Seitenstraße · Morgen</text>
+</svg>
