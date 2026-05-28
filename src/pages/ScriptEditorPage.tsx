@@ -1,4 +1,4 @@
-import { useEffect, useId, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft, Sparkles, Plus, Trash2, Edit3, Check, X,
@@ -80,16 +80,53 @@ function FieldLabel({ label, isDark, children }: { label: string; isDark: boolea
   );
 }
 
-function NodeRefInput({ label, value, onChange, nodeIds, isDark }: {
-  label: string; value: string; onChange: (v: string) => void; nodeIds: string[]; isDark: boolean;
+function SceneNodePicker({ label, value, onChange, scenes, characters, isDark }: {
+  label: string; value: string; onChange: (v: string) => void;
+  scenes: StoryScene[]; characters: StoryCharacter[]; isDark: boolean;
 }) {
-  const uid = useId();
-  const listId = `nri-${uid}`;
+  const owningScene = value
+    ? (scenes.find(s => s.id === value) ?? scenes.find(s => s.nodes.some(n => n.id === value)))
+    : null;
+  const [sceneId, setSceneId] = useState(owningScene?.id ?? '');
+
+  useEffect(() => {
+    if (!value) { setSceneId(''); return; }
+    const found = scenes.find(s => s.id === value) ?? scenes.find(s => s.nodes.some(n => n.id === value));
+    if (found) setSceneId(found.id);
+  }, [value]);
+
+  const scene = scenes.find(s => s.id === sceneId);
+
+  const nodeLabel = (n: StoryNode) => {
+    const charName = n.character ? (characters.find(c => c.id === n.character)?.name ?? n.character) : null;
+    const text = n.text || n.prompt || n.entry_line || '';
+    const parts = [
+      `[${n.type.replace('_', ' ')}]`,
+      charName,
+      text ? `"${text.slice(0, 45)}${text.length > 45 ? '…' : ''}"` : null,
+    ].filter(Boolean);
+    return `${n.id} — ${parts.join(' · ')}`;
+  };
+
   return (
     <FieldLabel label={label} isDark={isDark}>
-      <input list={listId} value={value} onChange={e => onChange(e.target.value)}
-        placeholder="node id or blank" className={inputCls(isDark)} />
-      <datalist id={listId}>{nodeIds.map(id => <option key={id} value={id} />)}</datalist>
+      <div className="space-y-1.5">
+        <select value={sceneId} onChange={e => { setSceneId(e.target.value); onChange(''); }} className={inputCls(isDark)}>
+          <option value="">— select scene —</option>
+          {scenes.map(s => (
+            <option key={s.id} value={s.id}>{s.title ? `${s.title} (${s.id})` : s.id}</option>
+          ))}
+        </select>
+        {scene && (
+          <select value={value} onChange={e => onChange(e.target.value)} className={inputCls(isDark)}>
+            <option value="">— select node —</option>
+            <option value={scene.id}>→ Scene entry — jump to start of &quot;{scene.title || scene.id}&quot;</option>
+            {scene.nodes.map(n => (
+              <option key={n.id} value={n.id}>{nodeLabel(n)}</option>
+            ))}
+          </select>
+        )}
+      </div>
     </FieldLabel>
   );
 }
@@ -226,8 +263,8 @@ function BackgroundPicker({ value, onChange, bookId, isDark }: {
 
 // ── Node type forms ────────────────────────────────────────────────────────────
 
-function DialogueForm({ node, onChange, nodeIds, characters, isDark, onCreateChar }: {
-  node: StoryNode; onChange: (n: StoryNode) => void; nodeIds: string[];
+function DialogueForm({ node, onChange, scenes, characters, isDark, onCreateChar }: {
+  node: StoryNode; onChange: (n: StoryNode) => void; scenes: StoryScene[];
   characters: StoryCharacter[]; isDark: boolean; onCreateChar: (c: StoryCharacter) => void;
 }) {
   const set = (k: keyof StoryNode, v: any) => onChange({ ...node, [k]: v });
@@ -239,16 +276,16 @@ function DialogueForm({ node, onChange, nodeIds, characters, isDark, onCreateCha
         <textarea rows={3} value={node.text || ''} onChange={e => set('text', e.target.value)}
           className={clsx(inputCls(isDark), 'resize-none')} />
       </FieldLabel>
-      <NodeRefInput label="Next node" value={node.next || ''} onChange={v => set('next', v)}
-        nodeIds={nodeIds} isDark={isDark} />
+      <SceneNodePicker label="Next node" value={node.next || ''} onChange={v => set('next', v)}
+        scenes={scenes} characters={characters} isDark={isDark} />
     </div>
   );
 }
 
-function ChoiceForm({ node, onChange, nodeIds, isDark }: {
-  node: StoryNode; onChange: (n: StoryNode) => void; nodeIds: string[]; isDark: boolean;
+function ChoiceForm({ node, onChange, scenes, characters, isDark }: {
+  node: StoryNode; onChange: (n: StoryNode) => void; scenes: StoryScene[];
+  characters: StoryCharacter[]; isDark: boolean;
 }) {
-  const formUid = useId();
   const set = (k: keyof StoryNode, v: any) => onChange({ ...node, [k]: v });
   const opts = node.options || [];
   const setOpt = (i: number, opt: ChoiceOption) => { const next = [...opts]; next[i] = opt; set('options', next); };
@@ -275,18 +312,12 @@ function ChoiceForm({ node, onChange, nodeIds, isDark }: {
                 <X className="w-3.5 h-3.5" />
               </button>
             </div>
-            <div className="grid grid-cols-2 gap-3">
-              <label className={clsx('flex items-center gap-2 text-xs cursor-pointer', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>
-                <input type="checkbox" checked={!!opt.correct} onChange={e => setOpt(i, { ...opt, correct: e.target.checked })} />
-                Correct answer
-              </label>
-              <div>
-                <p className={clsx('text-xs font-medium mb-1', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>Next node</p>
-                <input list={`${formUid}-opt-${i}`} value={opt.next || ''} onChange={e => setOpt(i, { ...opt, next: e.target.value })}
-                  placeholder="node id" className={inputCls(isDark)} />
-                <datalist id={`${formUid}-opt-${i}`}>{nodeIds.map(id => <option key={id} value={id} />)}</datalist>
-              </div>
-            </div>
+            <label className={clsx('flex items-center gap-2 text-xs cursor-pointer', isDark ? 'text-[#8B87B8]' : 'text-violet-500')}>
+              <input type="checkbox" checked={!!opt.correct} onChange={e => setOpt(i, { ...opt, correct: e.target.checked })} />
+              Correct answer
+            </label>
+            <SceneNodePicker label="Next node" value={opt.next || ''} onChange={v => setOpt(i, { ...opt, next: v })}
+              scenes={scenes} characters={characters} isDark={isDark} />
           </div>
         ))}
       </div>
@@ -300,8 +331,9 @@ function ChoiceForm({ node, onChange, nodeIds, isDark }: {
   );
 }
 
-function FreeTextForm({ node, onChange, nodeIds, isDark }: {
-  node: StoryNode; onChange: (n: StoryNode) => void; nodeIds: string[]; isDark: boolean;
+function FreeTextForm({ node, onChange, scenes, characters, isDark }: {
+  node: StoryNode; onChange: (n: StoryNode) => void; scenes: StoryScene[];
+  characters: StoryCharacter[]; isDark: boolean;
 }) {
   const set = (k: keyof StoryNode, v: any) => onChange({ ...node, [k]: v });
   return (
@@ -319,22 +351,22 @@ function FreeTextForm({ node, onChange, nodeIds, isDark }: {
           className={clsx(inputCls(isDark), 'resize-none')} />
       </FieldLabel>
       <div className="grid grid-cols-2 gap-3">
-        <NodeRefInput label="On success →" value={node.on_success || ''} onChange={v => set('on_success', v)} nodeIds={nodeIds} isDark={isDark} />
-        <NodeRefInput label="On fail →" value={node.on_fail || ''} onChange={v => set('on_fail', v)} nodeIds={nodeIds} isDark={isDark} />
+        <SceneNodePicker label="On success →" value={node.on_success || ''} onChange={v => set('on_success', v)} scenes={scenes} characters={characters} isDark={isDark} />
+        <SceneNodePicker label="On fail →" value={node.on_fail || ''} onChange={v => set('on_fail', v)} scenes={scenes} characters={characters} isDark={isDark} />
       </div>
       <div className="grid grid-cols-2 gap-3">
         <FieldLabel label="Max attempts" isDark={isDark}>
           <input type="number" min={1} value={node.max_attempts ?? 3}
             onChange={e => set('max_attempts', parseInt(e.target.value) || 1)} className={inputCls(isDark)} />
         </FieldLabel>
-        <NodeRefInput label="On exhausted →" value={node.on_exhausted || ''} onChange={v => set('on_exhausted', v)} nodeIds={nodeIds} isDark={isDark} />
+        <SceneNodePicker label="On exhausted →" value={node.on_exhausted || ''} onChange={v => set('on_exhausted', v)} scenes={scenes} characters={characters} isDark={isDark} />
       </div>
     </div>
   );
 }
 
-function ChatForm({ node, onChange, nodeIds, characters, isDark, onCreateChar }: {
-  node: StoryNode; onChange: (n: StoryNode) => void; nodeIds: string[];
+function ChatForm({ node, onChange, scenes, characters, isDark, onCreateChar }: {
+  node: StoryNode; onChange: (n: StoryNode) => void; scenes: StoryScene[];
   characters: StoryCharacter[]; isDark: boolean; onCreateChar: (c: StoryCharacter) => void;
 }) {
   const set = (k: keyof StoryNode, v: any) => onChange({ ...node, [k]: v });
@@ -349,7 +381,7 @@ function ChatForm({ node, onChange, nodeIds, characters, isDark, onCreateChar }:
         <input type="checkbox" checked={!!node.standalone} onChange={e => set('standalone', e.target.checked)} />
         Standalone (player can chat freely, no auto-advance)
       </label>
-      <NodeRefInput label="Next node" value={node.next || ''} onChange={v => set('next', v)} nodeIds={nodeIds} isDark={isDark} />
+      <SceneNodePicker label="Next node" value={node.next || ''} onChange={v => set('next', v)} scenes={scenes} characters={characters} isDark={isDark} />
     </div>
   );
 }
@@ -363,8 +395,8 @@ const TYPE_BADGE_CLS: Record<string, [string, string]> = {
   chat:      ['bg-blue-500/10 text-blue-400',       'bg-blue-50 text-blue-600'],
 };
 
-function NodeRow({ node, isDark, allNodeIds, characters, bookId, onSave, onDelete, onCreateChar }: {
-  node: StoryNode; isDark: boolean; allNodeIds: string[]; bookId: string;
+function NodeRow({ node, isDark, scenes, characters, bookId, onSave, onDelete, onCreateChar }: {
+  node: StoryNode; isDark: boolean; scenes: StoryScene[]; bookId: string;
   characters: StoryCharacter[]; onSave: (n: StoryNode) => void;
   onDelete: () => void; onCreateChar: (c: StoryCharacter) => void;
 }) {
@@ -460,17 +492,17 @@ function NodeRow({ node, isDark, allNodeIds, characters, bookId, onSave, onDelet
           </div>
 
           {draft.type === 'dialogue' && (
-            <DialogueForm node={draft} onChange={setDraft} nodeIds={allNodeIds}
+            <DialogueForm node={draft} onChange={setDraft} scenes={scenes}
               characters={characters} isDark={isDark} onCreateChar={onCreateChar} />
           )}
           {draft.type === 'choice' && (
-            <ChoiceForm node={draft} onChange={setDraft} nodeIds={allNodeIds} isDark={isDark} />
+            <ChoiceForm node={draft} onChange={setDraft} scenes={scenes} characters={characters} isDark={isDark} />
           )}
           {draft.type === 'free_text' && (
-            <FreeTextForm node={draft} onChange={setDraft} nodeIds={allNodeIds} isDark={isDark} />
+            <FreeTextForm node={draft} onChange={setDraft} scenes={scenes} characters={characters} isDark={isDark} />
           )}
           {draft.type === 'chat' && (
-            <ChatForm node={draft} onChange={setDraft} nodeIds={allNodeIds}
+            <ChatForm node={draft} onChange={setDraft} scenes={scenes}
               characters={characters} isDark={isDark} onCreateChar={onCreateChar} />
           )}
 
@@ -643,7 +675,6 @@ export default function ScriptEditorPage() {
       .finally(() => setLoading(false));
   }, [bookId]);
 
-  const allNodeIds = story?.scenes.flatMap(s => s.nodes.map(n => n.id)) ?? [];
 
   const update = (fn: (s: Story) => Story) => {
     setStory(prev => prev ? fn(prev) : prev);
@@ -835,7 +866,7 @@ export default function ScriptEditorPage() {
                           key={node.id}
                           node={node}
                           isDark={isDark}
-                          allNodeIds={allNodeIds}
+                          scenes={story.scenes}
                           bookId={bookId!}
                           characters={story.characters ?? []}
                           onSave={updated => handleSaveNode(scene.id, node.id, updated)}
