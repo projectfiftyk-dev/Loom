@@ -40,6 +40,7 @@ export interface DialogueNode {
   text: string;
   audio?: string;
   next?: string;
+  hint?: string;
 }
 
 export interface ChoiceNode {

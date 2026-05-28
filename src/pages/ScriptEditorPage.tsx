@@ -276,6 +276,11 @@ function DialogueForm({ node, onChange, scenes, characters, isDark, onCreateChar
         <textarea rows={3} value={node.text || ''} onChange={e => set('text', e.target.value)}
           className={clsx(inputCls(isDark), 'resize-none')} />
       </FieldLabel>
+      <FieldLabel label="Hint (optional — displayed but not spoken)" isDark={isDark}>
+        <textarea rows={2} value={node.hint || ''} onChange={e => set('hint', e.target.value || undefined)}
+          placeholder="Tip or context shown to the reader below the dialogue…"
+          className={clsx(inputCls(isDark), 'resize-none')} />
+      </FieldLabel>
       <SceneNodePicker label="Next node" value={node.next || ''} onChange={v => set('next', v)}
         scenes={scenes} characters={characters} isDark={isDark} />
     </div>

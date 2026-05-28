@@ -303,11 +303,20 @@ export default function ReaderPage() {
       {isDialogue && currentNode && (
         <div className="absolute bottom-0 inset-x-0 z-20">
           <div className="h-px" style={{ background: hexToRgba(speakerAccent, 0.4) }} />
-          <div className="bg-black/88 backdrop-blur-sm h-[22vh] min-h-[130px] max-h-[210px]">
-            <div className="h-full flex flex-col px-8 py-4">
-              <p className="italic text-white/90 text-base leading-relaxed flex-1 overflow-hidden">
+          <div className="bg-black/88 backdrop-blur-sm min-h-[130px] max-h-[280px]">
+            <div className="flex flex-col px-8 py-4">
+              <p className="italic text-white/90 text-base leading-relaxed">
                 {(currentNode as DialogueNode).text}
               </p>
+              {(currentNode as DialogueNode).hint && (
+                <div className="mt-3 flex-shrink-0">
+                  <div className="h-px bg-white/10 mb-2" />
+                  <p className="text-xs leading-relaxed text-white/45">
+                    <span className="font-semibold text-white/30 uppercase tracking-wider text-[10px] mr-1.5">Hint</span>
+                    {(currentNode as DialogueNode).hint}
+                  </p>
+                </div>
+              )}
               <div className="flex items-center justify-between mt-3 flex-shrink-0">
                 <span className="text-[10px] tracking-[0.18em] text-white/22 uppercase select-none">
                   {story.metadata.title}
