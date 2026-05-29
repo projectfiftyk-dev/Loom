@@ -148,8 +148,13 @@ app.post('/api/llm/evaluate', async (req, res) => {
         }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error?.message || 'Gemini error');
-      const raw = data.candidates?.[0]?.content?.parts?.[0]?.text || '';
+      if (!response.ok) {
+        const errMsg = data.error?.message || 'Gemini error';
+        const errStatus = data.error?.status ? ` [${data.error.status}]` : '';
+        throw new Error(errMsg + errStatus);
+      }
+      const parts = data.candidates?.[0]?.content?.parts || [];
+      const raw = (parts.find(p => !p.thought) || parts[0])?.text || '';
       // Strip markdown fences if present, then try to extract a JSON object
       const stripped = raw.replace(/```json\n?|\n?```/g, '').trim();
       let parsed;
@@ -228,8 +233,13 @@ app.post('/api/llm/chat', async (req, res) => {
         }),
       });
       const data = await response.json();
-      if (!response.ok) throw new Error(data.error?.message || 'Gemini error');
-      res.json({ reply: data.candidates?.[0]?.content?.parts?.[0]?.text || 'No response.' });
+      if (!response.ok) {
+        const errMsg = data.error?.message || 'Gemini error';
+        const errStatus = data.error?.status ? ` [${data.error.status}]` : '';
+        throw new Error(errMsg + errStatus);
+      }
+      const chatParts = data.candidates?.[0]?.content?.parts || [];
+      res.json({ reply: (chatParts.find(p => !p.thought) || chatParts[0])?.text || 'No response.' });
 
     } else {
       res.status(400).json({ error: 'Unknown provider' });
