@@ -11,7 +11,7 @@ import type { BookMeta } from '../types/story';
 import { fetchBooks, bookAssetUrl } from '../api/client';
 import { getPaletteForStyle, hexToRgba } from '../styles/palettes';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Library'>;
+type Props = { navigation: any };
 
 const LANG_LABELS: Record<string, string> = {
   en: 'EN', es: 'ES', fr: 'FR', de: 'DE',
