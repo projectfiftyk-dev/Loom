@@ -25,3 +25,10 @@ Thumbs.db
 
 # Vite
 vite.config.ts.timestamp-*
+
+# Generated voice preview clips (auto-created by the audio test feature)
+voice-tests/
+
+# Intentionally tracked (do not add these):
+# audio/          — generated MP3s for stories
+# books/          — story YAML files + cover/background images
