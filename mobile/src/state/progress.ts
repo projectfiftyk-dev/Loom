@@ -1,5 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import type { ChatMessage } from '../types/story';
 
 const STORAGE_KEY = 'loom_progress';
 const ONBOARDING_KEY = 'loom_onboarding_done';
@@ -14,7 +15,10 @@ export interface UserProgress {
   userName?: string;
   activePaths: string[];
   completedBooks: string[];
-  inProgressBooks: Record<string, string>;
+  inProgressBooks: Record<string, string>;           // bookId → last nodeId
+  chatHistories: Record<string, Record<string, ChatMessage[]>>; // bookId → charId → msgs
+  completedScenes: Record<string, string[]>;         // bookId → completed scene IDs
+  bookProgress: Record<string, number>;              // bookId → 0-100
   lastAccessed?: LastAccessed;
   selectedCategory?: 'language' | 'kids';
   selectedLanguage?: string;
@@ -24,6 +28,9 @@ const DEFAULT_PROGRESS: UserProgress = {
   activePaths: [],
   completedBooks: [],
   inProgressBooks: {},
+  chatHistories: {},
+  completedScenes: {},
+  bookProgress: {},
 };
 
 export function useProgress() {
@@ -33,15 +40,14 @@ export function useProgress() {
   useEffect(() => {
     AsyncStorage.getItem(STORAGE_KEY).then(raw => {
       if (raw) {
-        try { setProgress(JSON.parse(raw)); } catch {}
+        try {
+          const parsed = JSON.parse(raw) as Partial<UserProgress>;
+          // Merge with defaults so new fields are always present
+          setProgress({ ...DEFAULT_PROGRESS, ...parsed });
+        } catch {}
       }
       setLoaded(true);
     });
-  }, []);
-
-  const save = useCallback(async (next: UserProgress) => {
-    setProgress(next);
-    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   }, []);
 
   const persist = useCallback((updater: (prev: UserProgress) => UserProgress) => {
@@ -50,6 +56,11 @@ export function useProgress() {
       AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
       return next;
     });
+  }, []);
+
+  const save = useCallback(async (next: UserProgress) => {
+    setProgress(next);
+    await AsyncStorage.setItem(STORAGE_KEY, JSON.stringify(next));
   }, []);
 
   const enrollInPath = useCallback((pathId: string) => {
@@ -66,11 +77,23 @@ export function useProgress() {
     persist(prev => ({ ...prev, lastAccessed: entry }));
   }, [persist]);
 
-  const markBookInProgress = useCallback((bookId: string, nodeId: string) => {
+  const markBookInProgress = useCallback((bookId: string, nodeId: string, pct: number) => {
     persist(prev => ({
       ...prev,
       inProgressBooks: { ...prev.inProgressBooks, [bookId]: nodeId },
+      bookProgress: { ...prev.bookProgress, [bookId]: pct },
     }));
+  }, [persist]);
+
+  const markSceneComplete = useCallback((bookId: string, sceneId: string) => {
+    persist(prev => {
+      const existing = prev.completedScenes[bookId] ?? [];
+      if (existing.includes(sceneId)) return prev;
+      return {
+        ...prev,
+        completedScenes: { ...prev.completedScenes, [bookId]: [...existing, sceneId] },
+      };
+    });
   }, [persist]);
 
   const markBookComplete = useCallback((bookId: string) => {
@@ -80,15 +103,34 @@ export function useProgress() {
       const completed = prev.completedBooks.includes(bookId)
         ? prev.completedBooks
         : [...prev.completedBooks, bookId];
-      return { ...prev, inProgressBooks: inProgress, completedBooks: completed };
+      return {
+        ...prev,
+        inProgressBooks: inProgress,
+        completedBooks: completed,
+        bookProgress: { ...prev.bookProgress, [bookId]: 100 },
+      };
     });
+  }, [persist]);
+
+  const saveChatHistory = useCallback((bookId: string, charId: string, msgs: ChatMessage[]) => {
+    persist(prev => ({
+      ...prev,
+      chatHistories: {
+        ...prev.chatHistories,
+        [bookId]: {
+          ...(prev.chatHistories[bookId] ?? {}),
+          [charId]: msgs,
+        },
+      },
+    }));
   }, [persist]);
 
   return {
     progress, loaded, save,
     enrollInPath, unenrollFromPath,
     setLastAccessed,
-    markBookInProgress, markBookComplete,
+    markBookInProgress, markSceneComplete, markBookComplete,
+    saveChatHistory,
   };
 }
 

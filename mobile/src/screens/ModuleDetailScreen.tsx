@@ -15,6 +15,7 @@ type Props = NativeStackScreenProps<MainStackParamList, 'ModuleDetail'>;
 const C = {
   bg: '#0C0B1A',
   surface: '#1E1C30',
+  surfaceAlt: '#16152B',
   text: '#FFFFFF',
   textMuted: '#8B87B8',
 };
@@ -41,9 +42,16 @@ export default function ModuleDetailScreen({ route, navigation }: Props) {
     );
   }
 
+  const isBookComplete = (bookId: string) => progress.completedBooks.includes(bookId);
+  const isBookStarted = (bookId: string) =>
+    bookId in progress.inProgressBooks || progress.completedBooks.includes(bookId);
+  const getBookProgress = (bookId: string): number => progress.bookProgress[bookId] ?? 0;
+
   return (
     <SafeAreaView style={styles.root}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+
+        {/* Header */}
         <View style={styles.header}>
           <TouchableOpacity onPress={() => navigation.goBack()}>
             <Text style={styles.back}>← Back</Text>
@@ -55,16 +63,20 @@ export default function ModuleDetailScreen({ route, navigation }: Props) {
           <Text style={styles.desc}>{mod.description}</Text>
         </View>
 
-        <View style={styles.bookList}>
+        {/* Books */}
+        <View style={styles.section}>
           <Text style={styles.sectionTitle}>Books in this module</Text>
           {loading ? (
             <ActivityIndicator color={path.accent} style={{ marginTop: 24 }} />
           ) : books.length === 0 ? (
-            <Text style={styles.empty}>Books loading — make sure the server is running.</Text>
+            <Text style={styles.empty}>Make sure the server is running.</Text>
           ) : (
             books.map(book => {
-              const isComplete = progress.completedBooks.includes(book.id);
-              const isInProgress = book.id in progress.inProgressBooks && !isComplete;
+              const complete = isBookComplete(book.id);
+              const started = isBookStarted(book.id);
+              const pct = getBookProgress(book.id);
+              const completedScenes = progress.completedScenes[book.id] ?? [];
+
               return (
                 <TouchableOpacity
                   key={book.id}
@@ -74,35 +86,65 @@ export default function ModuleDetailScreen({ route, navigation }: Props) {
                     navigation.navigate('Reader', { bookId: book.id });
                   }}
                 >
-                  <View style={styles.bookCardLeft}>
-                    <View style={[styles.statusDot, {
-                      backgroundColor: isComplete ? '#22C55E' : isInProgress ? path.accent : C.textMuted,
-                    }]} />
-                  </View>
+                  <View style={[styles.statusDot, {
+                    backgroundColor: complete ? '#22C55E' : started ? path.accent : C.textMuted,
+                  }]} />
+
                   <View style={styles.bookInfo}>
-                    <Text style={styles.bookTitle}>{book.title}</Text>
+                    <View style={styles.bookTopRow}>
+                      <Text style={styles.bookTitle}>{book.title}</Text>
+                      {complete && (
+                        <View style={styles.completeBadge}>
+                          <Text style={styles.completeBadgeText}>✓ Done</Text>
+                        </View>
+                      )}
+                    </View>
+
                     {book.author ? <Text style={styles.bookAuthor}>by {book.author}</Text> : null}
                     {book.description ? (
                       <Text style={styles.bookDesc} numberOfLines={2}>{book.description}</Text>
                     ) : null}
-                    <View style={styles.bookMeta}>
+
+                    {/* Progress bar */}
+                    {started && !complete && (
+                      <View style={styles.progressWrap}>
+                        <View style={styles.progressTrack}>
+                          <View style={[styles.progressFill, {
+                            width: `${pct}%` as any,
+                            backgroundColor: path.accent,
+                          }]} />
+                        </View>
+                        <Text style={[styles.progressLabel, { color: path.accent }]}>{pct}%</Text>
+                      </View>
+                    )}
+
+                    {/* Scene completion dots */}
+                    {completedScenes.length > 0 && (
+                      <View style={styles.sceneDots}>
+                        {completedScenes.map(sceneId => (
+                          <View
+                            key={sceneId}
+                            style={[styles.sceneDot, { backgroundColor: complete ? '#22C55E' : path.accent }]}
+                          />
+                        ))}
+                      </View>
+                    )}
+
+                    {/* Tags */}
+                    <View style={styles.tags}>
                       {book.language && (
                         <View style={[styles.tag, { backgroundColor: path.accent + '22' }]}>
                           <Text style={[styles.tagText, { color: path.accent }]}>{book.language.toUpperCase()}</Text>
                         </View>
                       )}
-                      {isComplete && (
-                        <View style={[styles.tag, { backgroundColor: '#22C55E22' }]}>
-                          <Text style={[styles.tagText, { color: '#22C55E' }]}>✓ Completed</Text>
+                      {book.tags?.slice(0, 2).map(t => (
+                        <View key={t} style={styles.tag}>
+                          <Text style={styles.tagText}>{t}</Text>
                         </View>
-                      )}
-                      {isInProgress && (
-                        <View style={[styles.tag, { backgroundColor: path.accent + '22' }]}>
-                          <Text style={[styles.tagText, { color: path.accent }]}>In Progress</Text>
-                        </View>
-                      )}
+                      ))}
                     </View>
                   </View>
+
                   <Text style={styles.chevron}>›</Text>
                 </TouchableOpacity>
               );
@@ -116,33 +158,36 @@ export default function ModuleDetailScreen({ route, navigation }: Props) {
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: C.bg },
-  scroll: { paddingBottom: 40 },
+  scroll: { paddingBottom: 48 },
   header: { padding: 24, gap: 10 },
   back: { color: C.textMuted, fontSize: 15, marginBottom: 4 },
   pathTag: { alignSelf: 'flex-start', borderRadius: 8, paddingHorizontal: 10, paddingVertical: 4 },
   pathTagText: { fontSize: 12, fontWeight: '600' },
   title: { fontSize: 26, fontWeight: '700', color: C.text },
   desc: { fontSize: 14, color: C.textMuted, lineHeight: 20 },
-  bookList: { paddingHorizontal: 24 },
-  sectionTitle: { fontSize: 15, fontWeight: '700', color: C.textMuted, marginBottom: 12, textTransform: 'uppercase', letterSpacing: 0.4 },
+  section: { paddingHorizontal: 24, marginBottom: 28 },
+  sectionTitle: { fontSize: 13, fontWeight: '700', color: C.textMuted, marginBottom: 14, textTransform: 'uppercase', letterSpacing: 0.5 },
   empty: { color: C.textMuted, fontSize: 14, marginTop: 8 },
   bookCard: {
-    backgroundColor: C.surface,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'flex-start',
-    gap: 12,
+    backgroundColor: C.surface, borderRadius: 16, padding: 16,
+    marginBottom: 10, flexDirection: 'row', alignItems: 'flex-start', gap: 12,
   },
-  bookCardLeft: { paddingTop: 4 },
-  statusDot: { width: 10, height: 10, borderRadius: 5 },
-  bookInfo: { flex: 1, gap: 4 },
-  bookTitle: { fontSize: 16, fontWeight: '600', color: C.text },
-  bookAuthor: { fontSize: 13, color: C.textMuted },
+  statusDot: { width: 10, height: 10, borderRadius: 5, marginTop: 4 },
+  bookInfo: { flex: 1, gap: 5 },
+  bookTopRow: { flexDirection: 'row', alignItems: 'center', gap: 8, flexWrap: 'wrap' },
+  bookTitle: { fontSize: 16, fontWeight: '600', color: C.text, flex: 1 },
+  completeBadge: { backgroundColor: '#22C55E22', borderRadius: 6, paddingHorizontal: 7, paddingVertical: 2 },
+  completeBadgeText: { color: '#22C55E', fontSize: 11, fontWeight: '700' },
+  bookAuthor: { fontSize: 12, color: C.textMuted },
   bookDesc: { fontSize: 13, color: C.textMuted, lineHeight: 18 },
-  bookMeta: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 4 },
-  tag: { borderRadius: 6, paddingHorizontal: 8, paddingVertical: 3 },
-  tagText: { fontSize: 11, fontWeight: '600' },
+  progressWrap: { flexDirection: 'row', alignItems: 'center', gap: 8, marginTop: 2 },
+  progressTrack: { flex: 1, height: 4, backgroundColor: C.surfaceAlt, borderRadius: 2, overflow: 'hidden' },
+  progressFill: { height: 4, borderRadius: 2 },
+  progressLabel: { fontSize: 11, fontWeight: '700', minWidth: 28 },
+  sceneDots: { flexDirection: 'row', gap: 4, flexWrap: 'wrap', marginTop: 2 },
+  sceneDot: { width: 6, height: 6, borderRadius: 3 },
+  tags: { flexDirection: 'row', flexWrap: 'wrap', gap: 6, marginTop: 2 },
+  tag: { backgroundColor: 'rgba(139,135,184,0.12)', borderRadius: 6, paddingHorizontal: 7, paddingVertical: 2 },
+  tagText: { color: C.textMuted, fontSize: 11, fontWeight: '600' },
   chevron: { fontSize: 22, color: C.textMuted, alignSelf: 'center' },
 });

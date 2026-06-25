@@ -6,6 +6,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { MainStackParamList } from '../../App';
 import { getPathById, getTotalBooksInPath } from '../data/paths';
+import { getCharactersForBook, CharacterInfo } from '../data/characters';
 import { useProgress } from '../state/progress';
 
 type Props = NativeStackScreenProps<MainStackParamList, 'PathDetail'>;
@@ -37,10 +38,15 @@ export default function PathDetailScreen({ route, navigation }: Props) {
   ).length;
   const total = getTotalBooksInPath(path);
 
+  // All chat characters across every book in this path
+  const allBookIds = path.modules.flatMap(m => m.bookIds);
+  const characters: CharacterInfo[] = allBookIds.flatMap(getCharactersForBook);
+
   return (
     <SafeAreaView style={styles.root}>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
-        {/* Header */}
+
+        {/* Hero header */}
         <View style={[styles.hero, { borderBottomColor: path.accent + '33' }]}>
           <TouchableOpacity onPress={() => navigation.goBack()} style={styles.back}>
             <Text style={styles.backText}>← Back</Text>
@@ -73,9 +79,58 @@ export default function PathDetailScreen({ route, navigation }: Props) {
           </TouchableOpacity>
         </View>
 
+        {/* Character hub — visible once enrolled */}
+        {characters.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionLabel}>Characters</Text>
+            {!enrolled && (
+              <Text style={styles.enrollHint}>Enroll to start chatting with characters.</Text>
+            )}
+            <View style={styles.charGrid}>
+              {characters.map(char => (
+                <TouchableOpacity
+                  key={`${char.bookId}-${char.id}`}
+                  style={[
+                    styles.charCard,
+                    enrolled
+                      ? { borderColor: char.color + '55' }
+                      : { borderColor: 'rgba(139,135,184,0.12)', opacity: 0.5 },
+                  ]}
+                  onPress={() => {
+                    if (!enrolled) return;
+                    navigation.navigate('CharacterChat', { bookId: char.bookId, characterId: char.id });
+                  }}
+                  activeOpacity={enrolled ? 0.75 : 1}
+                >
+                  <View style={[
+                    styles.charAvatar,
+                    { backgroundColor: enrolled ? char.color : 'rgba(139,135,184,0.2)' },
+                  ]}>
+                    <Text style={styles.charAvatarText}>
+                      {char.name.charAt(0).toUpperCase()}
+                    </Text>
+                  </View>
+                  <Text style={[styles.charName, !enrolled && { color: C.textMuted }]}>
+                    {char.name.split(' ')[0]}
+                  </Text>
+                  {enrolled ? (
+                    <View style={[styles.charBadge, { backgroundColor: char.color + '22' }]}>
+                      <Text style={[styles.charBadgeText, { color: char.color }]}>Chat →</Text>
+                    </View>
+                  ) : (
+                    <View style={[styles.charBadge, { backgroundColor: 'rgba(139,135,184,0.1)' }]}>
+                      <Text style={[styles.charBadgeText, { color: C.textMuted }]}>🔒</Text>
+                    </View>
+                  )}
+                </TouchableOpacity>
+              ))}
+            </View>
+          </View>
+        )}
+
         {/* Modules */}
-        <View style={styles.modules}>
-          <Text style={styles.modulesTitle}>Modules</Text>
+        <View style={styles.section}>
+          <Text style={styles.sectionLabel}>Modules</Text>
           {path.modules.map((mod, idx) => (
             <TouchableOpacity
               key={mod.id}
@@ -94,6 +149,7 @@ export default function PathDetailScreen({ route, navigation }: Props) {
             </TouchableOpacity>
           ))}
         </View>
+
       </ScrollView>
     </SafeAreaView>
   );
@@ -110,13 +166,8 @@ function Stat({ label, value, accent }: { label: string; value: string; accent?:
 
 const styles = StyleSheet.create({
   root: { flex: 1, backgroundColor: C.bg },
-  scroll: { paddingBottom: 40 },
-  hero: {
-    padding: 24,
-    borderBottomWidth: 1,
-    gap: 10,
-    marginBottom: 8,
-  },
+  scroll: { paddingBottom: 48 },
+  hero: { padding: 24, borderBottomWidth: 1, gap: 10, marginBottom: 8 },
   back: { marginBottom: 8 },
   backText: { color: C.textMuted, fontSize: 15 },
   emoji: { fontSize: 48 },
@@ -129,16 +180,29 @@ const styles = StyleSheet.create({
   statDivider: { width: 1, height: 32, backgroundColor: 'rgba(139,135,184,0.2)' },
   enrollBtn: { borderRadius: 14, paddingVertical: 14, alignItems: 'center', marginTop: 4 },
   enrollText: { color: '#FFFFFF', fontSize: 16, fontWeight: '700' },
-  modules: { paddingHorizontal: 24, paddingTop: 16 },
-  modulesTitle: { fontSize: 17, fontWeight: '700', color: C.text, marginBottom: 12 },
+
+  section: { paddingHorizontal: 24, paddingTop: 20, marginBottom: 8 },
+  sectionLabel: {
+    fontSize: 13, fontWeight: '700', color: C.textMuted,
+    textTransform: 'uppercase', letterSpacing: 0.5, marginBottom: 12,
+  },
+  enrollHint: { fontSize: 13, color: 'rgba(139,135,184,0.5)', marginBottom: 12 },
+
+  charGrid: { flexDirection: 'row', flexWrap: 'wrap', gap: 10, marginBottom: 4 },
+  charCard: {
+    width: '47%', backgroundColor: C.surface,
+    borderRadius: 16, padding: 14, borderWidth: 1,
+    alignItems: 'center', gap: 8,
+  },
+  charAvatar: { width: 52, height: 52, borderRadius: 26, alignItems: 'center', justifyContent: 'center' },
+  charAvatarText: { color: '#fff', fontSize: 22, fontWeight: '700' },
+  charName: { fontSize: 13, fontWeight: '600', color: C.text, textAlign: 'center' },
+  charBadge: { borderRadius: 8, paddingHorizontal: 10, paddingVertical: 3 },
+  charBadgeText: { fontSize: 11, fontWeight: '600' },
+
   moduleCard: {
-    backgroundColor: C.surface,
-    borderRadius: 16,
-    padding: 16,
-    marginBottom: 10,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 14,
+    backgroundColor: C.surface, borderRadius: 16, padding: 16,
+    marginBottom: 10, flexDirection: 'row', alignItems: 'center', gap: 14,
   },
   moduleIndex: { width: 36, height: 36, borderRadius: 10, alignItems: 'center', justifyContent: 'center' },
   moduleIndexText: { fontSize: 15, fontWeight: '700' },

@@ -6,16 +6,16 @@ import {
 import { SvgUri } from 'react-native-svg';
 import { SafeAreaView, useSafeAreaInsets } from 'react-native-safe-area-context';
 import { useAudioPlayer, useAudioPlayerStatus } from 'expo-audio';
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const yaml = require('js-yaml') as typeof import('js-yaml');
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { RootStackParamList } from '../../App';
 import type {
   Story, StoryNode, Scene, Character,
-  DialogueNode, FreeTextAttempt,
+  DialogueNode, ChatMessage, FreeTextAttempt,
 } from '../types/story';
 import { fetchBookYaml, fetchAudioConfig, bookAssetUrl, audioUrl } from '../api/client';
 import { getPaletteForStyle, hexToRgba } from '../styles/palettes';
+import { useProgress } from '../state/progress';
 import ChoiceNodeView from '../components/reader/ChoiceNodeView';
 import FreeTextNodeView from '../components/reader/FreeTextNodeView';
 import ChatNodeView from '../components/reader/ChatNodeView';
@@ -33,6 +33,7 @@ function resolveCharacter(ref: string | Character, story: Story): Character {
 export default function ReaderScreen({ navigation, route }: Props) {
   const { bookId } = route.params;
   const insets = useSafeAreaInsets();
+  const { progress, markBookInProgress, markSceneComplete, markBookComplete, saveChatHistory } = useProgress();
 
   const [story, setStory] = useState<Story | null>(null);
   const [loading, setLoading] = useState(true);
@@ -41,7 +42,12 @@ export default function ReaderScreen({ navigation, route }: Props) {
   const [freeTextAttempts, setFreeTextAttempts] = useState<FreeTextAttempt[]>([]);
   const [finished, setFinished] = useState(false);
   const [audioConfig, setAudioConfig] = useState<Record<string, string>>({});
+
+  // Chat histories for this book, keyed by characterId
+  const [chatHistories, setChatHistories] = useState<Record<string, ChatMessage[]>>({});
+
   const advanceRef = useRef<() => void>(() => {});
+  const prevSceneIdRef = useRef<string | null>(null);
 
   // ── load ─────────────────────────────────────────────────────────────────
   useEffect(() => {
@@ -52,31 +58,70 @@ export default function ReaderScreen({ navigation, route }: Props) {
         setStory(parsed);
         setAudioConfig(audioCfg || {});
         const scene = parsed.scenes.find(s => s.start);
-        if (scene?.nodes?.[0]) setCurrentNodeId(scene.nodes[0].id);
+        // Resume from last node if available
+        const savedNode = progress.inProgressBooks[bookId];
+        const resumeId = savedNode && parsed.scenes.flatMap(s => s.nodes).find(n => n.id === savedNode)
+          ? savedNode
+          : scene?.nodes?.[0]?.id ?? '';
+        setCurrentNodeId(resumeId);
       })
       .catch(e => setError(e.message))
       .finally(() => setLoading(false));
   }, [bookId]);
 
+  // Load persisted chat histories for this book
+  useEffect(() => {
+    const saved = progress.chatHistories[bookId];
+    if (saved) setChatHistories(saved);
+  }, [bookId]);
+
   // ── maps ─────────────────────────────────────────────────────────────────
-  const { nodeMap, sceneByNode, nodeIndex } = useMemo(() => {
+  const { nodeMap, sceneByNode, nodeIndex, totalNodes } = useMemo(() => {
     if (!story) return {
       nodeMap: new Map<string, StoryNode>(),
       sceneByNode: new Map<string, Scene>(),
       nodeIndex: new Map<string, number>(),
+      totalNodes: 0,
     };
     const nm = new Map<string, StoryNode>();
     const sbn = new Map<string, Scene>();
     const ni = new Map<string, number>();
+    let total = 0;
     story.scenes.forEach(scene =>
       scene.nodes.forEach((node, idx) => {
-        nm.set(node.id, node); sbn.set(node.id, scene); ni.set(node.id, idx);
+        nm.set(node.id, node); sbn.set(node.id, scene); ni.set(node.id, idx); total++;
       })
     );
-    return { nodeMap: nm, sceneByNode: sbn, nodeIndex: ni };
+    return { nodeMap: nm, sceneByNode: sbn, nodeIndex: ni, totalNodes: total };
   }, [story]);
 
   const palette = useMemo(() => getPaletteForStyle(story?.metadata.style), [story]);
+
+  // ── scene tracking ────────────────────────────────────────────────────────
+  useEffect(() => {
+    if (!story || !currentNodeId) return;
+    const scene = sceneByNode.get(currentNodeId);
+    if (!scene) return;
+
+    // Mark previous scene complete when we move to a new one
+    if (prevSceneIdRef.current && prevSceneIdRef.current !== scene.id) {
+      markSceneComplete(bookId, prevSceneIdRef.current);
+    }
+    prevSceneIdRef.current = scene.id;
+
+    // Compute progress percentage
+    let pos = 0;
+    let found = false;
+    for (const sc of story.scenes) {
+      for (const n of sc.nodes) {
+        if (!found) pos++;
+        if (n.id === currentNodeId) { found = true; break; }
+      }
+      if (found) break;
+    }
+    const pct = Math.round((pos / Math.max(totalNodes, 1)) * 100);
+    markBookInProgress(bookId, currentNodeId, pct);
+  }, [currentNodeId]);
 
   // ── navigation ────────────────────────────────────────────────────────────
   const navigateTo = (target: string) => {
@@ -104,7 +149,20 @@ export default function ReaderScreen({ navigation, route }: Props) {
   };
   advanceRef.current = handleAdvance;
 
-  // ── audio (expo-audio) ────────────────────────────────────────────────────
+  const handleFinish = () => {
+    if (currentNodeId) markSceneComplete(bookId, sceneByNode.get(currentNodeId)?.id ?? '');
+    markBookComplete(bookId);
+    setFinished(true);
+  };
+
+  // ── chat history ──────────────────────────────────────────────────────────
+  const handleUpdateChatHistory = (charId: string, msgs: ChatMessage[]) => {
+    const next = { ...chatHistories, [charId]: msgs };
+    setChatHistories(next);
+    saveChatHistory(bookId, charId, msgs);
+  };
+
+  // ── audio ─────────────────────────────────────────────────────────────────
   const audioSource = useMemo(() => {
     if (!currentNodeId || !bookId || finished) return null;
     const path = audioConfig[`${bookId}::${currentNodeId}`];
@@ -115,19 +173,8 @@ export default function ReaderScreen({ navigation, route }: Props) {
   const player = useAudioPlayer(audioSource ?? null);
   const playerStatus = useAudioPlayerStatus(player);
 
-  // Auto-play when source changes
-  useEffect(() => {
-    if (audioSource) {
-      player.play();
-    }
-  }, [audioSource]);
-
-  // Advance when audio finishes
-  useEffect(() => {
-    if (playerStatus.didJustFinish) {
-      advanceRef.current();
-    }
-  }, [playerStatus.didJustFinish]);
+  useEffect(() => { if (audioSource) player.play(); }, [audioSource]);
+  useEffect(() => { if (playerStatus.didJustFinish) advanceRef.current(); }, [playerStatus.didJustFinish]);
 
   // ── derived ───────────────────────────────────────────────────────────────
   const currentNode = currentNodeId ? nodeMap.get(currentNodeId) : null;
@@ -144,7 +191,7 @@ export default function ReaderScreen({ navigation, route }: Props) {
   const isNarrator = speaker?.id === 'narrator';
   const speakerAccent = speaker?.color || palette.accent;
 
-  const progress = useMemo(() => {
+  const readingProgress = useMemo(() => {
     if (!story || !currentNodeId) return 0;
     let total = 0, pos = 0, found = false;
     for (const sc of story.scenes)
@@ -178,7 +225,7 @@ export default function ReaderScreen({ navigation, route }: Props) {
     <View style={[styles.fill, styles.center, { backgroundColor: '#000', padding: 32 }]}>
       <Text style={{ color: '#f87171', textAlign: 'center', marginBottom: 16 }}>{error || 'Could not load book.'}</Text>
       <TouchableOpacity onPress={() => navigation.goBack()}>
-        <Text style={{ color: '#7C3AED', textDecorationLine: 'underline' }}>Back to Library</Text>
+        <Text style={{ color: '#7C3AED', textDecorationLine: 'underline' }}>Go back</Text>
       </TouchableOpacity>
     </View>
   );
@@ -192,7 +239,11 @@ export default function ReaderScreen({ navigation, route }: Props) {
         style={[styles.finishBtn, { borderColor: 'rgba(255,255,255,0.15)' }]}
         onPress={() => {
           const s = story.scenes.find(sc => sc.start);
-          if (s?.nodes?.[0]) { setCurrentNodeId(s.nodes[0].id); setFinished(false); setFreeTextAttempts([]); }
+          if (s?.nodes?.[0]) {
+            setCurrentNodeId(s.nodes[0].id);
+            setFinished(false);
+            setFreeTextAttempts([]);
+          }
         }}
       >
         <Text style={{ color: 'rgba(255,255,255,0.6)', fontSize: 15 }}>↺  Read Again</Text>
@@ -201,7 +252,7 @@ export default function ReaderScreen({ navigation, route }: Props) {
         style={[styles.finishBtn, { backgroundColor: palette.accent, borderColor: palette.accent, marginTop: 10 }]}
         onPress={() => navigation.goBack()}
       >
-        <Text style={{ color: '#fff', fontSize: 15, fontWeight: '600' }}>← Back to Library</Text>
+        <Text style={{ color: '#fff', fontSize: 15, fontWeight: '600' }}>← Go Back</Text>
       </TouchableOpacity>
     </View>
   );
@@ -223,7 +274,6 @@ export default function ReaderScreen({ navigation, route }: Props) {
         </ImageBackground>
       ) : null}
 
-      {/* Vignette */}
       <View style={styles.vignette} pointerEvents="none" />
 
       {/* TOP BAR */}
@@ -240,7 +290,7 @@ export default function ReaderScreen({ navigation, route }: Props) {
           </View>
           <View style={styles.topBarRight}>
             <View style={styles.progressBar}>
-              <View style={[styles.progressFill, { width: `${progress}%` as any, backgroundColor: hexToRgba(palette.accent, 0.7) }]} />
+              <View style={[styles.progressFill, { width: `${readingProgress}%` as any, backgroundColor: hexToRgba(palette.accent, 0.7) }]} />
             </View>
             <TouchableOpacity onPress={() => navigation.goBack()} hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }}>
               <Text style={styles.closeBtn}>✕</Text>
@@ -281,7 +331,7 @@ export default function ReaderScreen({ navigation, route }: Props) {
                 </TouchableOpacity>
               )}
               {isLastNode && (
-                <TouchableOpacity onPress={() => setFinished(true)}>
+                <TouchableOpacity onPress={handleFinish}>
                   <Text style={[styles.controlIcon, { color: speakerAccent, fontSize: 14 }]}>Finish →</Text>
                 </TouchableOpacity>
               )}
@@ -307,7 +357,13 @@ export default function ReaderScreen({ navigation, route }: Props) {
           )}
           {currentNode.type === 'chat' && (
             <ChatNodeView
-              node={currentNode} story={story} palette={palette}
+              node={currentNode}
+              story={story}
+              palette={palette}
+              bookId={bookId}
+              chatHistories={chatHistories}
+              freeTextAttempts={freeTextAttempts}
+              onUpdateHistory={handleUpdateChatHistory}
               onClose={() => (currentNode as any).next && navigateTo((currentNode as any).next)}
             />
           )}
@@ -353,7 +409,7 @@ const styles = StyleSheet.create({
   controlIcon: { color: 'rgba(255,255,255,0.5)', fontSize: 22 },
   panel: {
     position: 'absolute', bottom: 0, left: 0, right: 0, zIndex: 30,
-    maxHeight: SCREEN_HEIGHT * 0.6,
+    maxHeight: SCREEN_HEIGHT * 0.65,
     backgroundColor: 'rgba(0,0,0,0.92)', borderTopWidth: 1,
   },
   panelAccentLine: { position: 'absolute', top: 0, left: 0, right: 0, height: 1 },

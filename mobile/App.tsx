@@ -19,6 +19,7 @@ import ExploreScreen from './src/screens/ExploreScreen';
 import PathDetailScreen from './src/screens/PathDetailScreen';
 import ModuleDetailScreen from './src/screens/ModuleDetailScreen';
 import ReaderScreen from './src/screens/ReaderScreen';
+import CharacterChatScreen from './src/screens/CharacterChatScreen';
 
 export { OnboardingContext, useOnboarding } from './src/context/onboarding';
 
@@ -41,6 +42,7 @@ export type MainStackParamList = {
   PathDetail: { pathId: string };
   ModuleDetail: { pathId: string; moduleId: string };
   Reader: { bookId: string };
+  CharacterChat: { bookId: string; characterId: string };
 };
 
 // Kept for backwards-compat with ReaderScreen / LibraryScreen
@@ -102,6 +104,7 @@ function MainStack() {
       <MainNav.Screen name="PathDetail" component={PathDetailScreen} />
       <MainNav.Screen name="ModuleDetail" component={ModuleDetailScreen} />
       <MainNav.Screen name="Reader" component={ReaderScreen} options={{ animation: 'fade' }} />
+      <MainNav.Screen name="CharacterChat" component={CharacterChatScreen} options={{ animation: 'slide_from_right' }} />
     </MainNav.Navigator>
   );
 }
