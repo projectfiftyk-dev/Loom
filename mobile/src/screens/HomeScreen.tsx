@@ -133,9 +133,30 @@ export default function HomeScreen({ navigation }: Props) {
           </View>
         )}
 
-        {enrolledPaths.length > 0 && inProgressIds.length === 0 && completedIds.length === 0 && (
-          <Text style={styles.hint}>Open a book from your path to start tracking progress.</Text>
-        )}
+        {enrolledPaths.length > 0 && inProgressIds.length === 0 && completedIds.length === 0 && (() => {
+          const firstPath = enrolledPaths[0] as NonNullable<(typeof enrolledPaths)[number]>;
+          const firstMod = firstPath?.modules[0];
+          const firstBookId = firstMod?.bookIds[0];
+          return (
+            <View style={styles.startCard}>
+              <Text style={styles.startEmoji}>📖</Text>
+              <Text style={styles.startTitle}>Ready to start?</Text>
+              <Text style={styles.startSub}>You've enrolled in {firstPath?.title}. Open your first book to begin.</Text>
+              {firstBookId && (
+                <TouchableOpacity
+                  style={[styles.startBtn, { backgroundColor: firstPath?.accent ?? C.accent }]}
+                  onPress={() => {
+                    if (firstPath && firstMod) {
+                      navigation.navigate('ModuleDetail', { pathId: firstPath.id, moduleId: firstMod.id });
+                    }
+                  }}
+                >
+                  <Text style={styles.startBtnText}>Start Reading →</Text>
+                </TouchableOpacity>
+              )}
+            </View>
+          );
+        })()}
       </ScrollView>
     </SafeAreaView>
   );
@@ -209,5 +230,18 @@ const styles = StyleSheet.create({
   bookAuthor: { fontSize: 12, color: C.textMuted, marginTop: 2 },
   bookBadge: { borderRadius: 8, paddingHorizontal: 8, paddingVertical: 4 },
   bookBadgeText: { fontSize: 11, fontWeight: '700' },
-  hint: { color: C.textMuted, textAlign: 'center', fontSize: 14, paddingHorizontal: 32 },
+  startCard: {
+    marginHorizontal: 24, marginBottom: 24,
+    backgroundColor: C.surface, borderRadius: 20, padding: 24,
+    alignItems: 'center', gap: 8,
+    borderWidth: 1, borderColor: 'rgba(139,135,184,0.2)',
+  },
+  startEmoji: { fontSize: 36 },
+  startTitle: { fontSize: 18, fontWeight: '700', color: C.text },
+  startSub: { fontSize: 14, color: C.textMuted, textAlign: 'center', lineHeight: 20 },
+  startBtn: {
+    marginTop: 8, borderRadius: 14,
+    paddingVertical: 13, paddingHorizontal: 28,
+  },
+  startBtnText: { color: '#fff', fontSize: 15, fontWeight: '700' },
 });

@@ -35,7 +35,7 @@ export default function ContinueTabButton() {
     }
 
     // Nothing to continue — go to Explore
-    navigation.navigate('Tabs');
+    (navigation as any).navigate('Tabs', { screen: 'Explore' });
   };
 
   const hasContent = !!(progress.lastAccessed || progress.activePaths.length > 0);

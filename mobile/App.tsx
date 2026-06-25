@@ -20,6 +20,7 @@ import PathDetailScreen from './src/screens/PathDetailScreen';
 import ModuleDetailScreen from './src/screens/ModuleDetailScreen';
 import ReaderScreen from './src/screens/ReaderScreen';
 import CharacterChatScreen from './src/screens/CharacterChatScreen';
+import ProfileScreen from './src/screens/ProfileScreen';
 
 export { OnboardingContext, useOnboarding } from './src/context/onboarding';
 
@@ -35,6 +36,7 @@ export type MainTabsParamList = {
   Home: undefined;
   _Continue: undefined;
   Explore: undefined;
+  Profile: undefined;
 };
 
 export type MainStackParamList = {
@@ -79,6 +81,9 @@ function MainTabs() {
           if (route.name === 'Explore') {
             return <Ionicons name={focused ? 'compass' : 'compass-outline'} size={size} color={color} />;
           }
+          if (route.name === 'Profile') {
+            return <Ionicons name={focused ? 'person' : 'person-outline'} size={size} color={color} />;
+          }
           return null;
         },
       })}
@@ -93,6 +98,7 @@ function MainTabs() {
         }}
       />
       <Tab.Screen name="Explore" component={ExploreScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} options={{ tabBarLabel: 'Profile' }} />
     </Tab.Navigator>
   );
 }

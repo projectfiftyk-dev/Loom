@@ -32,6 +32,7 @@ const CATEGORY_LABELS: Record<string, string> = {
 export default function ExploreScreen({ navigation }: Props) {
   const { progress } = useProgress();
   const categories = ['language', 'kids', 'topics', 'classic'] as const;
+  const enrolledPaths = PATHS.filter(p => progress.activePaths.includes(p.id));
 
   return (
     <SafeAreaView style={styles.root}>
@@ -40,6 +41,22 @@ export default function ExploreScreen({ navigation }: Props) {
         <Text style={styles.sub}>Find your next adventure.</Text>
       </View>
       <ScrollView contentContainerStyle={styles.scroll} showsVerticalScrollIndicator={false}>
+
+        {/* For You — enrolled paths pinned at top */}
+        {enrolledPaths.length > 0 && (
+          <View style={styles.section}>
+            <Text style={styles.sectionTitle}>✨ For You</Text>
+            {enrolledPaths.map(path => (
+              <PathCard
+                key={path.id}
+                path={path}
+                enrolled
+                onPress={() => navigation.navigate('PathDetail', { pathId: path.id })}
+              />
+            ))}
+          </View>
+        )}
+
         {categories.map(cat => {
           const catPaths = PATHS.filter(p => p.category === cat);
           return (

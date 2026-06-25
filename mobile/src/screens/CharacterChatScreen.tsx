@@ -29,6 +29,7 @@ export default function CharacterChatScreen({ route, navigation }: Props) {
   const [loadingStory, setLoadingStory] = useState(true);
   const [input, setInput] = useState('');
   const [sending, setSending] = useState(false);
+  const [bioExpanded, setBioExpanded] = useState(false);
 
   const charColor = charInfo?.color ?? '#7C3AED';
   const charName = charInfo?.name ?? characterId;
@@ -107,6 +108,26 @@ export default function CharacterChatScreen({ route, navigation }: Props) {
         </View>
         {loadingStory && <ActivityIndicator size="small" color={charColor} />}
       </View>
+
+      {/* Bio card */}
+      <TouchableOpacity
+        style={[styles.bioCard, { borderColor: charColor + '33' }]}
+        onPress={() => setBioExpanded(e => !e)}
+        activeOpacity={0.8}
+      >
+        <View style={styles.bioRow}>
+          <Text style={[styles.bioLabel, { color: charColor }]}>About {charName}</Text>
+          <Text style={[styles.bioChevron, { color: charColor }]}>{bioExpanded ? '▲' : '▼'}</Text>
+        </View>
+        {bioExpanded && charInfo?.personality && (
+          <Text style={styles.bioText} numberOfLines={6}>
+            {charInfo.personality.split('\n').slice(0, 4).join(' ').substring(0, 300)}
+          </Text>
+        )}
+        {!bioExpanded && charInfo?.entryLine && (
+          <Text style={styles.bioHint} numberOfLines={1}>"{charInfo.entryLine}"</Text>
+        )}
+      </TouchableOpacity>
 
       {/* Messages */}
       <KeyboardAvoidingView
@@ -216,4 +237,13 @@ const styles = StyleSheet.create({
     alignItems: 'center', justifyContent: 'center',
   },
   sendIcon: { color: '#fff', fontSize: 24, fontWeight: '700', marginTop: -2 },
+  bioCard: {
+    marginHorizontal: 12, marginTop: 8, marginBottom: 4,
+    backgroundColor: SURFACE, borderRadius: 14, padding: 12, borderWidth: 1,
+  },
+  bioRow: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' },
+  bioLabel: { fontSize: 12, fontWeight: '700', textTransform: 'uppercase', letterSpacing: 0.4 },
+  bioChevron: { fontSize: 11 },
+  bioText: { color: 'rgba(255,255,255,0.7)', fontSize: 13, lineHeight: 19, marginTop: 8 },
+  bioHint: { color: 'rgba(255,255,255,0.35)', fontSize: 12, fontStyle: 'italic', marginTop: 4 },
 });
